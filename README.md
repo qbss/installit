@@ -2,6 +2,11 @@
 
 Installer for many shell programs from terminalforlife.
 
+NOTE
+----
+
+This repository is NOT meant to be downloaded and used directly, but it can (and probably should be) used when you see it packaged with my other repositories.
+
 HOW TO USE
 ----------
 

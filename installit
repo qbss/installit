@@ -1,9 +1,9 @@
 #!/bin/bash
 
 #----------------------------------------------------------------------------------
-# Project Name      - installit (blkid-lite)
+# Project Name      - installit
 # Started On        - Thu 14 Sep 14:44:27 BST 2017
-# Last Change       - Thu 14 Sep 15:54:39 BST 2017
+# Last Change       - Thu 14 Sep 17:35:18 BST 2017
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -12,7 +12,7 @@ XERR(){ echo "ERROR: $1" 1>&2; exit 1; }
 ERR(){ echo "ERROR: $1" 1>&2; }
 
 DEPCOUNT=0
-for DEP in /usr/bin/wget /bin/{chmod,chown,cat,mkdir}
+for DEP in /usr/bin/wget /bin/{rm,chmod,chown,cat,mkdir}
 {
 	if ! type -P "$DEP" &> /dev/null
 	then
@@ -33,14 +33,20 @@ USAGE()
 		
 		            Installer for many shell programs from terminalforlife.
 
-		SYNTAX:     installit [OPTS]
+		SYNTAX:     install_blkid-lite [OPTS]
 		
 		OPTS:       --help|-h|-?            - Displays this help information.
 		            --debug                 - Enables the built-in bash debugging.
 		            --quiet|-q              - Runs in quiet mode. Errors still output.
-		            --verbose               - Be verbose about what's going on.
 		            --force|-F              - Force installation, despite conflicts.
 		            --uninstall|-u          - Uninstall files installed here.
+
+		WARNING:    Uninstalling with this program will permanently delete the files it
+		            initially installed, but only if you don't have: /usr/bin/gvfs-trash
+
+		            To check for this command, execute the following:
+
+		              which /usr/bin/gvfs-trash
 		
 		SITE:       https://github.com/terminalforlife
 	EOF
@@ -56,8 +62,6 @@ for ARG in $@
 			DEBUGME="true" ;;
 		--quiet|-q)
 			BEQUIET="true" ;;
-		--verbose)
-			VERBOSE="true" ;;
 		--force|-F)
 			FORCE_INSTALL="true" ;;
 		--uninstall|-u)
@@ -67,25 +71,20 @@ for ARG in $@
 	esac
 }
 
-BEVERBOSE()
-{
-	if [ "$VERBOSE" == "true" ]
-	then
-		printf "L%-0.3d: %s\n" "$1" "$2"
-	fi
-}
+# [N]ormal [V]er[b]osity
+NVB(){ printf "L%-0.3d: %s\n" "$1" "$2"; }
 
-[ $UID -eq 0 ] || XERR "Root access is required for installation."
+[ $UID -eq 0 ] || XERR "Root access is required."
 
 [ "$BEQUIET" == "true" ] && exec 1> /dev/null
 [ "$DEBUGME" == "true" ] && set -xeu
 
 GITHUB_URL="https://github.com/terminalforlife"
-PROJECT="blkid-lite"
+PROJECT=""
 
 if [ "$UNINSTALL" == "true" ]
 then
-	BEVERBOSE "$LINENO" "Uninstalling program."
+	NVB "$LINENO" "Uninstalling program."
 fi
 
 for FILENAME in\
@@ -94,7 +93,7 @@ for FILENAME in\
 {
 	if ! [ "$UNINSTALL" == "true" ]
 	then
-		BEVERBOSE "$LINENO" "Checking conflict: ${FILENAME%:*}"
+		NVB "$LINENO" "Checking conflict: ${FILENAME%:*}"
 		if [ -f "${FILENAME%:*}" ]
 		then
 			ERR "Conflict found: ${FILENAME%:*}"
@@ -102,28 +101,28 @@ for FILENAME in\
 			then
 				continue
 			else
-				BEVERBOSE "$LINENO" "Item forced: ${FILENAME%:*}"
+				NVB "$LINENO" "Item forced: ${FILENAME%:*}"
 			fi
 		fi
 
-		BEVERBOSE "$LINENO" "Downloading here: ${FILENAME%:*}"
+		NVB "$LINENO" "Downloading here: ${FILENAME%:*}"
 		/usr/bin/wget -cq "$GITHUB_URL/$PROJECT"/blob/master/$PROJECT\
 			-O "${FILENAME%:*}"
 
-		BEVERBOSE "$LINENO" "Correcting attributes: ${FILENAME%:*}"
+		NVB "$LINENO" "Correcting attributes: ${FILENAME%:*}"
 		/bin/chown root:root "${FILENAME%:*}"
 		/bin/chmod ${FILENAME/*:} "${FILENAME%:*}"
 	else
 		if type -P /usr/bin/gvfs-trash &> /dev/null
 		then
-			BEVERBOSE "$LINENO" "Sending to trash: ${FILENAME%:*}"
+			NVB "$LINENO" "Sending to trash: ${FILENAME%:*}"
 			if ! /usr/bin/gvfs-trash "${FILENAME%:*}" &> /dev/null
 			then
 				ERR "Failed to trash: ${FILENAME%:*}"
 			fi
 		else
-			BEVERBOSE "$LINENO" "Deleting: ${FILENAME%:*}"
-			if /bin/rm "${FILENAME%:*}" &> /dev/null
+			NVB "$LINENO" "Deleting: ${FILENAME%:*}"
+			if /bin/rm -i "${FILENAME%:*}" &> /dev/null
 			then
 				ERR "Failed to delete: ${FILENAME%:*}"
 			fi

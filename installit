@@ -106,7 +106,7 @@ for FILENAME in\
 		fi
 
 		NVB "$LINENO" "Downloading here: ${FILENAME%:*}"
-		/usr/bin/wget -cq "$GITHUB_URL"/$PROJECT/master/$PROJECT\
+		/usr/bin/wget -q "$GITHUB_URL"/$PROJECT/master/$PROJECT\
 			-O "${FILENAME%:*}"
 
 		NVB "$LINENO" "Correcting attributes: ${FILENAME%:*}"

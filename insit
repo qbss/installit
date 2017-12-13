@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Wed 13 Dec 01:49:56 GMT 2017
+# Last Change       - Wed 13 Dec 01:55:02 GMT 2017
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -36,18 +36,20 @@ USAGE(){
 	while read -r; do
 		printf "%s\n" "$REPLY"
 	done <<-EOF
-		            INSTALLIT (13th December 2017)
+		            INSIT (13th December 2017)
 		            Written by terminalforlife (terminalforlife@yahoo.com)
 		
 		            Installer for many shell programs from terminalforlife.
 
-		SYNTAX:     install_blkid-lite [OPTS]
+		SYNTAX:     insit [OPTS] WHAT1 WHAT2 WHAT3 . . .
 		
 		OPTS:       --help|-h|-?            - Displays this help information.
 		            --debug                 - Enables the built-in bash debugging.
 		            --quiet|-q              - Runs in quiet mode. Errors still output.
 		            --update|-U             - Replace and update existing files.
 		            --uninstall|-u          - Uninstall files installed here.
+
+		NOTE:       Where WHAT is the program(s) to install.
 
 		WARNING:    Uninstalling with this program will permanently delete the files it
 		            initially installed, but only if you don't have: /usr/bin/gvfs-trash

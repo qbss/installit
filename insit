@@ -1,0 +1,105 @@
+#!/bin/bash
+
+#----------------------------------------------------------------------------------
+# Project Name      - insit (Based on the older, Installit)
+# Started On        - Wed 13 Dec 01:13:55 GMT 2017
+# Last Change       - Wed 13 Dec 01:49:56 GMT 2017
+# Author E-Mail     - terminalforlife@yahoo.com
+# Author GitHub     - https://github.com/terminalforlife
+#----------------------------------------------------------------------------------
+# This installer is to replace the current installit. The aim of this installer is
+# to do away with the need to have several installers, but instead combining them
+# all into one easy-to-use installer, while making it more practical to update.
+#
+# WARNING: Do NOT use this installer until you see this warning line removed.
+#          This is only temporary. Eventually the old one will be removed, if all
+#          goes well with this "redo".
+#
+# Although this installer will hopefully replace the current installer, this one
+# will still use the same old command line arguments, where possible.
+#----------------------------------------------------------------------------------
+
+XERR(){ printf "[L%0.4d] ERROR: %s\n" "$1" "$2" 1>&2; exit 1; }
+ERR(){ printf "[L%0.4d] ERROR: %s\n" "$1" "$2" 1>&2; }
+
+declare -i DEPCOUNT=0
+for DEP in /usr/bin/wget /bin/{rm,chmod,chown,mkdir}; {
+	[ -x "$DEP" ] || {
+		ERR "$LINENO" "Dependency '$DEP' not met."
+		DEPCOUNT+=1
+	}
+}
+
+[ $DEPCOUNT -eq 0 ] || exit 1
+
+USAGE(){
+	while read -r; do
+		printf "%s\n" "$REPLY"
+	done <<-EOF
+		            INSTALLIT (13th December 2017)
+		            Written by terminalforlife (terminalforlife@yahoo.com)
+		
+		            Installer for many shell programs from terminalforlife.
+
+		SYNTAX:     install_blkid-lite [OPTS]
+		
+		OPTS:       --help|-h|-?            - Displays this help information.
+		            --debug                 - Enables the built-in bash debugging.
+		            --quiet|-q              - Runs in quiet mode. Errors still output.
+		            --update|-U             - Replace and update existing files.
+		            --uninstall|-u          - Uninstall files installed here.
+
+		WARNING:    Uninstalling with this program will permanently delete the files it
+		            initially installed, but only if you don't have: /usr/bin/gvfs-trash
+
+		            To check for this command, execute the following:
+
+		              which /usr/bin/gvfs-trash
+		
+		SITE:       https://github.com/terminalforlife
+	EOF
+}
+
+while [ "$1" ]; do
+	case "$1" in
+		--help|-h|-\?)
+			USAGE; exit 0 ;;
+		--debug)
+			DEBUGME="true" ;;
+		--quiet|-q)
+			BEQUIET="true" ;;
+		--update|-U)
+			UPDATE="true" ;;
+		--uninstall|-u)
+			UNINSTALL="true" ;;
+		-*)
+			XERR "$LINENO" "Incorrect argument(s) specified." ;;
+		*)
+			break ;;
+	esac
+
+	shift
+done
+
+[ $UID -eq 0 ] || XERR "$LINENO" "Root access is required."
+
+[ "$BEQUIET" == "true" ] && exec 1> /dev/null
+[ "$DEBUGME" == "true" ] && set -xeu
+
+URL="https://raw.githubusercontent.com/terminalforlife"
+BRANCH="master"
+PROJECT=""
+
+# EXAMPLE:
+#
+#   INSTALL "source_file.sh" "/usr/bin/source_file" 755
+
+INSTALL(){
+	/usr/bin/wget -q "$URL/$PROJECT/$BRANCH/$1" -O "$2"
+	/bin/chown root:root "$2"
+	/bin/chmod "$3" "$2"
+}
+
+#-----------------------------------------------------------ACTUAL INSTALL COMMANDS
+
+INSTALL 

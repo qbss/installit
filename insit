@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sun 17 Dec 02:08:32 GMT 2017
+# Last Change       - Sun 17 Dec 02:30:33 GMT 2017
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -101,15 +101,38 @@ fi
 FILE(){
 	# FILE project_name "source_file.sh" "/usr/bin/target_file" 755
 	if [ "$UNINSTALL" == "true" ]; then
-		/bin/rm "$3"
+		/bin/rm "$3" && printf "File '%s' removed.\n" "$3"
 	else
-		if [ -f "$3" ]; then
+		if [ -f "$3" -a ! "$UPDATE" == "true" ]; then
 			ERR "$LINENO" "File already exists: $3"
 			return 1
 		else
-			/usr/bin/wget -q "$URL/$1/$BRANCH/$2" -O "$3"
-			/bin/chown $5:$5 "$3"
-			/bin/chmod "$4" "$3"
+			#TODO - This is sloppy - IMPROVE!
+			if [ -f "$3" ]; then
+				if /usr/bin/wget -q "$URL/$1/$BRANCH/$2" -O "$3"; then
+					printf "File '%s' downloaded and updated.\n" "$3"
+				fi
+
+				if /bin/chown $5:$5 "$3"; then
+					printf "File '%s' ownership re-set.\n" "$3"
+				fi
+
+				if /bin/chmod "$4" "$3"; then
+					printf "File '%s' mode re-set.\n" "$3"
+				fi
+			else
+				if /usr/bin/wget -q "$URL/$1/$BRANCH/$2" -O "$3"; then
+					printf "File '%s' downloaded.\n" "$3"
+				fi
+
+				if /bin/chown $5:$5 "$3"; then
+					printf "File '%s' ownership set.\n" "$3"
+				fi
+
+				if /bin/chmod "$4" "$3"; then
+					printf "File '%s' mode set.\n" "$3"
+				fi
+			fi
 		fi
 	fi
 }
@@ -157,8 +180,12 @@ AVAIL=(
 )
 
 if [ "$SELF" == "true" ]; then
-	FILE installit insit /usr/bin/insit 755 0
-	exit 0
+	if FILE installit insit /usr/bin/insit 755 0; then
+		printf "Successful insit update.\n"
+		exit 0
+	else
+		XERR "$LINENO" "Failure to properly update insit."
+	fi
 fi
 
 if ! [ "$AVAIL_SHOW" == "true" ]; then

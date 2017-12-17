@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Wed 13 Dec 01:55:02 GMT 2017
+# Last Change       - Sun 17 Dec 00:45:10 GMT 2017
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -36,7 +36,7 @@ USAGE(){
 	while read -r; do
 		printf "%s\n" "$REPLY"
 	done <<-EOF
-		            INSIT (13th December 2017)
+		            INSIT (17th December 2017)
 		            Written by terminalforlife (terminalforlife@yahoo.com)
 		
 		            Installer for many shell programs from terminalforlife.
@@ -48,6 +48,7 @@ USAGE(){
 		            --quiet|-q              - Runs in quiet mode. Errors still output.
 		            --update|-U             - Replace and update existing files.
 		            --uninstall|-u          - Uninstall files installed here.
+		            --available|-A          - Output all available programs.
 
 		NOTE:       Where WHAT is the program(s) to install.
 
@@ -74,6 +75,8 @@ while [ "$1" ]; do
 			UPDATE="true" ;;
 		--uninstall|-u)
 			UNINSTALL="true" ;;
+		--available|-A)
+			AVAIL_SHOW="true" ;;
 		-*)
 			XERR "$LINENO" "Incorrect argument(s) specified." ;;
 		*)
@@ -92,16 +95,58 @@ URL="https://raw.githubusercontent.com/terminalforlife"
 BRANCH="master"
 PROJECT=""
 
-# EXAMPLE:
-#
-#   INSTALL "source_file.sh" "/usr/bin/source_file" 755
-
-INSTALL(){
-	/usr/bin/wget -q "$URL/$PROJECT/$BRANCH/$1" -O "$2"
-	/bin/chown root:root "$2"
-	/bin/chmod "$3" "$2"
+FILE(){
+	# FILE project_name "source_file.sh" "/usr/bin/target_file" 755
+	if [ "$UNINSTALL" == "true" ]; then
+		/bin/rm "$3"
+	else
+		/usr/bin/wget -q "$URL/$1/$BRANCH/$2" -O "$3"
+		/bin/chown root:root "$3"
+		/bin/chmod "$4" "$3"
+	fi
 }
 
-#-----------------------------------------------------------ACTUAL INSTALL COMMANDS
+AVAIL=()
 
-INSTALL 
+if ! [ "$AVAIL_SHOW" == "true" ]; then
+	while [ "$1" ]; do
+		case "$1" in
+			medlog)
+				AVAIL+=("medlog")
+				FILE miscellaneous medlog /usr/bin/medlog 755 ;;
+			mif)
+				AVAIL+=("mif")
+				FILE miscellaneous mif /usr/bin/mif 755 ;;
+			seewttr)
+				AVAIL+=("seewttr")
+				FILE miscellaneous seewttr /usr/bin/seewttr 755 ;;
+			backmeup)
+				AVAIL+=("backmeup")
+				FILE miscellaneous backmeup /usr/bin/backmeup 755 ;;
+			clean-locales)
+				AVAIL+=("clean-locales")
+				FILE miscellaneous clean-locales /usr/bin/clean-locales 755 ;;
+			mkpass)
+				AVAIL+=("mkpass")
+				FILE miscellaneous mkpass /usr/bin/mkpass 755 ;;
+			mplay)
+				AVAIL+=("mplay")
+				FILE miscellaneous mplay /usr/bin/mplay 755 ;;
+			pagewatch)
+				AVAIL+=("pagewatch")
+				FILE miscellaneous pagewatch /usr/bin/pagewatch 755 ;;
+			redshifter)
+				AVAIL+=("redshifter")
+				FILE miscellaneous redshifter /usr/bin/redshifter 755 ;;
+			tozero)
+				AVAIL+=("tozero")
+				FILE miscellaneous tozero /usr/bin/tozero 755 ;;
+			*)
+				ERR "$LINENO" "Unavailable WHAT at: $1" ;;
+		esac
+	
+		shift
+	done
+else
+	printf "%s\n" "${AVAIL[@]}"
+fi

@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sun 17 Dec 01:56:12 GMT 2017
+# Last Change       - Sun 17 Dec 02:08:32 GMT 2017
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -54,12 +54,7 @@ USAGE(){
 
 		NOTE:       Where WHAT is the program(s) to install.
 
-		WARNING:    Uninstalling with this program will permanently delete the files it
-		            initially installed, but only if you don't have: /usr/bin/gvfs-trash
-
-		            To check for this command, execute the following:
-
-		              which /usr/bin/gvfs-trash
+		WARNING:    Uninstalling with this program is permanent!
 		
 		SITE:       https://github.com/terminalforlife
 	EOF

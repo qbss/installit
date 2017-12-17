@@ -81,3 +81,9 @@ Uninstalling a program is easy too:
 $ sudo insit -u medlog
 File '/usr/bin/medlog' removed.
 ```
+
+What if you want to update the installer itself? Easy:
+
+```bash
+
+```

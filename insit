@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sun 17 Dec 11:55:54 GMT 2017
+# Last Change       - Sun 17 Dec 12:00:46 GMT 2017
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -186,6 +186,7 @@ SELF_UPDATE(){
 }
 
 AVAIL=(
+	"autoscrot - Tool to take full screenshots at user-specified intervals using scrot."
 	"apt-undo-install - Undo the last package(s) install executed with apt-get."
 	"binwatch - Output list of executables found in your PATH"
 	"bl - Much simpler, quicker version of blkid."
@@ -244,6 +245,8 @@ fi
 if ! [ "$AVAIL_SHOW" == "true" ]; then
 	while [ "$1" ]; do
 		case "$1" in
+			autoscrot)
+				FILE autoscrot autoscrot /usr/bin/autoscrot 755 0 ;;
 			apt-undo-install)
 				FILE apt-undo-install apt-undo-install /usr/bin/apt-undo-install 755 0 ;;
 			binwatch)

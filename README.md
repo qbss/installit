@@ -85,5 +85,9 @@ File '/usr/bin/medlog' removed.
 What if you want to update the installer itself? Easy:
 
 ```bash
-
+$ sudo insit -S
+File '/usr/bin/insit' downloaded and updated.
+File '/usr/bin/insit' ownership re-set.
+File '/usr/bin/insit' mode re-set.
+Successful insit update.
 ```

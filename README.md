@@ -17,7 +17,7 @@ HOW TO USE
 Execute this simple one-liner to download and install insit:
 
 ```bash
-sudo wget -q https://raw.githubusercontent.com/terminalforlife/insit/master/insit -O /usr/bin/insit && sudo chmod u+x install_bdl
+sudo wget -q https://raw.githubusercontent.com/terminalforlife/insit/master/insit -O /usr/bin/insit && sudo chmod u+x /usr/bin/insit
 ```
 
 EXAMPLE

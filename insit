@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sun 17 Dec 00:45:10 GMT 2017
+# Last Change       - Sun 17 Dec 01:11:05 GMT 2017
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -49,6 +49,7 @@ USAGE(){
 		            --update|-U             - Replace and update existing files.
 		            --uninstall|-u          - Uninstall files installed here.
 		            --available|-A          - Output all available programs.
+		            --branch|-B NAME        - Where NAME is the branch to use.
 
 		NOTE:       Where WHAT is the program(s) to install.
 
@@ -62,6 +63,9 @@ USAGE(){
 		SITE:       https://github.com/terminalforlife
 	EOF
 }
+
+URL="https://raw.githubusercontent.com/terminalforlife"
+BRANCH="master"
 
 while [ "$1" ]; do
 	case "$1" in
@@ -77,6 +81,9 @@ while [ "$1" ]; do
 			UNINSTALL="true" ;;
 		--available|-A)
 			AVAIL_SHOW="true" ;;
+		--branch|-B)
+			shift
+			BRANCH="$1" ;;
 		-*)
 			XERR "$LINENO" "Incorrect argument(s) specified." ;;
 		*)
@@ -86,14 +93,12 @@ while [ "$1" ]; do
 	shift
 done
 
-[ $UID -eq 0 ] || XERR "$LINENO" "Root access is required."
+if ! [ "$AVAIL_SHOW" == "true" ]; then
+	[ $UID -eq 0 ] || XERR "$LINENO" "Root access is required."
+fi
 
 [ "$BEQUIET" == "true" ] && exec 1> /dev/null
 [ "$DEBUGME" == "true" ] && set -xeu
-
-URL="https://raw.githubusercontent.com/terminalforlife"
-BRANCH="master"
-PROJECT=""
 
 FILE(){
 	# FILE project_name "source_file.sh" "/usr/bin/target_file" 755
@@ -106,41 +111,75 @@ FILE(){
 	fi
 }
 
-AVAIL=()
+AVAIL=(
+	"lsbins - Simple shell program to list and describe the PATH executables."
+	"github-ssh-setup - Simple shell program to create an SSH key pair for GitHub."
+	"homewatch - Output files in HOME which have been modified today."
+	"getip - View your internal and/or external IP address."
+	"ripmydvd - Shell program using ffmpeg and mplayer to rip your DVD."
+	"simwea - Simple program to display some weather statistics."
+	"medlog - Need help taking and logging when you've had your medication?"
+	"mif - Shell program to filter films by year and whether seen or not."
+	"seewttr - Super-simple wrapper-like script to get your weather."
+	"backmeup - Small tool I use to quickly and easily back up my HOME."
+	"clean-locales - Remove some unnecessary non-English localizations."
+	"mkpass - Pure Bourne Again Shell approach to complex password generation."
+	"mplay - Simple script to allow me to quickly load mocp how I like."
+	"pagewatch - Watch a webpage for signs of change by checkings its md5sum."
+	"redshifter - Effective and simple tool to manually adjust the gamma via Redshift."
+	"tozero - Simple program to display a countdown for a target date."
+	"nosp - A workaround for the issue in XFCE wherein Smart Placement refuses to go away."
+	"dlspwalls - Download a collection of steampunk wallpapers."
+	"dlfcmags - Download issues of the Full Circle magazine PDFs."
+	"dlfallwalls - Download a collection of Autumn/Fall wallpapers."
+	"dl-tuxradar-podcasts - Small shell program to download the TuxRadar podcasts."
+)
 
 if ! [ "$AVAIL_SHOW" == "true" ]; then
 	while [ "$1" ]; do
 		case "$1" in
+			lsbins)
+				FILE lsbins lsbins /usr/bin/lsbins 755 ;;
+			github-ssh-setup)
+				FILE github-ssh-setup github-ssh-setup /usr/bin/github-ssh-setup 755 ;;
+			homewatch)
+				FILE homewatch homewatch /usr/bin/homewatch 755 ;;
+			getip)
+				FILE getip getip /usr/bin/getip 755 ;;
+			ripmydvd)
+				FILE ripmydvd ripmydvd /usr/bin/ripmydvd 755 ;;
+			simwea)
+				FILE simwea simwea /usr/bin/simwea 755 ;;
 			medlog)
-				AVAIL+=("medlog")
 				FILE miscellaneous medlog /usr/bin/medlog 755 ;;
 			mif)
-				AVAIL+=("mif")
 				FILE miscellaneous mif /usr/bin/mif 755 ;;
 			seewttr)
-				AVAIL+=("seewttr")
 				FILE miscellaneous seewttr /usr/bin/seewttr 755 ;;
 			backmeup)
-				AVAIL+=("backmeup")
 				FILE miscellaneous backmeup /usr/bin/backmeup 755 ;;
 			clean-locales)
-				AVAIL+=("clean-locales")
 				FILE miscellaneous clean-locales /usr/bin/clean-locales 755 ;;
 			mkpass)
-				AVAIL+=("mkpass")
 				FILE miscellaneous mkpass /usr/bin/mkpass 755 ;;
 			mplay)
-				AVAIL+=("mplay")
 				FILE miscellaneous mplay /usr/bin/mplay 755 ;;
 			pagewatch)
-				AVAIL+=("pagewatch")
 				FILE miscellaneous pagewatch /usr/bin/pagewatch 755 ;;
 			redshifter)
-				AVAIL+=("redshifter")
 				FILE miscellaneous redshifter /usr/bin/redshifter 755 ;;
 			tozero)
-				AVAIL+=("tozero")
 				FILE miscellaneous tozero /usr/bin/tozero 755 ;;
+			nosp)
+				FILE miscellaneous nosp /usr/bin/nosp 755 ;;
+			dlspwalls)
+				FILE miscellaneous dlspwalls /usr/bin/dlspwalls 755 ;;
+			dlfcmags)
+				FILE miscellaneous dlfcmags /usr/bin/dlfcmags 755 ;;
+			dlfallwalls)
+				FILE miscellaneous dlfallwalls /usr/bin/dlfallwalls 755 ;;
+			dl-tuxradar-podcasts)
+				FILE miscellaneous dl-tuxradar-podcasts /usr/bin/dl-tuxradar-podcasts 755 ;;
 			*)
 				ERR "$LINENO" "Unavailable WHAT at: $1" ;;
 		esac

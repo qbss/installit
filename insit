@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sun 17 Dec 11:31:34 GMT 2017
+# Last Change       - Sun 17 Dec 11:35:35 GMT 2017
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -114,6 +114,8 @@ FILE(){
 			if [ -f "$3" ]; then
 				if /usr/bin/wget -q "$URL/$1/$BRANCH/$2" -O "$3" &> /dev/null; then
 					printf "File '%s' downloaded and updated.\n" "$3"
+				else
+					ERR "$LINENO" "Unable to download and/or update '$3' file."
 				fi
 
 				if /bin/chown $5:$5 "$3" &> /dev/null; then
@@ -130,6 +132,8 @@ FILE(){
 			else
 				if /usr/bin/wget -q "$URL/$1/$BRANCH/$2" -O "$3" &> /dev/null; then
 					printf "File '%s' downloaded.\n" "$3"
+				else
+					ERR "$LINENO" "Unable to download '$3' file."
 				fi
 
 				if /bin/chown $5:$5 "$3" &> /dev/null; then
@@ -151,7 +155,7 @@ FILE(){
 SELF_UPDATE(){
 	declare -i FAIL=0
 
-	if /usr/bin/wget -q "$URL/insit/master/insit" -O /usr/bin/insit &> /dev/null; then
+	if /usr/bin/wget -q "$URL/installit/dev/insit" -O /usr/bin/insit &> /dev/null; then
 		printf "File '%s' downloaded and updated.\n" /usr/bin/insit
 	else
 		ERR "$LINENO" "Unable to download and/or update '/usr/bin/insit' file."

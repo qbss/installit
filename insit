@@ -3,20 +3,13 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sun 17 Dec 11:47:41 GMT 2017
+# Last Change       - Sun 17 Dec 11:55:54 GMT 2017
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
-# This installer is to replace the current installit. The aim of this installer is
-# to do away with the need to have several installers, but instead combining them
-# all into one easy-to-use installer, while making it more practical to update.
-#
-# WARNING: Do NOT use this installer until you see this warning line removed.
-#          This is only temporary. Eventually the old one will be removed, if all
-#          goes well with this "redo".
-#
-# Although this installer will hopefully replace the current installer, this one
-# will still use the same old command line arguments, where possible.
+# This installer replaces the old installit. The aim of this installer is to do
+# away with the need to have several installers, but instead combining them all
+# into one easy-to-use installer, while making it more practical to update.
 #----------------------------------------------------------------------------------
 
 XERR(){ printf "[L%0.4d] ERROR: %s\n" "$1" "$2" 1>&2; exit 1; }
@@ -166,7 +159,7 @@ FILE(){
 SELF_UPDATE(){
 	declare -i FAIL=0
 
-	if /usr/bin/wget -q "$URL/installit/dev/insit" -O /usr/bin/insit &> /dev/null; then
+	if /usr/bin/wget -q "$URL/installit/master/insit" -O /usr/bin/insit &> /dev/null; then
 		printf "File '%s' downloaded and updated.\n" /usr/bin/insit
 	else
 		ERR "$LINENO" "Unable to download and/or update '/usr/bin/insit' file."

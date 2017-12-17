@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sun 17 Dec 02:30:33 GMT 2017
+# Last Change       - Sun 17 Dec 02:34:35 GMT 2017
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -103,7 +103,11 @@ FILE(){
 	if [ "$UNINSTALL" == "true" ]; then
 		/bin/rm "$3" && printf "File '%s' removed.\n" "$3"
 	else
-		if [ -f "$3" -a ! "$UPDATE" == "true" ]; then
+		#TODO - The below line needs to test for whether update or self are
+		#       NOT true, as well as if the file $3 already exists. This is
+		#       to ensure proper self update and regular program updates.
+		if [ -f "$3" -a ! "$UPDATE" == "true" ] || ! [ "$SELF" == "true" ]
+		then
 			ERR "$LINENO" "File already exists: $3"
 			return 1
 		else

@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sun 17 Dec 01:11:05 GMT 2017
+# Last Change       - Sun 17 Dec 01:52:50 GMT 2017
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -50,6 +50,7 @@ USAGE(){
 		            --uninstall|-u          - Uninstall files installed here.
 		            --available|-A          - Output all available programs.
 		            --branch|-B NAME        - Where NAME is the branch to use.
+		            --self-update|-S        - Update insit to the latest stable version.
 
 		NOTE:       Where WHAT is the program(s) to install.
 
@@ -105,13 +106,36 @@ FILE(){
 	if [ "$UNINSTALL" == "true" ]; then
 		/bin/rm "$3"
 	else
-		/usr/bin/wget -q "$URL/$1/$BRANCH/$2" -O "$3"
-		/bin/chown root:root "$3"
-		/bin/chmod "$4" "$3"
+		if [ -f "$3" ]; then
+			ERR "$LINENO" "File already exists: $3"
+			return 1
+		else
+			/usr/bin/wget -q "$URL/$1/$BRANCH/$2" -O "$3"
+			/bin/chown $5:$5 "$3"
+			/bin/chmod "$4" "$3"
+		fi
 	fi
 }
 
 AVAIL=(
+	"apt-undo-install - Undo the last package(s) install executed with apt-get."
+	"binwatch - Output list of executables found in your PATH"
+	"bl - Much simpler, quicker version of blkid."
+	"nxbt - A fork and improvement of the XBT program written by Joe Collins."
+	"catmedia - Concatenate media files originally separated in parts."
+	"cpufreq - Lightweight Bourne Shell utility to output your CPU frequencies."
+	"dwwdl - Download all of the available DistroWatch Weekly podcasts."
+	"notify-upgrade - Simple upgrade notification utility for Debian- and Ubuntu-based systems."
+	"roks - This small program will clear out your system of old kernel versions."
+	"bdl - Easily and quickly download a batch of files using wget."
+	"bashconfig - My own bash settings and shell plugins for use by anybody."
+	"i3config - My own i3-wm settings and shell plugins for use by anybody."
+	"kernelchk - Small tool to check for a change in kernel version. Ideal for scripts."
+	"get-uuid - Grab and copy your file system's UUID with this simple, easy-to-use GUI."
+	"wcdl - Crawl WallpapersCraft for desktop backgrounds."
+	"getline - Pure Bourne Again Shell way to handle a plain text file."
+	"mansaver - Save man pages for each applicable command in PATH."
+	"lspkg - Quickly and portable-y show, describe, and search installed packages."
 	"lsbins - Simple shell program to list and describe the PATH executables."
 	"github-ssh-setup - Simple shell program to create an SSH key pair for GitHub."
 	"homewatch - Output files in HOME which have been modified today."
@@ -138,48 +162,122 @@ AVAIL=(
 if ! [ "$AVAIL_SHOW" == "true" ]; then
 	while [ "$1" ]; do
 		case "$1" in
+			apt-undo-install)
+				FILE apt-undo-install apt-undo-install /usr/bin/apt-undo-install 755 0 ;;
+			binwatch)
+				FILE binwatch binwatch /usr/bin/binwatch 755 0 ;;
+			bl)
+				FILE bl bl /usr/bin/bl 755 0 ;;
+			nxbt)
+				FILE nxbt nxbt /usr/bin/nxbt 755 0 ;;
+			catmedia)
+				FILE catmedia catmedia /usr/bin/catmedia 755 0 ;;
+			cpufreq)
+				FILE cpufreq cpufreq /usr/bin/cpufreq 755 0 ;;
+			dwwdl)
+				FILE dwwdl dwwdl /usr/bin/dwwdl 755 0 ;;
+			notify-upgrade)
+				FILE notify-upgrade notify-upgrade /usr/bin/notify-upgrade 755 0 ;;
+			roks)
+				FILE roks roks /usr/bin/roks 755 0 ;;
+			bdl)
+				FILE bdl bdl /usr/bin/bdl 755 0 ;;
+			bashconfig)
+				FILE bashconfig .profile $HOME/.profile 644 "$USER"
+				FILE bashconfig .bash_aliases $HOME/.bash_aliases 644 "$USER"
+				FILE bashconfig .bashrc $HOME/.bashrc 644 "$USER"
+				[ -d "$HOME/ShellPlugins" ] || /bin/mkdir "$HOME/ShellPlugins"
+				FILE bashconfig ShellPlugins/Bell_Alarm $HOME/ShellPlugins/Bell_Alarm 644
+				FILE bashconfig ShellPlugins/Cleaner_RK_Scan $HOME/ShellPlugins/Cleaner_RK_Scan 644
+				FILE bashconfig ShellPlugins/Clear_CD_LS $HOME/ShellPlugins/Clear_CD_LS 644
+				FILE bashconfig ShellPlugins/CPU_Intensive_Procs $HOME/ShellPlugins/CPU_Intensive_Procs 644
+				FILE bashconfig ShellPlugins/Create_VM $HOME/ShellPlugins/Create_VM 644
+				FILE bashconfig ShellPlugins/Get_Bad_Hosts $HOME/ShellPlugins/Get_Bad_Hosts 644
+				FILE bashconfig ShellPlugins/Git_Status_All $HOME/ShellPlugins/Git_Status_All 644
+				FILE bashconfig ShellPlugins/List_Signals $HOME/ShellPlugins/List_Signals 644
+				FILE bashconfig ShellPlugins/Load_File_Links2 $HOME/ShellPlugins/Load_File_Links2 644
+				FILE bashconfig ShellPlugins/Loop_This $HOME/ShellPlugins/Loop_This 644
+				FILE bashconfig ShellPlugins/NIR_Difference $HOME/ShellPlugins/NIR_Difference 644
+				FILE bashconfig ShellPlugins/Play_Download_MPSYT $HOME/ShellPlugins/Play_Download_MPSYT 644
+				FILE bashconfig ShellPlugins/Shell_Alias_Correcting $HOME/ShellPlugins/Shell_Alias_Correcting 644
+				FILE bashconfig ShellPlugins/Times_Table $HOME/ShellPlugins/Times_Table 644 ;;
+			i3config)
+				FILE i3config config $HOME/.config/i3/config 644 "$USER"
+				[ -d "$HOME/.i3a" ] || /bin/mkdir "$HOME/.i3a"
+				FILE i3config .i3a/dtrecord $HOME/.i3a/dtrecord 644 "$USER"
+				FILE i3config .i3a/feh_slides $HOME/.i3a/feh_slides 644 "$USER"
+				FILE i3config .i3a/initialize $HOME/.i3a/initialize 644 "$USER"
+				FILE i3config .i3a/key_autorepeat $HOME/.i3a/key_autorepeat 644 "$USER"
+				FILE i3config .i3a/scrot_sel_take $HOME/.i3a/scrot_sel_take 644 "$USER"
+				FILE i3config .i3a/scrot_take $HOME/.i3a/scrot_take 644 "$USER"
+				FILE i3config .i3a/scrot_win_take $HOME/.i3a/scrot_win_take 644 "$USER"
+				FILE i3config .i3a/sink_lower $HOME/.i3a/sink_lower 644 "$USER"
+				FILE i3config .i3a/sink_mute $HOME/.i3a/sink_mute 644 "$USER"
+				FILE i3config .i3a/sink_raise $HOME/.i3a/sink_raise 644 "$USER"
+				FILE i3config .i3a/source_lower $HOME/.i3a/source_lower 644 "$USER"
+				FILE i3config .i3a/source_mute $HOME/.i3a/source_mute 644 "$USER"
+				FILE i3config .i3a/source_raise $HOME/.i3a/source_raise 644 "$USER"
+				FILE i3config .i3a/term_font_size $HOME/.i3a/term_font_size 644 "$USER"
+				FILE i3config .i3a/term_font_size_py $HOME/.i3a/term_font_size_py 644 "$USER"
+				FILE i3config .i3a/terminal $HOME/.i3a/terminal 644 "$USER"
+				FILE i3config .i3a/track_notify $HOME/.i3a/track_notify 644 "$USER"
+				FILE i3config .i3a/use_dmenu $HOME/.i3a/use_dmenu 644 "$USER" ;;
+			kernelchk)
+				FILE kernelchk kernelchk /usr/bin/kernelchk 755 0 ;;
+			get-uuid)
+				FILE get-uuid get-uuid /usr/bin/get-uuid 755 0
+				FILE get-uuid.desktop get-uuid.desktop /usr/share/applications/get-uuid.desktop 644 0 ;;
+			wcdl)
+				FILE wcdl wcdl /usr/bin/wcdl 755 0
+				FILE wcdl-cacheparse wcdl-cacheparse /usr/bin/wcdl-cacheparse 755 0 ;;
+			getline)
+				FILE getline getline /usr/bin/getline 755 0 ;;
+			mansaver)
+				FILE mansaver mansaver /usr/bin/mansaver 755 0 ;;
+			lspkg)
+				FILE lspkg lspkg /usr/bin/lspkg 755 0 ;;
 			lsbins)
-				FILE lsbins lsbins /usr/bin/lsbins 755 ;;
+				FILE lsbins lsbins /usr/bin/lsbins 755 0 ;;
 			github-ssh-setup)
-				FILE github-ssh-setup github-ssh-setup /usr/bin/github-ssh-setup 755 ;;
+				FILE github-ssh-setup github-ssh-setup /usr/bin/github-ssh-setup 755 0 ;;
 			homewatch)
-				FILE homewatch homewatch /usr/bin/homewatch 755 ;;
+				FILE homewatch homewatch /usr/bin/homewatch 755 0 ;;
 			getip)
-				FILE getip getip /usr/bin/getip 755 ;;
+				FILE getip getip /usr/bin/getip 755 0 ;;
 			ripmydvd)
-				FILE ripmydvd ripmydvd /usr/bin/ripmydvd 755 ;;
+				FILE ripmydvd ripmydvd /usr/bin/ripmydvd 755 0 ;;
 			simwea)
-				FILE simwea simwea /usr/bin/simwea 755 ;;
+				FILE simwea simwea /usr/bin/simwea 755 0 ;;
 			medlog)
-				FILE miscellaneous medlog /usr/bin/medlog 755 ;;
+				FILE miscellaneous medlog /usr/bin/medlog 755 0 ;;
 			mif)
-				FILE miscellaneous mif /usr/bin/mif 755 ;;
+				FILE miscellaneous mif /usr/bin/mif 755 0 ;;
 			seewttr)
-				FILE miscellaneous seewttr /usr/bin/seewttr 755 ;;
+				FILE miscellaneous seewttr /usr/bin/seewttr 755 0 ;;
 			backmeup)
-				FILE miscellaneous backmeup /usr/bin/backmeup 755 ;;
+				FILE miscellaneous backmeup /usr/bin/backmeup 755 0 ;;
 			clean-locales)
-				FILE miscellaneous clean-locales /usr/bin/clean-locales 755 ;;
+				FILE miscellaneous clean-locales /usr/bin/clean-locales 755 0 ;;
 			mkpass)
-				FILE miscellaneous mkpass /usr/bin/mkpass 755 ;;
+				FILE miscellaneous mkpass /usr/bin/mkpass 755 0 ;;
 			mplay)
-				FILE miscellaneous mplay /usr/bin/mplay 755 ;;
+				FILE miscellaneous mplay /usr/bin/mplay 755 0 ;;
 			pagewatch)
-				FILE miscellaneous pagewatch /usr/bin/pagewatch 755 ;;
+				FILE miscellaneous pagewatch /usr/bin/pagewatch 755 0 ;;
 			redshifter)
-				FILE miscellaneous redshifter /usr/bin/redshifter 755 ;;
+				FILE miscellaneous redshifter /usr/bin/redshifter 755 0 ;;
 			tozero)
-				FILE miscellaneous tozero /usr/bin/tozero 755 ;;
+				FILE miscellaneous tozero /usr/bin/tozero 755 0 ;;
 			nosp)
-				FILE miscellaneous nosp /usr/bin/nosp 755 ;;
+				FILE miscellaneous nosp /usr/bin/nosp 755 0 ;;
 			dlspwalls)
-				FILE miscellaneous dlspwalls /usr/bin/dlspwalls 755 ;;
+				FILE miscellaneous dlspwalls /usr/bin/dlspwalls 755 0 ;;
 			dlfcmags)
-				FILE miscellaneous dlfcmags /usr/bin/dlfcmags 755 ;;
+				FILE miscellaneous dlfcmags /usr/bin/dlfcmags 755 0 ;;
 			dlfallwalls)
-				FILE miscellaneous dlfallwalls /usr/bin/dlfallwalls 755 ;;
+				FILE miscellaneous dlfallwalls /usr/bin/dlfallwalls 755 0 ;;
 			dl-tuxradar-podcasts)
-				FILE miscellaneous dl-tuxradar-podcasts /usr/bin/dl-tuxradar-podcasts 755 ;;
+				FILE miscellaneous dl-tuxradar-podcasts /usr/bin/dl-tuxradar-podcasts 755 0 ;;
 			*)
 				ERR "$LINENO" "Unavailable WHAT at: $1" ;;
 		esac

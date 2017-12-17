@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sun 17 Dec 11:35:35 GMT 2017
+# Last Change       - Sun 17 Dec 11:37:25 GMT 2017
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -176,7 +176,9 @@ SELF_UPDATE(){
 		FAIL+=1
 	fi
 
-	[ $FAIL -gt 0 ] && return 1
+	if [ $FAIL -gt 0 ]; then
+		return 1
+	fi
 }
 
 AVAIL=(

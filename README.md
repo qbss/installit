@@ -23,7 +23,7 @@ sudo wget -q https://raw.githubusercontent.com/terminalforlife/insit/master/insi
 EXAMPLE
 -------
 
-Now that you've done that, all that's left is to load up insit to peruse the catalogue of my work at your own leisure. Here is its --help output, as of 2017-12-17:
+Now that you've done that, all that's left is to load up insit to peruse the catalogue of my work at your own leisure. Here is its `--help` output, as of 2017-12-17:
 
 ```
 $ insit --help

@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sun 17 Dec 01:52:50 GMT 2017
+# Last Change       - Sun 17 Dec 01:56:12 GMT 2017
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -85,6 +85,8 @@ while [ "$1" ]; do
 		--branch|-B)
 			shift
 			BRANCH="$1" ;;
+		--self-update|-S)
+			SELF="true" ;;
 		-*)
 			XERR "$LINENO" "Incorrect argument(s) specified." ;;
 		*)
@@ -158,6 +160,11 @@ AVAIL=(
 	"dlfallwalls - Download a collection of Autumn/Fall wallpapers."
 	"dl-tuxradar-podcasts - Small shell program to download the TuxRadar podcasts."
 )
+
+if [ "$SELF" == "true" ]; then
+	FILE installit insit /usr/bin/insit 755 0
+	exit 0
+fi
 
 if ! [ "$AVAIL_SHOW" == "true" ]; then
 	while [ "$1" ]; do

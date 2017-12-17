@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sun 17 Dec 02:34:35 GMT 2017
+# Last Change       - Sun 17 Dec 11:31:34 GMT 2017
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -106,39 +106,73 @@ FILE(){
 		#TODO - The below line needs to test for whether update or self are
 		#       NOT true, as well as if the file $3 already exists. This is
 		#       to ensure proper self update and regular program updates.
-		if [ -f "$3" -a ! "$UPDATE" == "true" ] || ! [ "$SELF" == "true" ]
-		then
+		if [ -f "$3" -a ! "$UPDATE" == "true" ]; then
 			ERR "$LINENO" "File already exists: $3"
 			return 1
 		else
 			#TODO - This is sloppy - IMPROVE!
 			if [ -f "$3" ]; then
-				if /usr/bin/wget -q "$URL/$1/$BRANCH/$2" -O "$3"; then
+				if /usr/bin/wget -q "$URL/$1/$BRANCH/$2" -O "$3" &> /dev/null; then
 					printf "File '%s' downloaded and updated.\n" "$3"
 				fi
 
-				if /bin/chown $5:$5 "$3"; then
+				if /bin/chown $5:$5 "$3" &> /dev/null; then
 					printf "File '%s' ownership re-set.\n" "$3"
+				else
+					ERR "$LINENO" "Unable to re-set the ownership of '$3' file."
 				fi
 
-				if /bin/chmod "$4" "$3"; then
+				if /bin/chmod "$4" "$3" &> /dev/null; then
 					printf "File '%s' mode re-set.\n" "$3"
+				else
+					ERR "$LINENO" "Unable to re-set the mode of '$3' file."
 				fi
 			else
-				if /usr/bin/wget -q "$URL/$1/$BRANCH/$2" -O "$3"; then
+				if /usr/bin/wget -q "$URL/$1/$BRANCH/$2" -O "$3" &> /dev/null; then
 					printf "File '%s' downloaded.\n" "$3"
 				fi
 
-				if /bin/chown $5:$5 "$3"; then
+				if /bin/chown $5:$5 "$3" &> /dev/null; then
 					printf "File '%s' ownership set.\n" "$3"
+				else
+					ERR "$LINENO" "Unable to set the ownership of '$3' file."
 				fi
 
-				if /bin/chmod "$4" "$3"; then
+				if /bin/chmod "$4" "$3" &> /dev/null; then
 					printf "File '%s' mode set.\n" "$3"
+				else
+					ERR "$LINENO" "Unable to set the mode of '$3' file."
 				fi
 			fi
 		fi
 	fi
+}
+
+SELF_UPDATE(){
+	declare -i FAIL=0
+
+	if /usr/bin/wget -q "$URL/insit/master/insit" -O /usr/bin/insit &> /dev/null; then
+		printf "File '%s' downloaded and updated.\n" /usr/bin/insit
+	else
+		ERR "$LINENO" "Unable to download and/or update '/usr/bin/insit' file."
+		FAIL+=1
+	fi
+	
+	if /bin/chown 0:0 /usr/bin/insit &> /dev/null; then
+		printf "File '%s' ownership re-set.\n" /usr/bin/insit
+	else
+		ERR "$LINENO" "Unable to set the ownership of '/usr/bin/insit' file."
+		FAIL+=1
+	fi
+	
+	if /bin/chmod 755 /usr/bin/insit &> /dev/null; then
+		printf "File '%s' mode re-set.\n" /usr/bin/insit
+	else
+		ERR "$LINENO" "Unable to set the mode of '/usr/bin/insit' file."
+		FAIL+=1
+	fi
+
+	[ $FAIL -gt 0 ] && return 1
 }
 
 AVAIL=(
@@ -184,7 +218,7 @@ AVAIL=(
 )
 
 if [ "$SELF" == "true" ]; then
-	if FILE installit insit /usr/bin/insit 755 0; then
+	if SELF_UPDATE; then
 		printf "Successful insit update.\n"
 		exit 0
 	else

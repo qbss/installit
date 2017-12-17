@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sun 17 Dec 11:37:25 GMT 2017
+# Last Change       - Sun 17 Dec 11:47:41 GMT 2017
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -51,8 +51,17 @@ USAGE(){
 		            --available|-A          - Output all available programs.
 		            --branch|-B NAME        - Where NAME is the branch to use.
 		            --self-update|-S        - Update insit to the latest stable version.
+		            --custom|-C             - Execute your own FILE function line.
 
 		NOTE:       Where WHAT is the program(s) to install.
+
+		            The argument positions for the FILE function:
+
+		              1: Name of the repository, per the URL.
+		              2: Name of the file, per the URL, to download.
+		              3: Desired name of the file to be Downloaded.
+		              4: The permissions (mode), such as 755 or 644.
+		              5: The file's owner and group, such as 0 or \$USER.
 
 		WARNING:    Uninstalling with this program is permanent!
 		
@@ -82,6 +91,8 @@ while [ "$1" ]; do
 			BRANCH="$1" ;;
 		--self-update|-S)
 			SELF="true" ;;
+		--custom|-C)
+			CUSTOM="true" ;;
 		-*)
 			XERR "$LINENO" "Incorrect argument(s) specified." ;;
 		*)
@@ -230,6 +241,11 @@ if [ "$SELF" == "true" ]; then
 	else
 		XERR "$LINENO" "Failure to properly update insit."
 	fi
+fi
+
+if [ "$CUSTOM" == "true" ]; then
+	FILE $@
+	exit 0
 fi
 
 if ! [ "$AVAIL_SHOW" == "true" ]; then

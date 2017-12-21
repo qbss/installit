@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sun 17 Dec 12:00:46 GMT 2017
+# Last Change       - Thu 21 Dec 11:29:20 GMT 2017
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -29,7 +29,7 @@ USAGE(){
 	while read -r; do
 		printf "%s\n" "$REPLY"
 	done <<-EOF
-		            INSIT (17th December 2017)
+		            INSIT (21st December 2017)
 		            Written by terminalforlife (terminalforlife@yahoo.com)
 		
 		            Installer for many shell programs from terminalforlife.
@@ -186,6 +186,7 @@ SELF_UPDATE(){
 }
 
 AVAIL=(
+	"forex - Easily convert various currency rates straight from the terminal."
 	"autoscrot - Tool to take full screenshots at user-specified intervals using scrot."
 	"apt-undo-install - Undo the last package(s) install executed with apt-get."
 	"binwatch - Output list of executables found in your PATH"
@@ -245,6 +246,8 @@ fi
 if ! [ "$AVAIL_SHOW" == "true" ]; then
 	while [ "$1" ]; do
 		case "$1" in
+			forex)
+				FILE miscellaneous forex /usr/bin/forex 755 0 ;;
 			autoscrot)
 				FILE autoscrot autoscrot /usr/bin/autoscrot 755 0 ;;
 			apt-undo-install)

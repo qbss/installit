@@ -91,3 +91,8 @@ File '/usr/bin/insit' ownership re-set.
 File '/usr/bin/insit' mode re-set.
 Successful insit update.
 ```
+
+NOTE
+----
+
+Sorry if anyone uses the old installit installers; I'm no longer supporting them because they really were too time-consuming and clumsily written. They should still work for a while, and if not, give insit a go.

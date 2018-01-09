@@ -27,7 +27,7 @@ Now that you've done that, all that's left is to load up insit to peruse the cat
 
 ```
 $ insit --help
-            INSIT (17th December 2017)
+            INSIT (9th January 2018)
             Written by terminalforlife (terminalforlife@yahoo.com)
 
             Installer for many shell programs from terminalforlife.

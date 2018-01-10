@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Wed 10 Jan 10:37:05 GMT 2018
+# Last Change       - Wed 10 Jan 10:50:22 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -274,21 +274,22 @@ if ! [ "$AVAIL_SHOW" == "true" ]; then
 				FILE bashconfig .profile $HOME/.profile 644 "$USER"
 				FILE bashconfig .bash_aliases $HOME/.bash_aliases 644 "$USER"
 				FILE bashconfig .bashrc $HOME/.bashrc 644 "$USER"
-				[ -d "$HOME/ShellPlugins" ] || /bin/mkdir "$HOME/ShellPlugins"
-				FILE bashconfig ShellPlugins/Bell_Alarm $HOME/ShellPlugins/Bell_Alarm 644
-				FILE bashconfig ShellPlugins/Cleaner_RK_Scan $HOME/ShellPlugins/Cleaner_RK_Scan 644
-				FILE bashconfig ShellPlugins/Clear_CD_LS $HOME/ShellPlugins/Clear_CD_LS 644
-				FILE bashconfig ShellPlugins/CPU_Intensive_Procs $HOME/ShellPlugins/CPU_Intensive_Procs 644
-				FILE bashconfig ShellPlugins/Create_VM $HOME/ShellPlugins/Create_VM 644
-				FILE bashconfig ShellPlugins/Get_Bad_Hosts $HOME/ShellPlugins/Get_Bad_Hosts 644
-				FILE bashconfig ShellPlugins/Git_Status_All $HOME/ShellPlugins/Git_Status_All 644
-				FILE bashconfig ShellPlugins/List_Signals $HOME/ShellPlugins/List_Signals 644
-				FILE bashconfig ShellPlugins/Load_File_Links2 $HOME/ShellPlugins/Load_File_Links2 644
-				FILE bashconfig ShellPlugins/Loop_This $HOME/ShellPlugins/Loop_This 644
-				FILE bashconfig ShellPlugins/NIR_Difference $HOME/ShellPlugins/NIR_Difference 644
-				FILE bashconfig ShellPlugins/Play_Download_MPSYT $HOME/ShellPlugins/Play_Download_MPSYT 644
-				FILE bashconfig ShellPlugins/Shell_Alias_Correcting $HOME/ShellPlugins/Shell_Alias_Correcting 644
-				FILE bashconfig ShellPlugins/Times_Table $HOME/ShellPlugins/Times_Table 644 ;;
+				[ -d "$HOME/ShellPlugins" ] || /bin/mkdir --mode=755 "$HOME/ShellPlugins"
+				/usr/bin/chown "$SUDO_USER":"$SUDO_USER" "$HOME/ShellPlugins"
+				FILE bashconfig ShellPlugins/Bell_Alarm $HOME/ShellPlugins/Bell_Alarm 644 $UID
+				FILE bashconfig ShellPlugins/Cleaner_RK_Scan $HOME/ShellPlugins/Cleaner_RK_Scan 644 $UID
+				FILE bashconfig ShellPlugins/Clear_CD_LS $HOME/ShellPlugins/Clear_CD_LS 644 $UID
+				FILE bashconfig ShellPlugins/CPU_Intensive_Procs $HOME/ShellPlugins/CPU_Intensive_Procs 644 $UID
+				FILE bashconfig ShellPlugins/Create_VM $HOME/ShellPlugins/Create_VM 644 $UID
+				FILE bashconfig ShellPlugins/Get_Bad_Hosts $HOME/ShellPlugins/Get_Bad_Hosts 644 $UID
+				FILE bashconfig ShellPlugins/Git_Status_All $HOME/ShellPlugins/Git_Status_All 644 $UID
+				FILE bashconfig ShellPlugins/List_Signals $HOME/ShellPlugins/List_Signals 644 $UID
+				FILE bashconfig ShellPlugins/Load_File_Links2 $HOME/ShellPlugins/Load_File_Links2 644 $UID
+				FILE bashconfig ShellPlugins/Loop_This $HOME/ShellPlugins/Loop_This 644 $UID
+				FILE bashconfig ShellPlugins/NIR_Difference $HOME/ShellPlugins/NIR_Difference 644 $UID
+				FILE bashconfig ShellPlugins/Play_Download_MPSYT $HOME/ShellPlugins/Play_Download_MPSYT 644 $UID
+				FILE bashconfig ShellPlugins/Shell_Alias_Correcting $HOME/ShellPlugins/Shell_Alias_Correcting 644 $UID
+				FILE bashconfig ShellPlugins/Times_Table $HOME/ShellPlugins/Times_Table 644 $UID ;;
 			i3config)
 				FILE i3config config $HOME/.config/i3/config 644 "$USER"
 				[ -d "$HOME/.i3a" ] || /bin/mkdir "$HOME/.i3a"

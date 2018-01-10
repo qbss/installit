@@ -27,7 +27,7 @@ Now that you've done that, all that's left is to load up insit to peruse the cat
 
 ```
 $ insit --help
-            INSIT (9th January 2018)
+            INSIT (10th January 2018)
             Written by terminalforlife (terminalforlife@yahoo.com)
 
             Installer for many shell programs from terminalforlife.
@@ -42,8 +42,17 @@ OPTS:       --help|-h|-?            - Displays this help information.
             --available|-A          - Output all available programs.
             --branch|-B NAME        - Where NAME is the branch to use.
             --self-update|-S        - Update insit to the latest stable version.
+            --custom|-C             - Execute your own FILE function line.
 
 NOTE:       Where WHAT is the program(s) to install.
+
+            The argument positions for the FILE function:
+
+              1: Name of the repository, per the URL.
+              2: Name of the file, per the URL, to download.
+              3: Desired name of the file to be Downloaded.
+              4: The permissions (mode), such as 755 or 644.
+              5: The file's owner and group, such as 0 or $USER.
 
 WARNING:    Uninstalling with this program is permanent!
 

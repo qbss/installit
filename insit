@@ -3,21 +3,13 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Tue  9 Jan 15:10:34 GMT 2018
+# Last Change       - Wed 10 Jan 10:37:05 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
 # This installer replaces the old installit. The aim of this installer is to do
 # away with the need to have several installers, but instead combining them all
 # into one easy-to-use installer, while making it more practical to update.
-#
-# The argument positions for the FILE function:
-# 
-#   1: Name of the repository, per the URL.
-#   2: Name of the file, per the URL, to download.
-#   3: Desired name of the file to be Downloaded.
-#   4: The permissions (mode), such as 755 or 644.
-#   5: The file's owner and group, such as 0 or \$USER.
 #----------------------------------------------------------------------------------
 
 XERR(){ printf "[L%0.4d] ERROR: %s\n" "$1" "$2" 1>&2; exit 1; }
@@ -37,7 +29,7 @@ USAGE(){
 	while read -r; do
 		printf "%s\n" "$REPLY"
 	done <<-EOF
-		            INSIT (9th January 2018)
+		            INSIT (10th January 2018)
 		            Written by terminalforlife (terminalforlife@yahoo.com)
 		
 		            Installer for many shell programs from terminalforlife.
@@ -55,6 +47,14 @@ USAGE(){
 		            --custom|-C             - Execute your own FILE function line.
 
 		NOTE:       Where WHAT is the program(s) to install.
+
+		            The argument positions for the FILE function:
+		
+		              1: Name of the repository, per the URL.
+		              2: Name of the file, per the URL, to download.
+		              3: Desired name of the file to be Downloaded.
+		              4: The permissions (mode), such as 755 or 644.
+		              5: The file's owner and group, such as 0 or \$USER.
 
 		WARNING:    Uninstalling with this program is permanent!
 		

@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Wed 10 Jan 10:50:22 GMT 2018
+# Last Change       - Wed 10 Jan 10:55:54 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -275,7 +275,7 @@ if ! [ "$AVAIL_SHOW" == "true" ]; then
 				FILE bashconfig .bash_aliases $HOME/.bash_aliases 644 "$USER"
 				FILE bashconfig .bashrc $HOME/.bashrc 644 "$USER"
 				[ -d "$HOME/ShellPlugins" ] || /bin/mkdir --mode=755 "$HOME/ShellPlugins"
-				/usr/bin/chown "$SUDO_USER":"$SUDO_USER" "$HOME/ShellPlugins"
+				/bin/chown "$SUDO_UID":"$SUDO_UID" "$HOME/ShellPlugins"
 				FILE bashconfig ShellPlugins/Bell_Alarm $HOME/ShellPlugins/Bell_Alarm 644 $UID
 				FILE bashconfig ShellPlugins/Cleaner_RK_Scan $HOME/ShellPlugins/Cleaner_RK_Scan 644 $UID
 				FILE bashconfig ShellPlugins/Clear_CD_LS $HOME/ShellPlugins/Clear_CD_LS 644 $UID

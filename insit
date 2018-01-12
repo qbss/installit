@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Wed 10 Jan 10:55:54 GMT 2018
+# Last Change       - Fri 12 Jan 15:28:02 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -186,6 +186,7 @@ SELF_UPDATE(){
 }
 
 AVAIL=(
+	"simplify-ubuntu - Small project to lighten standard Ubuntu 16.04.3 LTS installations."
 	"forex - Easily convert various currency rates straight from the terminal."
 	"autoscrot - Tool to take full screenshots at user-specified intervals using scrot."
 	"apt-undo-install - Undo the last package(s) install executed with apt-get."
@@ -246,6 +247,8 @@ fi
 if ! [ "$AVAIL_SHOW" == "true" ]; then
 	while [ "$1" ]; do
 		case "$1" in
+			simplify-ubuntu)
+				FILE simplify-ubuntu simplify-ubuntu /usr/bin/simplify-ubuntu 755 0 ;;
 			forex)
 				FILE miscellaneous forex /usr/bin/forex 755 0 ;;
 			autoscrot)

@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Fri 12 Jan 18:40:54 GMT 2018
+# Last Change       - Sat 13 Jan 11:50:43 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -29,7 +29,7 @@ USAGE(){
 	while read -r; do
 		printf "%s\n" "$REPLY"
 	done <<-EOF
-		            INSIT (10th January 2018)
+		            INSIT (13th January 2018)
 		            Written by terminalforlife (terminalforlife@yahoo.com)
 		
 		            Installer for many shell programs from terminalforlife.
@@ -275,46 +275,46 @@ if ! [ "$AVAIL_SHOW" == "true" ]; then
 			bdl)
 				FILE bdl bdl /usr/bin/bdl 755 0 ;;
 			bashconfig)
-				FILE bashconfig .profile $HOME/.profile 644 "$USER"
-				FILE bashconfig .bash_aliases $HOME/.bash_aliases 644 "$USER"
-				FILE bashconfig .bashrc $HOME/.bashrc 644 "$USER"
+				FILE bashconfig .profile $HOME/.profile 644 "$SUDO_UID"
+				FILE bashconfig .bash_aliases $HOME/.bash_aliases 644 "$SUDO_UID"
+				FILE bashconfig .bashrc $HOME/.bashrc 644 "$SUDO_UID"
 				[ -d "$HOME/ShellPlugins" ] || /bin/mkdir --mode=755 "$HOME/ShellPlugins"
 				/bin/chown "$SUDO_UID":"$SUDO_UID" "$HOME/ShellPlugins"
-				FILE bashconfig ShellPlugins/Bell_Alarm $HOME/ShellPlugins/Bell_Alarm 644 $UID
-				FILE bashconfig ShellPlugins/Cleaner_RK_Scan $HOME/ShellPlugins/Cleaner_RK_Scan 644 $UID
-				FILE bashconfig ShellPlugins/Clear_CD_LS $HOME/ShellPlugins/Clear_CD_LS 644 $UID
-				FILE bashconfig ShellPlugins/CPU_Intensive_Procs $HOME/ShellPlugins/CPU_Intensive_Procs 644 $UID
-				FILE bashconfig ShellPlugins/Create_VM $HOME/ShellPlugins/Create_VM 644 $UID
-				FILE bashconfig ShellPlugins/Get_Bad_Hosts $HOME/ShellPlugins/Get_Bad_Hosts 644 $UID
-				FILE bashconfig ShellPlugins/Git_Status_All $HOME/ShellPlugins/Git_Status_All 644 $UID
-				FILE bashconfig ShellPlugins/List_Signals $HOME/ShellPlugins/List_Signals 644 $UID
-				FILE bashconfig ShellPlugins/Load_File_Links2 $HOME/ShellPlugins/Load_File_Links2 644 $UID
-				FILE bashconfig ShellPlugins/Loop_This $HOME/ShellPlugins/Loop_This 644 $UID
-				FILE bashconfig ShellPlugins/NIR_Difference $HOME/ShellPlugins/NIR_Difference 644 $UID
-				FILE bashconfig ShellPlugins/Play_Download_MPSYT $HOME/ShellPlugins/Play_Download_MPSYT 644 $UID
-				FILE bashconfig ShellPlugins/Shell_Alias_Correcting $HOME/ShellPlugins/Shell_Alias_Correcting 644 $UID
-				FILE bashconfig ShellPlugins/Times_Table $HOME/ShellPlugins/Times_Table 644 $UID ;;
+				FILE bashconfig ShellPlugins/Bell_Alarm $HOME/ShellPlugins/Bell_Alarm 644 $SUDO_UID
+				FILE bashconfig ShellPlugins/Cleaner_RK_Scan $HOME/ShellPlugins/Cleaner_RK_Scan 644 $SUDO_UID
+				FILE bashconfig ShellPlugins/Clear_CD_LS $HOME/ShellPlugins/Clear_CD_LS 644 $SUDO_UID
+				FILE bashconfig ShellPlugins/CPU_Intensive_Procs $HOME/ShellPlugins/CPU_Intensive_Procs 644 $SUDO_UID
+				FILE bashconfig ShellPlugins/Create_VM $HOME/ShellPlugins/Create_VM 644 $SUDO_UID
+				FILE bashconfig ShellPlugins/Get_Bad_Hosts $HOME/ShellPlugins/Get_Bad_Hosts 644 $SUDO_UID
+				FILE bashconfig ShellPlugins/Git_Status_All $HOME/ShellPlugins/Git_Status_All 644 $SUDO_UID
+				FILE bashconfig ShellPlugins/List_Signals $HOME/ShellPlugins/List_Signals 644 $SUDO_UID
+				FILE bashconfig ShellPlugins/Load_File_Links2 $HOME/ShellPlugins/Load_File_Links2 644 $SUDO_UID
+				FILE bashconfig ShellPlugins/Loop_This $HOME/ShellPlugins/Loop_This 644 $SUDO_UID
+				FILE bashconfig ShellPlugins/NIR_Difference $HOME/ShellPlugins/NIR_Difference 644 $SUDO_UID
+				FILE bashconfig ShellPlugins/Play_Download_MPSYT $HOME/ShellPlugins/Play_Download_MPSYT 644 $SUDO_UID
+				FILE bashconfig ShellPlugins/Shell_Alias_Correcting $HOME/ShellPlugins/Shell_Alias_Correcting 644 $SUDO_UID
+				FILE bashconfig ShellPlugins/Times_Table $HOME/ShellPlugins/Times_Table 644 $SUDO_UID ;;
 			i3config)
-				FILE i3config config $HOME/.config/i3/config 644 "$USER"
+				FILE i3config config $HOME/.config/i3/config 644 "$SUDO_UID"
 				[ -d "$HOME/.i3a" ] || /bin/mkdir "$HOME/.i3a"
-				FILE i3config .i3a/dtrecord $HOME/.i3a/dtrecord 644 "$USER"
-				FILE i3config .i3a/feh_slides $HOME/.i3a/feh_slides 644 "$USER"
-				FILE i3config .i3a/initialize $HOME/.i3a/initialize 644 "$USER"
-				FILE i3config .i3a/key_autorepeat $HOME/.i3a/key_autorepeat 644 "$USER"
-				FILE i3config .i3a/scrot_sel_take $HOME/.i3a/scrot_sel_take 644 "$USER"
-				FILE i3config .i3a/scrot_take $HOME/.i3a/scrot_take 644 "$USER"
-				FILE i3config .i3a/scrot_win_take $HOME/.i3a/scrot_win_take 644 "$USER"
-				FILE i3config .i3a/sink_lower $HOME/.i3a/sink_lower 644 "$USER"
-				FILE i3config .i3a/sink_mute $HOME/.i3a/sink_mute 644 "$USER"
-				FILE i3config .i3a/sink_raise $HOME/.i3a/sink_raise 644 "$USER"
-				FILE i3config .i3a/source_lower $HOME/.i3a/source_lower 644 "$USER"
-				FILE i3config .i3a/source_mute $HOME/.i3a/source_mute 644 "$USER"
-				FILE i3config .i3a/source_raise $HOME/.i3a/source_raise 644 "$USER"
-				FILE i3config .i3a/term_font_size $HOME/.i3a/term_font_size 644 "$USER"
-				FILE i3config .i3a/term_font_size_py $HOME/.i3a/term_font_size_py 644 "$USER"
-				FILE i3config .i3a/terminal $HOME/.i3a/terminal 644 "$USER"
-				FILE i3config .i3a/track_notify $HOME/.i3a/track_notify 644 "$USER"
-				FILE i3config .i3a/use_dmenu $HOME/.i3a/use_dmenu 644 "$USER" ;;
+				FILE i3config .i3a/dtrecord $HOME/.i3a/dtrecord 644 "$SUDO_UID"
+				FILE i3config .i3a/feh_slides $HOME/.i3a/feh_slides 644 "$SUDO_UID"
+				FILE i3config .i3a/initialize $HOME/.i3a/initialize 644 "$SUDO_UID"
+				FILE i3config .i3a/key_autorepeat $HOME/.i3a/key_autorepeat 644 "$SUDO_UID"
+				FILE i3config .i3a/scrot_sel_take $HOME/.i3a/scrot_sel_take 644 "$SUDO_UID"
+				FILE i3config .i3a/scrot_take $HOME/.i3a/scrot_take 644 "$SUDO_UID"
+				FILE i3config .i3a/scrot_win_take $HOME/.i3a/scrot_win_take 644 "$SUDO_UID"
+				FILE i3config .i3a/sink_lower $HOME/.i3a/sink_lower 644 "$SUDO_UID"
+				FILE i3config .i3a/sink_mute $HOME/.i3a/sink_mute 644 "$SUDO_UID"
+				FILE i3config .i3a/sink_raise $HOME/.i3a/sink_raise 644 "$SUDO_UID"
+				FILE i3config .i3a/source_lower $HOME/.i3a/source_lower 644 "$SUDO_UID"
+				FILE i3config .i3a/source_mute $HOME/.i3a/source_mute 644 "$SUDO_UID"
+				FILE i3config .i3a/source_raise $HOME/.i3a/source_raise 644 "$SUDO_UID"
+				FILE i3config .i3a/term_font_size $HOME/.i3a/term_font_size 644 "$SUDO_UID"
+				FILE i3config .i3a/term_font_size_py $HOME/.i3a/term_font_size_py 644 "$SUDO_UID"
+				FILE i3config .i3a/terminal $HOME/.i3a/terminal 644 "$SUDO_UID"
+				FILE i3config .i3a/track_notify $HOME/.i3a/track_notify 644 "$SUDO_UID"
+				FILE i3config .i3a/use_dmenu $HOME/.i3a/use_dmenu 644 "$SUDO_UID" ;;
 			kernelchk)
 				FILE kernelchk kernelchk /usr/bin/kernelchk 755 0 ;;
 			get-uuid)

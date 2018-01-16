@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sat 13 Jan 11:50:43 GMT 2018
+# Last Change       - Tue 16 Jan 04:19:06 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -29,7 +29,7 @@ USAGE(){
 	while read -r; do
 		printf "%s\n" "$REPLY"
 	done <<-EOF
-		            INSIT (13th January 2018)
+		            INSIT (16th January 2018)
 		            Written by terminalforlife (terminalforlife@yahoo.com)
 		
 		            Installer for many shell programs from terminalforlife.
@@ -249,7 +249,8 @@ if ! [ "$AVAIL_SHOW" == "true" ]; then
 		case "$1" in
 			simplify-ubuntu)
 				FILE simplify-ubuntu simplify-ubuntu /usr/bin/simplify-ubuntu 755 0
-				FILE miscellaneous clean-locales /usr/bin/clean-locales 755 0 ;;
+				FILE miscellaneous clean-locales /usr/bin/clean-locales 755 0
+				FILE lspkg lspkg /usr/bin/lspkg 755 0 ;;
 			forex)
 				FILE miscellaneous forex /usr/bin/forex 755 0 ;;
 			autoscrot)

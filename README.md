@@ -27,7 +27,7 @@ Now that you've done that, all that's left is to load up insit to peruse the cat
 
 ```
 $ insit --help
-            INSIT (10th January 2018)
+            INSIT (24th January 2018)
             Written by terminalforlife (terminalforlife@yahoo.com)
 
             Installer for many shell programs from terminalforlife.
@@ -54,7 +54,19 @@ NOTE:       Where WHAT is the program(s) to install.
               4: The permissions (mode), such as 755 or 644.
               5: The file's owner and group, such as 0 or $USER.
 
+EXAMPLE:    sudo insit -B dev -U -C miscellaneous mfw /usr/bin/mfw 755 0
+            sudo insit -U notify-upgrade lspkg lsbins apt-undo-install
+            sudo insit --quiet --uninstall bl medlog wcdl clean-locales
+
 WARNING:    Uninstalling with this program is permanent!
+
+            Using the --update|-U flags will overwrite existing files, so, if an
+            executable just so happens to have the same name, take care not to
+            replace it by mistake!
+
+            All programs, scripts, and other files from the below SITE will contain
+            the comment header you see within this file, so grepping for the E-Mail
+            address or GitHub URL below would be a good way to check.
 
 SITE:       https://github.com/terminalforlife
 ```

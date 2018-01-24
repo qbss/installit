@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sun 21 Jan 16:30:37 GMT 2018
+# Last Change       - Wed 24 Jan 01:21:31 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -29,13 +29,13 @@ USAGE(){
 	while read -r; do
 		printf "%s\n" "$REPLY"
 	done <<-EOF
-		            INSIT (21st January 2018)
+		            INSIT (24th January 2018)
 		            Written by terminalforlife (terminalforlife@yahoo.com)
-		
+
 		            Installer for many shell programs from terminalforlife.
 
 		SYNTAX:     insit [OPTS] WHAT1 WHAT2 WHAT3 . . .
-		
+
 		OPTS:       --help|-h|-?            - Displays this help information.
 		            --debug                 - Enables the built-in bash debugging.
 		            --quiet|-q              - Runs in quiet mode. Errors still output.
@@ -49,7 +49,7 @@ USAGE(){
 		NOTE:       Where WHAT is the program(s) to install.
 
 		            The argument positions for the FILE function:
-		
+
 		              1: Name of the repository, per the URL.
 		              2: Name of the file, per the URL, to download.
 		              3: Desired name of the file to be Downloaded.
@@ -61,7 +61,15 @@ USAGE(){
 		            sudo insit --quiet --uninstall bl medlog wcdl clean-locales
 
 		WARNING:    Uninstalling with this program is permanent!
-		
+
+		            Using the --update|-U flags will overwrite existing files, so, if an
+		            executable just so happens to have the same name, take care not to
+		            replace it by mistake!
+
+		            All programs, scripts, and other files from the below SITE will contain
+		            the comment header you see within this file, so grepping for the E-Mail
+		            address or GitHub URL below would be a good way to check.
+
 		SITE:       https://github.com/terminalforlife
 	EOF
 }
@@ -169,14 +177,14 @@ SELF_UPDATE(){
 		ERR "$LINENO" "Unable to download and/or update '/usr/bin/insit' file."
 		FAIL+=1
 	fi
-	
+
 	if /bin/chown 0:0 /usr/bin/insit &> /dev/null; then
 		printf "File '%s' ownership re-set.\n" /usr/bin/insit
 	else
 		ERR "$LINENO" "Unable to set the ownership of '/usr/bin/insit' file."
 		FAIL+=1
 	fi
-	
+
 	if /bin/chmod 755 /usr/bin/insit &> /dev/null; then
 		printf "File '%s' mode re-set.\n" /usr/bin/insit
 	else
@@ -280,8 +288,38 @@ if ! [ "$AVAIL_SHOW" == "true" ]; then
 			bdl)
 				FILE bdl bdl /usr/bin/bdl 755 0 ;;
 			bashconfig)
+				while read -r; do
+					printf "%s\n" "$REPLY"
+				done <<-EOF
+					WARNING: This will install and replace the following:
+
+					  $HOME/.profile
+					  $HOME/.bash_aliases
+					  $HOME/.bash_functions
+					  $HOME/.bashrc
+					  $HOME/ShellPlugins/Bell_Alarm
+					  $HOME/ShellPlugins/Cleaner_RK_Scan
+					  $HOME/ShellPlugins/Clear_CD_LS
+					  $HOME/ShellPlugins/CPU_Intensive_Proc
+					  $HOME/ShellPlugins/Create_VM
+					  $HOME/ShellPlugins/Get_Bad_Hosts
+					  $HOME/ShellPlugins/Git_Status_All
+					  $HOME/ShellPlugins/List_Signals
+					  $HOME/ShellPlugins/Load_File_Links2
+					  $HOME/ShellPlugins/Loop_This
+					  $HOME/ShellPlugins/NIR_Difference
+					  $HOME/ShellPlugins/Play_Download_MPSY
+					  $HOME/ShellPlugins/Shell_Alias_Correc
+					  $HOME/ShellPlugins/Times_Table
+
+				EOF
+
+				read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
+				[[ "$REPLY" == "Yes!" ]] || { printf "No action taken -- quitting.\n"; exit 1; }
+
 				FILE bashconfig .profile $HOME/.profile 644 "$SUDO_UID"
 				FILE bashconfig .bash_aliases $HOME/.bash_aliases 644 "$SUDO_UID"
+				FILE bashconfig .bash_functions $HOME/.bash_functions 644 "$SUDO_UID"
 				FILE bashconfig .bashrc $HOME/.bashrc 644 "$SUDO_UID"
 				[ -d "$HOME/ShellPlugins" ] || /bin/mkdir --mode=755 "$HOME/ShellPlugins"
 				/bin/chown "$SUDO_UID":"$SUDO_UID" "$HOME/ShellPlugins"
@@ -300,6 +338,36 @@ if ! [ "$AVAIL_SHOW" == "true" ]; then
 				FILE bashconfig ShellPlugins/Shell_Alias_Correcting $HOME/ShellPlugins/Shell_Alias_Correcting 644 $SUDO_UID
 				FILE bashconfig ShellPlugins/Times_Table $HOME/ShellPlugins/Times_Table 644 $SUDO_UID ;;
 			i3config)
+				while read -r; do
+					printf "%s\n" "$REPLY"
+				done <<-EOF
+					WARNING: This will install and replace the following:
+
+					  $HOME/.config/i3/config
+					  $HOME/.i3a/dtrecord
+					  $HOME/.i3a/feh_slides
+					  $HOME/.i3a/initialize
+					  $HOME/.i3a/key_autorepeat
+					  $HOME/.i3a/scrot_sel_take
+					  $HOME/.i3a/scrot_take
+					  $HOME/.i3a/scrot_win_take
+					  $HOME/.i3a/sink_lower
+					  $HOME/.i3a/sink_mute
+					  $HOME/.i3a/sink_raise
+					  $HOME/.i3a/source_lower
+					  $HOME/.i3a/source_mute
+					  $HOME/.i3a/source_raise
+					  $HOME/.i3a/term_font_size
+					  $HOME/.i3a/term_font_size_py
+					  $HOME/.i3a/terminal
+					  $HOME/.i3a/track_notify
+					  $HOME/.i3a/use_dmenu
+
+				EOF
+
+				read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
+				[[ "$REPLY" == "Yes!" ]] || { printf "No action taken -- quitting.\n"; exit 1; }
+
 				FILE i3config config $HOME/.config/i3/config 644 "$SUDO_UID"
 				[ -d "$HOME/.i3a" ] || /bin/mkdir "$HOME/.i3a"
 				FILE i3config .i3a/dtrecord $HOME/.i3a/dtrecord 644 "$SUDO_UID"
@@ -379,7 +447,7 @@ if ! [ "$AVAIL_SHOW" == "true" ]; then
 			*)
 				ERR "$LINENO" "Unavailable WHAT at: $1" ;;
 		esac
-	
+
 		shift
 	done
 else

@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Wed 24 Jan 01:21:31 GMT 2018
+# Last Change       - Thu 25 Jan 23:46:04 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -29,7 +29,7 @@ USAGE(){
 	while read -r; do
 		printf "%s\n" "$REPLY"
 	done <<-EOF
-		            INSIT (24th January 2018)
+		            INSIT (25th January 2018)
 		            Written by terminalforlife (terminalforlife@yahoo.com)
 
 		            Installer for many shell programs from terminalforlife.
@@ -198,6 +198,7 @@ SELF_UPDATE(){
 }
 
 AVAIL=(
+	"ubuntu-syschk - Performs various non-root system health checks on Ubuntu."
 	"simplify-ubuntu - Small project to lighten standard Ubuntu 16.04.3 LTS installations."
 	"forex - Easily convert various currency rates straight from the terminal."
 	"autoscrot - Tool to take full screenshots at user-specified intervals using scrot."
@@ -259,6 +260,8 @@ fi
 if ! [ "$AVAIL_SHOW" == "true" ]; then
 	while [ "$1" ]; do
 		case "$1" in
+			ubuntu-syschk)
+				FILE ubuntu-syschk ubuntu-syschk /usr/bin/ubuntu-syschk 755 0 ;;
 			simplify-ubuntu)
 				FILE simplify-ubuntu simplify-ubuntu /usr/bin/simplify-ubuntu 755 0
 				FILE miscellaneous clean-locales /usr/bin/clean-locales 755 0

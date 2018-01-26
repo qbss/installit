@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Thu 25 Jan 23:46:04 GMT 2018
+# Last Change       - Fri 26 Jan 00:19:51 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -29,7 +29,7 @@ USAGE(){
 	while read -r; do
 		printf "%s\n" "$REPLY"
 	done <<-EOF
-		            INSIT (25th January 2018)
+		            INSIT (26th January 2018)
 		            Written by terminalforlife (terminalforlife@yahoo.com)
 
 		            Installer for many shell programs from terminalforlife.
@@ -198,49 +198,49 @@ SELF_UPDATE(){
 }
 
 AVAIL=(
-	"ubuntu-syschk - Performs various non-root system health checks on Ubuntu."
-	"simplify-ubuntu - Small project to lighten standard Ubuntu 16.04.3 LTS installations."
-	"forex - Easily convert various currency rates straight from the terminal."
-	"autoscrot - Tool to take full screenshots at user-specified intervals using scrot."
 	"apt-undo-install - Undo the last package(s) install executed with apt-get."
+	"autoscrot - Tool to take full screenshots at user-specified intervals using scrot."
+	"backmeup - Small tool I use to quickly and easily back up my HOME."
+	"bashconfig - My own bash settings and shell plugins for use by anybody."
+	"bdl - Easily and quickly download a batch of files using wget."
 	"binwatch - Output list of executables found in your PATH"
 	"bl - Much simpler, quicker version of blkid."
-	"nxbt - A fork and improvement of the XBT program written by Joe Collins."
 	"catmedia - Concatenate media files originally separated in parts."
+	"clean-locales - Remove some unnecessary non-English localizations."
 	"cpufreq - Lightweight Bourne Shell utility to output your CPU frequencies."
+	"dlfallwalls - Download a collection of Autumn/Fall wallpapers."
+	"dlfcmags - Download issues of the Full Circle magazine PDFs."
+	"dlspwalls - Download a collection of steampunk wallpapers."
+	"dl-tuxradar-podcasts - Small shell program to download the TuxRadar podcasts."
 	"dwwdl - Download all of the available DistroWatch Weekly podcasts."
-	"notify-upgrade - Simple upgrade notification utility for Debian- and Ubuntu-based systems."
-	"roks - This small program will clear out your system of old kernel versions."
-	"bdl - Easily and quickly download a batch of files using wget."
-	"bashconfig - My own bash settings and shell plugins for use by anybody."
-	"i3config - My own i3-wm settings and shell plugins for use by anybody."
-	"kernelchk - Small tool to check for a change in kernel version. Ideal for scripts."
-	"get-uuid - Grab and copy your file system's UUID with this simple, easy-to-use GUI."
-	"wcdl - Crawl WallpapersCraft for desktop backgrounds."
+	"forex - Easily convert various currency rates straight from the terminal."
+	"getip - View your internal and/or external IP address."
 	"getline - Pure Bourne Again Shell way to handle a plain text file."
-	"mansaver - Save man pages for each applicable command in PATH."
-	"lspkg - Quickly and portable-y show, describe, and search installed packages."
-	"lsbins - Simple shell program to list and describe the PATH executables."
+	"get-uuid - Grab and copy your file system's UUID with this simple, easy-to-use GUI."
 	"github-ssh-setup - Simple shell program to create an SSH key pair for GitHub."
 	"homewatch - Output files in HOME which have been modified today."
-	"getip - View your internal and/or external IP address."
-	"ripmydvd - Shell program using ffmpeg and mplayer to rip your DVD."
-	"simwea - Simple program to display some weather statistics."
+	"i3config - My own i3-wm settings and shell plugins for use by anybody."
+	"kernelchk - Small tool to check for a change in kernel version. Ideal for scripts."
+	"lsbins - Simple shell program to list and describe the PATH executables."
+	"lspkg - Quickly and portable-y show, describe, and search installed packages."
+	"mansaver - Save man pages for each applicable command in PATH."
 	"medlog - Need help taking and logging when you've had your medication?"
 	"mif - Shell program to filter films by year and whether seen or not."
-	"seewttr - Super-simple wrapper-like script to get your weather."
-	"backmeup - Small tool I use to quickly and easily back up my HOME."
-	"clean-locales - Remove some unnecessary non-English localizations."
 	"mkpass - Pure Bourne Again Shell approach to complex password generation."
 	"mplay - Simple script to allow me to quickly load mocp how I like."
+	"nosp - A workaround for the issue in XFCE wherein Smart Placement refuses to go away."
+	"notify-upgrade - Simple upgrade notification utility for Debian- and Ubuntu-based systems."
+	"nxbt - A fork and improvement of the XBT program written by Joe Collins."
 	"pagewatch - Watch a webpage for signs of change by checkings its md5sum."
 	"redshifter - Effective and simple tool to manually adjust the gamma via Redshift."
+	"ripmydvd - Shell program using ffmpeg and mplayer to rip your DVD."
+	"roks - This small program will clear out your system of old kernel versions."
+	"seewttr - Super-simple wrapper-like script to get your weather."
+	"simplify-ubuntu - Small project to lighten standard Ubuntu 16.04.3 LTS installations."
+	"simwea - Simple program to display some weather statistics."
 	"tozero - Simple program to display a countdown for a target date."
-	"nosp - A workaround for the issue in XFCE wherein Smart Placement refuses to go away."
-	"dlspwalls - Download a collection of steampunk wallpapers."
-	"dlfcmags - Download issues of the Full Circle magazine PDFs."
-	"dlfallwalls - Download a collection of Autumn/Fall wallpapers."
-	"dl-tuxradar-podcasts - Small shell program to download the TuxRadar podcasts."
+	"ubuntu-syschk - Performs various non-root system health checks on Ubuntu."
+	"wcdl - Crawl WallpapersCraft for desktop backgrounds."
 )
 
 if [ "$SELF" == "true" ]; then

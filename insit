@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Fri 26 Jan 00:19:51 GMT 2018
+# Last Change       - Sat 27 Jan 23:46:38 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -29,7 +29,7 @@ USAGE(){
 	while read -r; do
 		printf "%s\n" "$REPLY"
 	done <<-EOF
-		            INSIT (26th January 2018)
+		            INSIT (27th January 2018)
 		            Written by terminalforlife (terminalforlife@yahoo.com)
 
 		            Installer for many shell programs from terminalforlife.
@@ -233,6 +233,7 @@ AVAIL=(
 	"nxbt - A fork and improvement of the XBT program written by Joe Collins."
 	"pagewatch - Watch a webpage for signs of change by checkings its md5sum."
 	"redshifter - Effective and simple tool to manually adjust the gamma via Redshift."
+	"reviewer - Terminal viewer for Linux Mint's user submitted software reviews."
 	"ripmydvd - Shell program using ffmpeg and mplayer to rip your DVD."
 	"roks - This small program will clear out your system of old kernel versions."
 	"seewttr - Super-simple wrapper-like script to get your weather."
@@ -260,6 +261,8 @@ fi
 if ! [ "$AVAIL_SHOW" == "true" ]; then
 	while [ "$1" ]; do
 		case "$1" in
+			reviewer)
+				FILE reviewer reviewer /usr/bin/reviewer 755 0 ;;
 			ubuntu-syschk)
 				FILE ubuntu-syschk ubuntu-syschk /usr/bin/ubuntu-syschk 755 0 ;;
 			simplify-ubuntu)

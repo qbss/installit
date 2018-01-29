@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Mon 29 Jan 21:31:34 GMT 2018
+# Last Change       - Mon 29 Jan 21:35:25 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -170,59 +170,6 @@ FILE(){
 	fi
 }
 
-SELF_UPDATE(){
-	declare -i FAIL=0
-
-	if /usr/bin/wget -q "$URL/installit/master/insit" -O /usr/bin/insit &> /dev/null; then
-		printf "File '%s' downloaded and updated.\n" /usr/bin/insit
-	else
-		ERR "$LINENO" "Unable to download and/or update '/usr/bin/insit' file."
-		FAIL+=1
-	fi
-
-	if /bin/chown 0:0 /usr/bin/insit &> /dev/null; then
-		printf "File '%s' ownership re-set.\n" /usr/bin/insit
-	else
-		ERR "$LINENO" "Unable to set the ownership of '/usr/bin/insit' file."
-		FAIL+=1
-	fi
-
-	if /bin/chmod 755 /usr/bin/insit &> /dev/null; then
-		printf "File '%s' mode re-set.\n" /usr/bin/insit
-	else
-		ERR "$LINENO" "Unable to set the mode of '/usr/bin/insit' file."
-		FAIL+=1
-	fi
-
-	#TODO - This is so sloppy! Fix this.
-
-	if /usr/bin/wget -q "$URL/installit/master/completion"\
-		-O /usr/share/bash-completion/completions/insit &> /dev/null; then
-		printf "File '%s' downloaded and updated.\n" /usr/share/bash-completion/completions/insit
-	else
-		ERR "$LINENO" "Unable to download and/or update '/usr/share/bash-completion/completions/insit' file."
-		FAIL+=1
-	fi
-
-	if /bin/chown 0:0 /usr/share/bash-completion/completions/insit &> /dev/null; then
-		printf "File '%s' ownership re-set.\n" /usr/share/bash-completion/completions/insit
-	else
-		ERR "$LINENO" "Unable to set the ownership of '/usr/share/bash-completion/completions/insit' file."
-		FAIL+=1
-	fi
-
-	if /bin/chmod 644 /usr/share/bash-completion/completions/insit &> /dev/null; then
-		printf "File '%s' mode re-set.\n" /usr/share/bash-completion/completions/insit
-	else
-		ERR "$LINENO" "Unable to set the mode of '/usr/share/bash-completion/completions/insit' file."
-		FAIL+=1
-	fi
-
-	if [ $FAIL -gt 0 ]; then
-		return 1
-	fi
-}
-
 AVAIL=(
 	"apt-undo-install - Undo the last package(s) install executed with apt-get."
 	"autoscrot - Tool to take full screenshots at user-specified intervals using scrot."
@@ -271,15 +218,9 @@ AVAIL=(
 )
 
 if [ "$SELF" == "true" ]; then
-	if SELF_UPDATE; then
-		printf "Successful insit update.\n"
-		exit 0
-	else
-		XERR "$LINENO" "Failure to properly update insit."
-	fi
-fi
-
-if [ "$CUSTOM" == "true" ]; then
+	FILE installit insit /usr/bin/insit 755 0
+	FILE installit completion /usr/share/bash-completion/completions/insit 644 0
+elif [ "$CUSTOM" == "true" ]; then
 	FILE $@
 	exit 0
 fi

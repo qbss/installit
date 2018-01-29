@@ -1,0 +1,41 @@
+#!/bin/bash
+
+#----------------------------------------------------------------------------------
+# Project Name      - insit/completion
+# Started On        - Mon 29 Jan 18:47:58 GMT 2018
+# Last Change       - Mon 29 Jan 21:22:44 GMT 2018
+# Author E-Mail     - terminalforlife@yahoo.com
+# Author GitHub     - https://github.com/terminalforlife
+#----------------------------------------------------------------------------------
+# This is the bash completion script for insit.
+#----------------------------------------------------------------------------------
+
+_arg_list(){
+	local X
+
+	while read -a X; do
+		if [ "$IS_OPTS_LINE" == "true" ]\
+		&& [[ "$OLD" =~ ^[A-Z]+:$ ]]; then
+			break
+		fi
+
+		case "${X[0]}" in
+			OPTS:)
+				IS_OPTS_LINE="true"
+				printf "%s " "${X[1]//|/ }" ;;
+			-*)
+				printf "%s " "${X[0]//|/ }" ;;
+		esac
+
+		local OLD="${X[0]/OPTS:}"
+	done <<< "$(/usr/bin/insit -h)"
+}
+
+_option(){
+	local CWORD="${COMP_WORDS[COMP_CWORD]}"
+	local PWORD="${COMP_WORDS[COMP_CWORD-1]}"
+
+	COMPREPLY=($(compgen -W "$(_arg_list)" -- $CWORD))
+}
+
+complete -F _option insit

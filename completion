@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit/completion
 # Started On        - Mon 29 Jan 18:47:58 GMT 2018
-# Last Change       - Mon 29 Jan 21:22:44 GMT 2018
+# Last Change       - Mon 29 Jan 21:47:00 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -36,6 +36,11 @@ _option(){
 	local PWORD="${COMP_WORDS[COMP_CWORD-1]}"
 
 	COMPREPLY=($(compgen -W "$(_arg_list)" -- $CWORD))
+
+	case "$PWORD" in
+		--branch|-B)
+			COMPREPLY=($(compgen -W "master dev" -- $CWORD)) ;;
+	esac
 }
 
 complete -F _option insit

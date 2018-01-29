@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Mon 29 Jan 21:35:25 GMT 2018
+# Last Change       - Mon 29 Jan 21:39:51 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -95,6 +95,7 @@ while [ "$1" ]; do
 			shift
 			BRANCH="$1" ;;
 		--self-update|-S)
+			UPDATE="true"
 			SELF="true" ;;
 		--custom|-C)
 			CUSTOM="true" ;;
@@ -220,7 +221,9 @@ AVAIL=(
 if [ "$SELF" == "true" ]; then
 	FILE installit insit /usr/bin/insit 755 0
 	FILE installit completion /usr/share/bash-completion/completions/insit 644 0
-elif [ "$CUSTOM" == "true" ]; then
+fi
+
+if [ "$CUSTOM" == "true" ]; then
 	FILE $@
 	exit 0
 fi

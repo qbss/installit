@@ -7,20 +7,27 @@ Installer for many shell programs from terminalforlife.
 INTRODUCTION
 ------------
 
-Just download and install this handy-dandy installer in order to run it and install all of the TFL programs, scripts, tools, utilities, or whatever else (mostly) is up for grabs here.
+Just download and install this handy-dandy installer in order to run it and install all of the TFL programs, scripts, tools, utilities, or whatever else (mostly) is up for grabs here. Don't worry, the installer can, per your request, update itself as well.
 
-This was born from the clumsy "installit" - original installer I used. I wanted something easier and more featureful for both myself and other users. Updating, installing, and uninstalling is now much simpler. Don't worry, the installer can, per your request, update itself as well.
+As of 29th January 2018, bash completion is now fully supported and working in insit. This is also gradually coming to other TFL programs, such as apt-undo-install, so watch this space!
 
 HOW TO USE
 ----------
 
-Execute this simple one-liner to download and install insit:
+Execute these two simple one-liners, *one after the other*, to download and install insit:
 
 ```bash
-sudo wget -q https://raw.githubusercontent.com/terminalforlife/installit/master/insit -O /usr/bin/insit && sudo chmod +x /usr/bin/insit
+sudo wget -q https://raw.githubusercontent.com/terminalforlife/installit/master/insit -O /usr/bin/insit && sudo chmod 755 /usr/bin/insit
+sudo wget -q https://raw.githubusercontent.com/terminalforlife/installit/master/completion -o /usr/share/bash-completion/completions/insit && sudo chmod 644 /usr/share/bash-completion/completions/insit
 ```
 
-As of 29th January 2018, bash completion is now fully supported and working in insit. This is also gradually coming to other TFL programs, such as apt-undo-install, so watch this space!
+Or, if you'd prefer, you could clone or download (via the green button) this installit repository, then, once you've got access to the insit program, run the following from within the very same directory:
+
+```bash
+sudo insit -S
+```
+
+While that command is ordinarily for updating a pre-existing installation of insit, it'll also server to install it -- bonus.
 
 EXAMPLE
 -------
@@ -29,7 +36,7 @@ Now that you've done that, all that's left is to load up insit to peruse the cat
 
 ```
 $ insit --help
-            INSIT (24th January 2018)
+            INSIT (29th January 2018)
             Written by terminalforlife (terminalforlife@yahoo.com)
 
             Installer for many shell programs from terminalforlife.
@@ -77,7 +84,7 @@ An example installation of a program already installed:
 
 ```bash
 $ sudo insit medlog
-[L0107] ERROR: File already exists: /usr/bin/medlog
+[L0127] ERROR: File already exists: /usr/bin/medlog
 ```
 
 Now to update it, since it's already installed:
@@ -101,7 +108,7 @@ File '/usr/bin/medlog' mode set.
 Uninstalling a program is easy too:
 
 ```bash
-$ sudo insit -u medlog
+$ sudo insit --uninstall medlog
 File '/usr/bin/medlog' removed.
 ```
 
@@ -112,10 +119,7 @@ $ sudo insit -S
 File '/usr/bin/insit' downloaded and updated.
 File '/usr/bin/insit' ownership re-set.
 File '/usr/bin/insit' mode re-set.
-Successful insit update.
+File '/usr/share/bash-completion/completions/insit' downloaded and updated.
+File '/usr/share/bash-completion/completions/insit' ownership re-set.
+File '/usr/share/bash-completion/completions/insit' mode re-set.
 ```
-
-NOTE
-----
-
-Sorry if anyone uses the old installit installers; I'm no longer supporting them because they really were too time-consuming and clumsily written. They should still work for a while, and if not, give insit a go.

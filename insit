@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Mon 29 Jan 21:28:16 GMT 2018
+# Last Change       - Mon 29 Jan 21:31:34 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -211,7 +211,7 @@ SELF_UPDATE(){
 		FAIL+=1
 	fi
 
-	if /bin/chmod 755 /usr/share/bash-completion/completions/insit &> /dev/null; then
+	if /bin/chmod 644 /usr/share/bash-completion/completions/insit &> /dev/null; then
 		printf "File '%s' mode re-set.\n" /usr/share/bash-completion/completions/insit
 	else
 		ERR "$LINENO" "Unable to set the mode of '/usr/share/bash-completion/completions/insit' file."

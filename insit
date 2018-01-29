@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Mon 29 Jan 15:23:21 GMT 2018
+# Last Change       - Mon 29 Jan 15:34:14 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -29,7 +29,7 @@ USAGE(){
 	while read -r; do
 		printf "%s\n" "$REPLY"
 	done <<-EOF
-		            INSIT (27th January 2018)
+		            INSIT (29th January 2018)
 		            Written by terminalforlife (terminalforlife@yahoo.com)
 
 		            Installer for many shell programs from terminalforlife.

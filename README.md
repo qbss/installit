@@ -14,10 +14,12 @@ As of 29th January 2018, bash completion is now fully supported and working in i
 HOW TO USE
 ----------
 
-Execute these two simple one-liners, *one after the other*, to download and install insit:
+Execute these two simple one-liners beginning with `sudo`, *one after the other*, to download and install insit:
 
 ```bash
 sudo wget -q https://raw.githubusercontent.com/terminalforlife/installit/master/insit -O /usr/bin/insit && sudo chmod 755 /usr/bin/insit
+
+# Don't run the following command if you don't use bash completion; if in doubt, you do.
 sudo wget -q https://raw.githubusercontent.com/terminalforlife/installit/master/completion -o /usr/share/bash-completion/completions/insit && sudo chmod 644 /usr/share/bash-completion/completions/insit
 ```
 

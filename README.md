@@ -20,7 +20,7 @@ Execute this simple one-liner to download and install insit:
 sudo wget -q https://raw.githubusercontent.com/terminalforlife/installit/master/insit -O /usr/bin/insit && sudo chmod +x /usr/bin/insit
 ```
 
-As of 29th January 2018, bash completion is now supported in insit. This is also gradually coming to other TFL programs, such as apt-undo-install.
+As of 29th January 2018, bash completion is now fully supported and working in insit. This is also gradually coming to other TFL programs, such as apt-undo-install, so watch this space!
 
 EXAMPLE
 -------

@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Mon 29 Jan 21:00:02 GMT 2018
+# Last Change       - Mon 29 Jan 21:28:16 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -191,6 +191,30 @@ SELF_UPDATE(){
 		printf "File '%s' mode re-set.\n" /usr/bin/insit
 	else
 		ERR "$LINENO" "Unable to set the mode of '/usr/bin/insit' file."
+		FAIL+=1
+	fi
+
+	#TODO - This is so sloppy! Fix this.
+
+	if /usr/bin/wget -q "$URL/installit/master/completion"\
+		-O /usr/share/bash-completion/completions/insit &> /dev/null; then
+		printf "File '%s' downloaded and updated.\n" /usr/share/bash-completion/completions/insit
+	else
+		ERR "$LINENO" "Unable to download and/or update '/usr/share/bash-completion/completions/insit' file."
+		FAIL+=1
+	fi
+
+	if /bin/chown 0:0 /usr/share/bash-completion/completions/insit &> /dev/null; then
+		printf "File '%s' ownership re-set.\n" /usr/share/bash-completion/completions/insit
+	else
+		ERR "$LINENO" "Unable to set the ownership of '/usr/share/bash-completion/completions/insit' file."
+		FAIL+=1
+	fi
+
+	if /bin/chmod 755 /usr/share/bash-completion/completions/insit &> /dev/null; then
+		printf "File '%s' mode re-set.\n" /usr/share/bash-completion/completions/insit
+	else
+		ERR "$LINENO" "Unable to set the mode of '/usr/share/bash-completion/completions/insit' file."
 		FAIL+=1
 	fi
 

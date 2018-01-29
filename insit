@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Mon 29 Jan 15:34:14 GMT 2018
+# Last Change       - Mon 29 Jan 20:53:41 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -276,7 +276,13 @@ if ! [ "$AVAIL_SHOW" == "true" ]; then
 			autoscrot)
 				FILE autoscrot autoscrot /usr/bin/autoscrot 755 0 ;;
 			apt-undo-install)
-				FILE apt-undo-install apt-undo-install /usr/bin/apt-undo-install 755 0 ;;
+				FILE apt-undo-install apt-undo-install /usr/bin/apt-undo-install 755 0
+
+				if [ -d /etc/bash_completion.d ]; then
+					FILE apt-undo-install completion /etc/bash_completion.d/apt-undo-install 644 0
+				else
+					ERR "$LINENO" "Directory not found: /etc/bash_completion.d"
+				fi ;;
 			binwatch)
 				FILE binwatch binwatch /usr/bin/binwatch 755 0 ;;
 			bl)

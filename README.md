@@ -23,7 +23,7 @@ sudo wget -q https://raw.githubusercontent.com/terminalforlife/installit/master/
 Then, if you have bash completion installed (which most do), then execute this command as well:
 
 ```bash
-sudo wget -q https://raw.githubusercontent.com/terminalforlife/installit/master/completion -o /usr/share/bash-completion/completions/insit && sudo chmod 644 /usr/share/bash-completion/completions/insit
+sudo wget -q https://raw.githubusercontent.com/terminalforlife/installit/master/completion -O /usr/share/bash-completion/completions/insit && sudo chmod 644 /usr/share/bash-completion/completions/insit
 ```
 
 Or, if you'd prefer, you could clone or download (via the green button) this installit repository, then, once you've got access to the insit program, run the following from within the very same directory:

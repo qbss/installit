@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Tue 30 Jan 15:02:28 GMT 2018
+# Last Change       - Tue 30 Jan 21:26:16 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -268,7 +268,8 @@ if ! [ "$AVAIL_SHOW" == "true" ]; then
 				FILE roks roks /usr/bin/roks 755 0
 				FILE roks completion /usr/share/bash-completion/completions/roks 644 0 ;;
 			bdl)
-				FILE bdl bdl /usr/bin/bdl 755 0 ;;
+				FILE bdl bdl /usr/bin/bdl 755 0
+				FILE bdl completion /usr/share/bash-completion/completions/bdl 644 0 ;;
 			bashconfig)
 				while read -r; do
 					printf "%s\n" "$REPLY"

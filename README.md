@@ -157,4 +157,4 @@ WARNING: This will install and replace the following:
 Enter 'Yes!' if you're sure you wish to continue:
 ```
 
-At which point you just type 'Yes!' exactly as you see it, press the Enter key, and away you go! Just be sure to **back up your files** beforehand.
+At which point you just type 'Yes!' exactly as you see it in the above prompt, then press the Enter key, and away you go! Just, fair warning, be absolutely sure to have **backed up your files** before you give the go-ahead.

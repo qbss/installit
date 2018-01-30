@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Tue 30 Jan 14:42:11 GMT 2018
+# Last Change       - Tue 30 Jan 14:51:43 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -391,7 +391,8 @@ if ! [ "$AVAIL_SHOW" == "true" ]; then
 			mansaver)
 				FILE mansaver mansaver /usr/bin/mansaver 755 0 ;;
 			lspkg)
-				FILE lspkg lspkg /usr/bin/lspkg 755 0 ;;
+				FILE lspkg lspkg /usr/bin/lspkg 755 0
+				FILE lspkg completion /usr/share/bash-completion/completions/lspkg 644 0 ;;
 			lsbins)
 				FILE lsbins lsbins /usr/bin/lsbins 755 0 ;;
 			github-ssh-setup)

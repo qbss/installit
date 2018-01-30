@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Mon 29 Jan 23:15:36 GMT 2018
+# Last Change       - Tue 30 Jan 13:29:15 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -237,6 +237,7 @@ if ! [ "$AVAIL_SHOW" == "true" ]; then
 				FILE ubuntu-syschk ubuntu-syschk /usr/bin/ubuntu-syschk 755 0 ;;
 			simplify-ubuntu)
 				FILE simplify-ubuntu simplify-ubuntu /usr/bin/simplify-ubuntu 755 0
+				FILE simplify-ubuntu completion /usr/share/bash-completion/completions/simplify-ubuntu 644 0
 				FILE miscellaneous clean-locales /usr/bin/clean-locales 755 0
 				FILE lspkg lspkg /usr/bin/lspkg 755 0 ;;
 			forex)

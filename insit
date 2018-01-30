@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Tue 30 Jan 15:02:28 GMT 2018
+# Last Change       - Tue 30 Jan 21:39:20 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -232,7 +232,8 @@ if ! [ "$AVAIL_SHOW" == "true" ]; then
 	while [ "$1" ]; do
 		case "$1" in
 			reviewer)
-				FILE reviewer reviewer /usr/bin/reviewer 755 0 ;;
+				FILE reviewer reviewer /usr/bin/reviewer 755 0
+				FILE reviewer completion /usr/share/bash-completion/completions/reviewer 644 0 ;;
 			ubuntu-syschk)
 				FILE ubuntu-syschk ubuntu-syschk /usr/bin/ubuntu-syschk 755 0
 				FILE ubuntu-syschk completion /usr/share/bash-completion/completions/ubuntu-syschk 644 0 ;;

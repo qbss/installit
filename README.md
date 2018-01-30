@@ -37,7 +37,7 @@ While that command is ordinarily for updating a pre-existing installation of ins
 EXAMPLE
 -------
 
-Now that you've done that, all that's left is to load up insit to peruse the catalogue of my work at your own leisure. Here is its `--help` output, as of 2017-12-17:
+Now that you've done that, all that's left is to load up insit to peruse the catalogue of my work at your own leisure. Here is its `--help` output, as of 29th January 2018:
 
 ```
 $ insit --help

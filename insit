@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Tue 30 Jan 14:51:43 GMT 2018
+# Last Change       - Tue 30 Jan 14:57:40 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -247,12 +247,7 @@ if ! [ "$AVAIL_SHOW" == "true" ]; then
 				FILE autoscrot autoscrot /usr/bin/autoscrot 755 0 ;;
 			apt-undo-install)
 				FILE apt-undo-install apt-undo-install /usr/bin/apt-undo-install 755 0
-
-				if [ -d /usr/share/bash-completion/completions ]; then
-					FILE apt-undo-install completion /usr/share/bash-completion/completions/apt-undo-install 644 0
-				else
-					ERR "$LINENO" "Directory not found: /etc/bash_completion.d"
-				fi ;;
+				FILE apt-undo-install completion /usr/share/bash-completion/completions/apt-undo-install 644 0 ;;
 			binwatch)
 				FILE binwatch binwatch /usr/bin/binwatch 755 0 ;;
 			bl)
@@ -267,14 +262,10 @@ if ! [ "$AVAIL_SHOW" == "true" ]; then
 				FILE dwwdl dwwdl /usr/bin/dwwdl 755 0 ;;
 			notify-upgrade)
 				FILE notify-upgrade notify-upgrade /usr/bin/notify-upgrade 755 0
-
-				if [ -d /etc/cron.daily ]; then
-					FILE miscellaneous Cron_Tasks/APT_Update_Cron /etc/cron.daily/APT_Update_Cron 755 0
-				else
-					ERR "$LINENO" "Directory not found: /etc/cron.daily"
-				fi ;;
+				FILE miscellaneous Cron_Tasks/APT_Update_Cron /etc/cron.daily/APT_Update_Cron 755 0 ;;
 			roks)
-				FILE roks roks /usr/bin/roks 755 0 ;;
+				FILE roks roks /usr/bin/roks 755 0
+				FILE roks completion /usr/share/bash-completion/completions/roks 644 0 ;;
 			bdl)
 				FILE bdl bdl /usr/bin/bdl 755 0 ;;
 			bashconfig)

@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Tue 30 Jan 13:47:53 GMT 2018
+# Last Change       - Tue 30 Jan 14:39:44 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -399,7 +399,8 @@ if ! [ "$AVAIL_SHOW" == "true" ]; then
 			homewatch)
 				FILE homewatch homewatch /usr/bin/homewatch 755 0 ;;
 			getip)
-				FILE getip getip /usr/bin/getip 755 0 ;;
+				FILE getip getip /usr/bin/getip 755 0
+				FILE getip completion /usr/share/bash-completion/completions/getip 644 0 ;;
 			ripmydvd)
 				FILE ripmydvd ripmydvd /usr/bin/ripmydvd 755 0 ;;
 			simwea)

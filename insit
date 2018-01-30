@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Tue 30 Jan 14:57:40 GMT 2018
+# Last Change       - Tue 30 Jan 15:02:28 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -253,7 +253,8 @@ if ! [ "$AVAIL_SHOW" == "true" ]; then
 			bl)
 				FILE bl bl /usr/bin/bl 755 0 ;;
 			nxbt)
-				FILE nxbt nxbt /usr/bin/nxbt 755 0 ;;
+				FILE nxbt nxbt /usr/bin/nxbt 755 0
+				FILE nxbt completion /usr/share/bash-completion/completions/nxbt 644 0 ;;
 			catmedia)
 				FILE catmedia catmedia /usr/bin/catmedia 755 0 ;;
 			cpufreq)

@@ -26,10 +26,10 @@ Then, if you have bash completion installed (which most do), then execute this c
 sudo wget -q https://raw.githubusercontent.com/terminalforlife/installit/master/completion -O /usr/share/bash-completion/completions/insit && sudo chmod 644 /usr/share/bash-completion/completions/insit
 ```
 
-Or, if you'd prefer, you could clone or download (via the green button) this installit repository, then, once you've got access to the insit program, run the following from within the very same directory:
+Or, if you'd prefer, you could clone or download (via the green button) this installit repository, then, once you've got access to the insit program, run the following from within the very same directory, to install the latest insit:
 
 ```bash
-sudo insit -S
+sudo bash insit -S
 ```
 
 While that command is ordinarily for updating a pre-existing installation of insit, it'll also serve to install it -- bonus.

@@ -128,3 +128,33 @@ File '/usr/share/bash-completion/completions/insit' downloaded and updated.
 File '/usr/share/bash-completion/completions/insit' ownership re-set.
 File '/usr/share/bash-completion/completions/insit' mode re-set.
 ```
+
+You'll also get a warning for certain key installations, such as bashconfig:
+
+```bash
+$ sudo insit -U bashconfig
+WARNING: This will install and replace the following:
+
+  /home/tfl/.profile
+  /home/tfl/.bash_aliases
+  /home/tfl/.bash_functions
+  /home/tfl/.bashrc
+  /home/tfl/ShellPlugins/Bell_Alarm
+  /home/tfl/ShellPlugins/Cleaner_RK_Scan
+  /home/tfl/ShellPlugins/Clear_CD_LS
+  /home/tfl/ShellPlugins/CPU_Intensive_Proc
+  /home/tfl/ShellPlugins/Create_VM
+  /home/tfl/ShellPlugins/Get_Bad_Hosts
+  /home/tfl/ShellPlugins/Git_Status_All
+  /home/tfl/ShellPlugins/List_Signals
+  /home/tfl/ShellPlugins/Load_File_Links2
+  /home/tfl/ShellPlugins/Loop_This
+  /home/tfl/ShellPlugins/NIR_Difference
+  /home/tfl/ShellPlugins/Play_Download_MPSY
+  /home/tfl/ShellPlugins/Shell_Alias_Correc
+  /home/tfl/ShellPlugins/Times_Table
+
+Enter 'Yes!' if you're sure you wish to continue:
+```
+
+At which point you just type 'Yes!' exactly as you see it, press the Enter key, and away you go! Just be sure to **back up your files** beforehand.

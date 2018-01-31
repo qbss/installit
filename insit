@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Tue 30 Jan 21:39:20 GMT 2018
+# Last Change       - Wed 31 Jan 14:49:05 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -199,6 +199,7 @@ AVAIL=(
 	"lspkg - Quickly and portable-y show, describe, and search installed packages."
 	"mansaver - Save man pages for each applicable command in PATH."
 	"medlog - Need help taking and logging when you've had your medication?"
+	"mfw - Notifier for page-one threads on the Newbie Questions Linux Mint forum."
 	"mif - Shell program to filter films by year and whether seen or not."
 	"mkpass - Pure Bourne Again Shell approach to complex password generation."
 	"mplay - Simple script to allow me to quickly load mocp how I like."
@@ -231,6 +232,8 @@ fi
 if ! [ "$AVAIL_SHOW" == "true" ]; then
 	while [ "$1" ]; do
 		case "$1" in
+			mfw)
+				FILE miscellaneous mfw /usr/bin/mfw 755 0 ;;
 			reviewer)
 				FILE reviewer reviewer /usr/bin/reviewer 755 0
 				FILE reviewer completion /usr/share/bash-completion/completions/reviewer 644 0 ;;

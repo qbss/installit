@@ -3,14 +3,14 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit/completion
 # Started On        - Mon 29 Jan 18:47:58 GMT 2018
-# Last Change       - Mon 29 Jan 22:37:19 GMT 2018
+# Last Change       - Wed 31 Jan 12:56:32 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
 # This is the bash completion script for insit.
 #----------------------------------------------------------------------------------
 
-_arg_list(){
+_arg_list_insit(){
 	local X
 
 	while read -a X; do
@@ -31,17 +31,17 @@ _arg_list(){
 	done <<< "$(/usr/bin/insit -h)"
 }
 
-_app_list(){
+_app_list_insit(){
 	while read -a X; do
 		printf "%s " "${X[0]}"
 	done <<< "$(/usr/bin/insit -A)"
 }
 
-_option(){
+_option_insit(){
 	local CWORD="${COMP_WORDS[COMP_CWORD]}"
 	local PWORD="${COMP_WORDS[COMP_CWORD-1]}"
 
-	COMPREPLY=($(compgen -W "$(_arg_list)" -- $CWORD))
+	COMPREPLY=($(compgen -W "$(_arg_list_insit)" -- $CWORD))
 
 	case "$PWORD" in
 		--branch|-B)
@@ -49,8 +49,8 @@ _option(){
 	esac
 
 	if ! [[ "$CWORD" == -* ]]; then
-		COMPREPLY=($(compgen -W "$(_app_list)" -- $CWORD))
+		COMPREPLY=($(compgen -W "$(_app_list_insit)" -- $CWORD))
 	fi
 }
 
-complete -F _option insit
+complete -F _option_insit insit

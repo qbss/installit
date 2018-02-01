@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Wed 31 Jan 14:55:42 GMT 2018
+# Last Change       - Thu  1 Feb 00:06:55 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -179,6 +179,7 @@ AVAIL=(
 	"bdl - Easily and quickly download a batch of files using wget."
 	"binwatch - Output list of executables found in your PATH"
 	"bl - Much simpler, quicker version of blkid."
+	"capnum - Small tool to notify of NumLock and CapsLock status changes."
 	"catmedia - Concatenate media files originally separated in parts."
 	"clean-locales - Remove some unnecessary non-English localizations."
 	"cpufreq - Lightweight Bourne Shell utility to output your CPU frequencies."
@@ -232,6 +233,8 @@ fi
 if ! [ "$AVAIL_SHOW" == "true" ]; then
 	while [ "$1" ]; do
 		case "$1" in
+			capnum)
+				FILE miscellaneous capnum /usr/bin/capnum 755 0 ;;
 			mfw)
 				FILE miscellaneous mfw /usr/bin/mfw 755 0 ;;
 			reviewer)

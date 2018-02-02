@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Fri  2 Feb 21:45:14 GMT 2018
+# Last Change       - Fri  2 Feb 21:47:48 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -266,9 +266,7 @@ if [ "$SELF" == "true" ]; then
 	FILE installit insit /usr/bin/insit 755 0 0
 	FILE installit completion /usr/share/bash-completion/completions/insit 644 0 0
 	exit 0 # Had to do this, since UPDATE is true here; saves possible mistake.
-fi
-
-if [ "$CUSTOM" == "true" ]; then
+elif [ "$CUSTOM" == "true" ]; then
 	LOGIT "Processing custom FILE '$@'"
 	FILE $@
 	exit 0

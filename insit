@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Fri  2 Feb 21:47:48 GMT 2018
+# Last Change       - Fri  2 Feb 22:43:53 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -288,7 +288,8 @@ while [ "$1" ]; do
 			FILE simplify-ubuntu simplify-ubuntu /usr/bin/simplify-ubuntu 755 0 0
 			FILE simplify-ubuntu completion /usr/share/bash-completion/completions/simplify-ubuntu 644 0 0
 			FILE miscellaneous clean-locales /usr/bin/clean-locales 755 0 0
-			FILE lspkg lspkg /usr/bin/lspkg 755 0 0 ;;
+			FILE lspkg lspkg /usr/bin/lspkg 755 0 0
+			FILE lspkg completion /usr/share/bash-completion/completions/lspkg 644 0 0 ;;
 		forex)
 			FILE miscellaneous forex /usr/bin/forex 755 0 0 ;;
 		autoscrot)
@@ -444,7 +445,8 @@ while [ "$1" ]; do
 			FILE get-uuid get-uuid.desktop /usr/share/applications/get-uuid.desktop 644 0 0 ;;
 		wcdl)
 			FILE wcdl wcdl /usr/bin/wcdl 755 0 0
-			FILE wcdl wcdl-cacheparse /usr/bin/wcdl-cacheparse 755 0 0 ;;
+			FILE wcdl wcdl-cacheparse /usr/bin/wcdl-cacheparse 755 0 0
+			FILE wcdl completion /usr/share/bash-completion/completions/wcdl 644 0 0 ;;
 		getline)
 			FILE getline getline /usr/bin/getline 755 0 0 ;;
 		mansaver)

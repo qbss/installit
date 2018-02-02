@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Thu  1 Feb 00:16:28 GMT 2018
+# Last Change       - Fri  2 Feb 16:41:40 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -16,7 +16,7 @@ XERR(){ printf "[L%0.4d] ERROR: %s\n" "$1" "$2" 1>&2; exit 1; }
 ERR(){ printf "[L%0.4d] ERROR: %s\n" "$1" "$2" 1>&2; }
 
 declare -i DEPCOUNT=0
-for DEP in /usr/bin/wget /bin/{rm,chmod,chown,mkdir}; {
+for DEP in /usr/bin/wget /bin/{mv,rm,chmod,chown,mkdir}; {
 	[ -x "$DEP" ] || {
 		ERR "$LINENO" "Dependency '$DEP' not met."
 		DEPCOUNT+=1
@@ -29,7 +29,7 @@ USAGE(){
 	while read -r; do
 		printf "%s\n" "$REPLY"
 	done <<-EOF
-		            INSIT (31st January 2018)
+		            INSIT (2nd February 2018)
 		            Written by terminalforlife (terminalforlife@yahoo.com)
 
 		            Installer for many shell programs from terminalforlife.
@@ -45,6 +45,7 @@ USAGE(){
 		            --branch|-B NAME        - Where NAME is the branch to use.
 		            --self-update|-S        - Update insit to the latest stable version.
 		            --custom|-C             - Execute your own FILE function line.
+		            --log|-L                - Log and time-stamp actions to take.
 
 		NOTE:       Where WHAT is the program(s) to install.
 
@@ -58,7 +59,7 @@ USAGE(){
 
 		EXAMPLE:    sudo insit -B dev -U -C miscellaneous mfw /usr/bin/mfw 755 0
 		            sudo insit -U notify-upgrade lspkg lsbins apt-undo-install
-		            sudo insit --quiet --uninstall bl medlog wcdl clean-locales
+		            sudo insit -q --log --uninstall bl medlog wcdl clean-locales
 
 		WARNING:    Uninstalling with this program is permanent!
 
@@ -70,10 +71,13 @@ USAGE(){
 		            the comment header you see within this file, so grepping for the E-Mail
 		            address or GitHub URL below would be a good way to check.
 
+		FILE:       The log file is stored in: /var/log/tfl_insit.log
+
 		SITE:       https://github.com/terminalforlife
 	EOF
 }
 
+LOGFILE="/var/log/tfl_insit.log"
 URL="https://raw.githubusercontent.com/terminalforlife"
 BRANCH="master"
 
@@ -99,6 +103,8 @@ while [ "$1" ]; do
 			SELF="true" ;;
 		--custom|-C)
 			CUSTOM="true" ;;
+		--log|-L)
+			LOGIT="true" ;;
 		-*)
 			XERR "$LINENO" "Incorrect argument(s) specified." ;;
 		*)
@@ -110,25 +116,49 @@ done
 
 if ! [ "$AVAIL_SHOW" == "true" ]; then
 	[ $UID -eq 0 ] || XERR "$LINENO" "Root access is required."
+elif [ ! "$NOLOG" == "true" -a ! -x /usr/bin/tee ]; then
+	XERR "$LINENO" "Dependency '/usr/bin/tee' not met."
+elif [ -z "$SUDO_UID" ]; then
+	XERR "$LINENO" "Unable to continue -- are you not using sudo?"
 fi
 
 [ "$BEQUIET" == "true" ] && exec 1> /dev/null
 [ "$DEBUGME" == "true" ] && set -xeu
 
+LOGIT(){
+	if [ "$LOGIT" == "true" ]; then
+		if ! [ -d "${LOGFILE%/*}" ]; then
+			XERR "$LINENO" "System directory '/var/log' not found."
+		else
+			printf -v DATETIME "%(%F_%X)T" "-1"
+			printf "[%s]: %s\n" "$DATETIME" "$1" >> "$LOGFILE"
+
+			readarray A < "$LOGFILE"
+			if [ "${#A[@]}" -gt 4000 ]; then
+				/bin/mv "$LOGFILE"{,.old}
+				[ -x /bin/gzip ] && /bin/gzip "${LOGFILE}.old"
+			fi
+		fi
+	fi
+}
+
 FILE(){
 	# FILE project_name "source_file.sh" "/usr/bin/target_file" 755
 	if [ "$UNINSTALL" == "true" ]; then
+		LOGIT "Removing $3"
 		/bin/rm "$3" && printf "File '%s' removed.\n" "$3"
 	else
 		#TODO - The below line needs to test for whether update or self are
 		#       NOT true, as well as if the file $3 already exists. This is
 		#       to ensure proper self update and regular program updates.
 		if [ -f "$3" -a ! "$UPDATE" == "true" ]; then
+			LOGIT "File $3 already exists"
 			ERR "$LINENO" "File already exists: $3"
 			return 1
 		else
 			#TODO - This is sloppy - IMPROVE!
 			if [ -f "$3" ]; then
+				LOGIT "Downloading $URL/$1/$BRANCH/$2 over $3"
 				if /usr/bin/wget -q "$URL/$1/$BRANCH/$2" -O "$3" &> /dev/null; then
 					printf "File '%s' downloaded and updated.\n" "$3"
 				else
@@ -136,18 +166,21 @@ FILE(){
 					return 1
 				fi
 
-				if /bin/chown $5:$5 "$3" &> /dev/null; then
+				LOGIT "Re-setting $3 to $5 UID and $6 GID"
+				if /bin/chown $5:$6 "$3" &> /dev/null; then
 					printf "File '%s' ownership re-set.\n" "$3"
 				else
 					ERR "$LINENO" "Unable to re-set the ownership of '$3' file."
 				fi
 
+				LOGIT "Re-setting $3 to $4 permissions"
 				if /bin/chmod "$4" "$3" &> /dev/null; then
 					printf "File '%s' mode re-set.\n" "$3"
 				else
 					ERR "$LINENO" "Unable to re-set the mode of '$3' file."
 				fi
 			else
+				LOGIT "Downloading $URL/$1/$BRANCH/$2 to $3"
 				if /usr/bin/wget -q "$URL/$1/$BRANCH/$2" -O "$3" &> /dev/null; then
 					printf "File '%s' downloaded.\n" "$3"
 				else
@@ -155,12 +188,14 @@ FILE(){
 					return 1
 				fi
 
-				if /bin/chown $5:$5 "$3" &> /dev/null; then
+				LOGIT "Setting $3 to $6 UID and $5 GID"
+				if /bin/chown $5:$6 "$3" &> /dev/null; then
 					printf "File '%s' ownership set.\n" "$3"
 				else
 					ERR "$LINENO" "Unable to set the ownership of '$3' file."
 				fi
 
+				LOGIT "Setting $3 to $4 permissions"
 				if /bin/chmod "$4" "$3" &> /dev/null; then
 					printf "File '%s' mode set.\n" "$3"
 				else
@@ -221,12 +256,13 @@ AVAIL=(
 )
 
 if [ "$SELF" == "true" ]; then
-	FILE installit insit /usr/bin/insit 755 0
-	FILE installit completion /usr/share/bash-completion/completions/insit 644 0
+	FILE installit insit /usr/bin/insit 755 0 0
+	FILE installit completion /usr/share/bash-completion/completions/insit 644 0 0
 	exit 0 # Had to do this, since UPDATE is true here; saves possible mistake.
 fi
 
 if [ "$CUSTOM" == "true" ]; then
+	LOGIT "Processing custom FILE '$@'"
 	FILE $@
 	exit 0
 fi
@@ -235,50 +271,51 @@ if ! [ "$AVAIL_SHOW" == "true" ]; then
 	while [ "$1" ]; do
 		case "$1" in
 			capnum)
-				FILE miscellaneous capnum /usr/bin/capnum 755 0 ;;
+				FILE miscellaneous capnum /usr/bin/capnum 755 0 0 ;;
 			mfw)
-				FILE miscellaneous mfw /usr/bin/mfw 755 0 ;;
+				FILE miscellaneous mfw /usr/bin/mfw 755 0 0 ;;
 			reviewer)
-				FILE reviewer reviewer /usr/bin/reviewer 755 0
-				FILE reviewer completion /usr/share/bash-completion/completions/reviewer 644 0 ;;
+				FILE reviewer reviewer /usr/bin/reviewer 755 0 0
+				FILE reviewer completion /usr/share/bash-completion/completions/reviewer 644 0 0 ;;
 			ubuntu-syschk)
-				FILE ubuntu-syschk ubuntu-syschk /usr/bin/ubuntu-syschk 755 0
-				FILE ubuntu-syschk completion /usr/share/bash-completion/completions/ubuntu-syschk 644 0 ;;
+				FILE ubuntu-syschk ubuntu-syschk /usr/bin/ubuntu-syschk 755 0 0
+				FILE ubuntu-syschk completion /usr/share/bash-completion/completions/ubuntu-syschk 644 0 0 ;;
 			simplify-ubuntu)
-				FILE simplify-ubuntu simplify-ubuntu /usr/bin/simplify-ubuntu 755 0
-				FILE simplify-ubuntu completion /usr/share/bash-completion/completions/simplify-ubuntu 644 0
-				FILE miscellaneous clean-locales /usr/bin/clean-locales 755 0
-				FILE lspkg lspkg /usr/bin/lspkg 755 0 ;;
+				FILE simplify-ubuntu simplify-ubuntu /usr/bin/simplify-ubuntu 755 0 0
+				FILE simplify-ubuntu completion /usr/share/bash-completion/completions/simplify-ubuntu 644 0 0
+				FILE miscellaneous clean-locales /usr/bin/clean-locales 755 0 0
+				FILE lspkg lspkg /usr/bin/lspkg 755 0 0 ;;
 			forex)
-				FILE miscellaneous forex /usr/bin/forex 755 0 ;;
+				FILE miscellaneous forex /usr/bin/forex 755 0 0 ;;
 			autoscrot)
-				FILE autoscrot autoscrot /usr/bin/autoscrot 755 0 ;;
+				FILE autoscrot autoscrot /usr/bin/autoscrot 755 0 0 ;;
 			apt-undo-install)
-				FILE apt-undo-install apt-undo-install /usr/bin/apt-undo-install 755 0
-				FILE apt-undo-install completion /usr/share/bash-completion/completions/apt-undo-install 644 0 ;;
+				FILE apt-undo-install apt-undo-install /usr/bin/apt-undo-install 755 0 0
+				FILE apt-undo-install completion /usr/share/bash-completion/completions/apt-undo-install 644 0 0 ;;
 			binwatch)
-				FILE binwatch binwatch /usr/bin/binwatch 755 0 ;;
+				FILE binwatch binwatch /usr/bin/binwatch 755 0 0 ;;
 			bl)
-				FILE bl bl /usr/bin/bl 755 0 ;;
+				FILE bl bl /usr/bin/bl 755 0 0 ;;
 			nxbt)
-				FILE nxbt nxbt /usr/bin/nxbt 755 0
-				FILE nxbt completion /usr/share/bash-completion/completions/nxbt 644 0 ;;
+				FILE nxbt nxbt /usr/bin/nxbt 755 0 0
+				FILE nxbt completion /usr/share/bash-completion/completions/nxbt 644 0 0 ;;
 			catmedia)
-				FILE catmedia catmedia /usr/bin/catmedia 755 0 ;;
+				FILE catmedia catmedia /usr/bin/catmedia 755 0 0 ;;
 			cpufreq)
-				FILE cpufreq cpufreq /usr/bin/cpufreq 755 0 ;;
+				FILE cpufreq cpufreq /usr/bin/cpufreq 755 0 0 ;;
 			dwwdl)
-				FILE dwwdl dwwdl /usr/bin/dwwdl 755 0 ;;
+				FILE dwwdl dwwdl /usr/bin/dwwdl 755 0 0 ;;
 			notify-upgrade)
-				FILE notify-upgrade notify-upgrade /usr/bin/notify-upgrade 755 0
-				FILE miscellaneous Cron_Tasks/APT_Update_Cron /etc/cron.daily/APT_Update_Cron 755 0 ;;
+				FILE notify-upgrade notify-upgrade /usr/bin/notify-upgrade 755 0 0
+				FILE miscellaneous Cron_Tasks/APT_Update_Cron /etc/cron.daily/APT_Update_Cron 755 0 0 ;;
 			roks)
-				FILE roks roks /usr/bin/roks 755 0
-				FILE roks completion /usr/share/bash-completion/completions/roks 644 0 ;;
+				FILE roks roks /usr/bin/roks 755 0 0
+				FILE roks completion /usr/share/bash-completion/completions/roks 644 0 0 ;;
 			bdl)
-				FILE bdl bdl /usr/bin/bdl 755 0
-				FILE bdl completion /usr/share/bash-completion/completions/bdl 644 0 ;;
+				FILE bdl bdl /usr/bin/bdl 755 0 0
+				FILE bdl completion /usr/share/bash-completion/completions/bdl 644 0 0 ;;
 			bashconfig)
+				LOGIT "Displaying bashconfig WARNING"
 				while read -r; do
 					printf "%s\n" "$REPLY"
 				done <<-EOF
@@ -305,30 +342,39 @@ if ! [ "$AVAIL_SHOW" == "true" ]; then
 
 				EOF
 
+				LOGIT "Prompting user to continue or not"
 				read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
 				[[ "$REPLY" == "Yes!" ]] || { printf "No action taken -- quitting.\n"; exit 1; }
 
-				FILE bashconfig .profile $HOME/.profile 644 "$SUDO_UID"
-				FILE bashconfig .bash_aliases $HOME/.bash_aliases 644 "$SUDO_UID"
-				FILE bashconfig .bash_functions $HOME/.bash_functions 644 "$SUDO_UID"
-				FILE bashconfig .bashrc $HOME/.bashrc 644 "$SUDO_UID"
-				[ -d "$HOME/ShellPlugins" ] || /bin/mkdir --mode=755 "$HOME/ShellPlugins"
-				/bin/chown "$SUDO_UID":"$SUDO_UID" "$HOME/ShellPlugins"
-				FILE bashconfig ShellPlugins/Bell_Alarm $HOME/ShellPlugins/Bell_Alarm 644 $SUDO_UID
-				FILE bashconfig ShellPlugins/Cleaner_RK_Scan $HOME/ShellPlugins/Cleaner_RK_Scan 644 $SUDO_UID
-				FILE bashconfig ShellPlugins/Clear_CD_LS $HOME/ShellPlugins/Clear_CD_LS 644 $SUDO_UID
-				FILE bashconfig ShellPlugins/CPU_Intensive_Procs $HOME/ShellPlugins/CPU_Intensive_Procs 644 $SUDO_UID
-				FILE bashconfig ShellPlugins/Create_VM $HOME/ShellPlugins/Create_VM 644 $SUDO_UID
-				FILE bashconfig ShellPlugins/Get_Bad_Hosts $HOME/ShellPlugins/Get_Bad_Hosts 644 $SUDO_UID
-				FILE bashconfig ShellPlugins/Git_Status_All $HOME/ShellPlugins/Git_Status_All 644 $SUDO_UID
-				FILE bashconfig ShellPlugins/List_Signals $HOME/ShellPlugins/List_Signals 644 $SUDO_UID
-				FILE bashconfig ShellPlugins/Load_File_Links2 $HOME/ShellPlugins/Load_File_Links2 644 $SUDO_UID
-				FILE bashconfig ShellPlugins/Loop_This $HOME/ShellPlugins/Loop_This 644 $SUDO_UID
-				FILE bashconfig ShellPlugins/NIR_Difference $HOME/ShellPlugins/NIR_Difference 644 $SUDO_UID
-				FILE bashconfig ShellPlugins/Play_Download_MPSYT $HOME/ShellPlugins/Play_Download_MPSYT 644 $SUDO_UID
-				FILE bashconfig ShellPlugins/Shell_Alias_Correcting $HOME/ShellPlugins/Shell_Alias_Correcting 644 $SUDO_UID
-				FILE bashconfig ShellPlugins/Times_Table $HOME/ShellPlugins/Times_Table 644 $SUDO_UID ;;
+				FILE bashconfig .profile $HOME/.profile 644 "$SUDO_UID" "$SUDO_GID"
+				FILE bashconfig .bash_aliases $HOME/.bash_aliases 644 "$SUDO_UID" "$SUDO_GID"
+				FILE bashconfig .bash_functions $HOME/.bash_functions 644 "$SUDO_UID" "$SUDO_GID"
+				FILE bashconfig .bashrc $HOME/.bashrc 644 "$SUDO_UID" "$SUDO_GID"
+
+				if ! [ -d "$HOME/ShellPlugins" ]; then
+					LOGIT "Creating $HOME/ShellPlugins directory"
+					/bin/mkdir "$HOME/ShellPlugins"
+				fi
+
+				LOGIT "Setting $HOME/ShellPlugins to $SUDO_UID UID and $SUDO_GID GID"
+				/bin/chown "$SUDO_UID":"$SUDO_GID" "$HOME/ShellPlugins"
+
+				FILE bashconfig ShellPlugins/Bell_Alarm $HOME/ShellPlugins/Bell_Alarm 644 $SUDO_UID "$SUDO_GID"
+				FILE bashconfig ShellPlugins/Cleaner_RK_Scan $HOME/ShellPlugins/Cleaner_RK_Scan 644 $SUDO_UID "$SUDO_GID"
+				FILE bashconfig ShellPlugins/Clear_CD_LS $HOME/ShellPlugins/Clear_CD_LS 644 $SUDO_UID "$SUDO_GID"
+				FILE bashconfig ShellPlugins/CPU_Intensive_Procs $HOME/ShellPlugins/CPU_Intensive_Procs 644 $SUDO_UID "$SUDO_GID"
+				FILE bashconfig ShellPlugins/Create_VM $HOME/ShellPlugins/Create_VM 644 $SUDO_UID "$SUDO_GID"
+				FILE bashconfig ShellPlugins/Get_Bad_Hosts $HOME/ShellPlugins/Get_Bad_Hosts 644 $SUDO_UID "$SUDO_GID"
+				FILE bashconfig ShellPlugins/Git_Status_All $HOME/ShellPlugins/Git_Status_All 644 $SUDO_UID "$SUDO_GID"
+				FILE bashconfig ShellPlugins/List_Signals $HOME/ShellPlugins/List_Signals 644 $SUDO_UID "$SUDO_GID"
+				FILE bashconfig ShellPlugins/Load_File_Links2 $HOME/ShellPlugins/Load_File_Links2 644 $SUDO_UID "$SUDO_GID"
+				FILE bashconfig ShellPlugins/Loop_This $HOME/ShellPlugins/Loop_This 644 $SUDO_UID "$SUDO_GID"
+				FILE bashconfig ShellPlugins/NIR_Difference $HOME/ShellPlugins/NIR_Difference 644 $SUDO_UID "$SUDO_GID"
+				FILE bashconfig ShellPlugins/Play_Download_MPSYT $HOME/ShellPlugins/Play_Download_MPSYT 644 $SUDO_UID "$SUDO_GID"
+				FILE bashconfig ShellPlugins/Shell_Alias_Correcting $HOME/ShellPlugins/Shell_Alias_Correcting 644 $SUDO_UID "$SUDO_GID"
+				FILE bashconfig ShellPlugins/Times_Table $HOME/ShellPlugins/Times_Table 644 $SUDO_UID "$SUDO_GID" ;;
 			i3config)
+				LOGIT "Displaying i3config WARNING"
 				while read -r; do
 					printf "%s\n" "$REPLY"
 				done <<-EOF
@@ -356,87 +402,95 @@ if ! [ "$AVAIL_SHOW" == "true" ]; then
 
 				EOF
 
+				LOGIT "Prompting user to continue or not"
 				read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
 				[[ "$REPLY" == "Yes!" ]] || { printf "No action taken -- quitting.\n"; exit 1; }
 
-				FILE i3config config $HOME/.config/i3/config 644 "$SUDO_UID"
-				[ -d "$HOME/.i3a" ] || /bin/mkdir "$HOME/.i3a"
-				FILE i3config .i3a/dtrecord $HOME/.i3a/dtrecord 644 "$SUDO_UID"
-				FILE i3config .i3a/feh_slides $HOME/.i3a/feh_slides 644 "$SUDO_UID"
-				FILE i3config .i3a/initialize $HOME/.i3a/initialize 644 "$SUDO_UID"
-				FILE i3config .i3a/key_autorepeat $HOME/.i3a/key_autorepeat 644 "$SUDO_UID"
-				FILE i3config .i3a/scrot_sel_take $HOME/.i3a/scrot_sel_take 644 "$SUDO_UID"
-				FILE i3config .i3a/scrot_take $HOME/.i3a/scrot_take 644 "$SUDO_UID"
-				FILE i3config .i3a/scrot_win_take $HOME/.i3a/scrot_win_take 644 "$SUDO_UID"
-				FILE i3config .i3a/sink_lower $HOME/.i3a/sink_lower 644 "$SUDO_UID"
-				FILE i3config .i3a/sink_mute $HOME/.i3a/sink_mute 644 "$SUDO_UID"
-				FILE i3config .i3a/sink_raise $HOME/.i3a/sink_raise 644 "$SUDO_UID"
-				FILE i3config .i3a/source_lower $HOME/.i3a/source_lower 644 "$SUDO_UID"
-				FILE i3config .i3a/source_mute $HOME/.i3a/source_mute 644 "$SUDO_UID"
-				FILE i3config .i3a/source_raise $HOME/.i3a/source_raise 644 "$SUDO_UID"
-				FILE i3config .i3a/term_font_size $HOME/.i3a/term_font_size 644 "$SUDO_UID"
-				FILE i3config .i3a/term_font_size_py $HOME/.i3a/term_font_size_py 644 "$SUDO_UID"
-				FILE i3config .i3a/terminal $HOME/.i3a/terminal 644 "$SUDO_UID"
-				FILE i3config .i3a/track_notify $HOME/.i3a/track_notify 644 "$SUDO_UID"
-				FILE i3config .i3a/use_dmenu $HOME/.i3a/use_dmenu 644 "$SUDO_UID" ;;
+				FILE i3config config $HOME/.config/i3/config 644 "$SUDO_UID" "$SUDO_GID"
+
+				if ! [ -d "$HOME/.i3a" ]; then
+					LOGIT "Creating $HOME/.i3a directory"
+					/bin/mkdir "$HOME/.i3a"
+				fi
+
+				LOGIT "Setting $HOME/.i3a to $SUDO_UID UID and $SUDO_GID GID"
+
+				FILE i3config .i3a/dtrecord $HOME/.i3a/dtrecord 644 "$SUDO_UID" "$SUDO_GID"
+				FILE i3config .i3a/feh_slides $HOME/.i3a/feh_slides 644 "$SUDO_UID" "$SUDO_GID"
+				FILE i3config .i3a/initialize $HOME/.i3a/initialize 644 "$SUDO_UID" "$SUDO_GID"
+				FILE i3config .i3a/key_autorepeat $HOME/.i3a/key_autorepeat 644 "$SUDO_UID" "$SUDO_GID"
+				FILE i3config .i3a/scrot_sel_take $HOME/.i3a/scrot_sel_take 644 "$SUDO_UID" "$SUDO_GID"
+				FILE i3config .i3a/scrot_take $HOME/.i3a/scrot_take 644 "$SUDO_UID" "$SUDO_GID"
+				FILE i3config .i3a/scrot_win_take $HOME/.i3a/scrot_win_take 644 "$SUDO_UID" "$SUDO_GID"
+				FILE i3config .i3a/sink_lower $HOME/.i3a/sink_lower 644 "$SUDO_UID" "$SUDO_GID"
+				FILE i3config .i3a/sink_mute $HOME/.i3a/sink_mute 644 "$SUDO_UID" "$SUDO_GID"
+				FILE i3config .i3a/sink_raise $HOME/.i3a/sink_raise 644 "$SUDO_UID" "$SUDO_GID"
+				FILE i3config .i3a/source_lower $HOME/.i3a/source_lower 644 "$SUDO_UID" "$SUDO_GID"
+				FILE i3config .i3a/source_mute $HOME/.i3a/source_mute 644 "$SUDO_UID" "$SUDO_GID"
+				FILE i3config .i3a/source_raise $HOME/.i3a/source_raise 644 "$SUDO_UID" "$SUDO_GID"
+				FILE i3config .i3a/term_font_size $HOME/.i3a/term_font_size 644 "$SUDO_UID" "$SUDO_GID"
+				FILE i3config .i3a/term_font_size_py $HOME/.i3a/term_font_size_py 644 "$SUDO_UID" "$SUDO_GID"
+				FILE i3config .i3a/terminal $HOME/.i3a/terminal 644 "$SUDO_UID" "$SUDO_GID"
+				FILE i3config .i3a/track_notify $HOME/.i3a/track_notify 644 "$SUDO_UID" "$SUDO_GID"
+				FILE i3config .i3a/use_dmenu $HOME/.i3a/use_dmenu 644 "$SUDO_UID" "$SUDO_GID" ;;
 			kernelchk)
-				FILE kernelchk kernelchk /usr/bin/kernelchk 755 0 ;;
+				FILE kernelchk kernelchk /usr/bin/kernelchk 755 0 0 ;;
 			get-uuid)
-				FILE get-uuid get-uuid /usr/bin/get-uuid 755 0
-				FILE get-uuid get-uuid.desktop /usr/share/applications/get-uuid.desktop 644 0 ;;
+				FILE get-uuid get-uuid /usr/bin/get-uuid 755 0 0
+				FILE get-uuid get-uuid.desktop /usr/share/applications/get-uuid.desktop 644 0 0 ;;
 			wcdl)
-				FILE wcdl wcdl /usr/bin/wcdl 755 0
-				FILE wcdl wcdl-cacheparse /usr/bin/wcdl-cacheparse 755 0 ;;
+				FILE wcdl wcdl /usr/bin/wcdl 755 0 0
+				FILE wcdl wcdl-cacheparse /usr/bin/wcdl-cacheparse 755 0 0 ;;
 			getline)
-				FILE getline getline /usr/bin/getline 755 0 ;;
+				FILE getline getline /usr/bin/getline 755 0 0 ;;
 			mansaver)
-				FILE mansaver mansaver /usr/bin/mansaver 755 0 ;;
+				FILE mansaver mansaver /usr/bin/mansaver 755 0 0 ;;
 			lspkg)
-				FILE lspkg lspkg /usr/bin/lspkg 755 0
-				FILE lspkg completion /usr/share/bash-completion/completions/lspkg 644 0 ;;
+				FILE lspkg lspkg /usr/bin/lspkg 755 0 0
+				FILE lspkg completion /usr/share/bash-completion/completions/lspkg 644 0 0 ;;
 			lsbins)
-				FILE miscellaneous lsbins /usr/bin/lsbins 755 0 ;;
+				FILE miscellaneous lsbins /usr/bin/lsbins 755 0 0 ;;
 			github-ssh-setup)
-				FILE github-ssh-setup github-ssh-setup /usr/bin/github-ssh-setup 755 0 ;;
+				FILE github-ssh-setup github-ssh-setup /usr/bin/github-ssh-setup 755 0 0 ;;
 			homewatch)
-				FILE homewatch homewatch /usr/bin/homewatch 755 0 ;;
+				FILE homewatch homewatch /usr/bin/homewatch 755 0 0 ;;
 			getip)
-				FILE getip getip /usr/bin/getip 755 0
-				FILE getip completion /usr/share/bash-completion/completions/getip 644 0 ;;
+				FILE getip getip /usr/bin/getip 755 0 0
+				FILE getip completion /usr/share/bash-completion/completions/getip 644 0 0 ;;
 			ripmydvd)
-				FILE ripmydvd ripmydvd /usr/bin/ripmydvd 755 0 ;;
+				FILE ripmydvd ripmydvd /usr/bin/ripmydvd 755 0 0 ;;
 			simwea)
-				FILE simwea simwea /usr/bin/simwea 755 0 ;;
+				FILE simwea simwea /usr/bin/simwea 755 0 0 ;;
 			medlog)
-				FILE miscellaneous medlog /usr/bin/medlog 755 0 ;;
+				FILE miscellaneous medlog /usr/bin/medlog 755 0 0 ;;
 			mif)
-				FILE miscellaneous mif /usr/bin/mif 755 0 ;;
+				FILE miscellaneous mif /usr/bin/mif 755 0 0 ;;
 			seewttr)
-				FILE miscellaneous seewttr /usr/bin/seewttr 755 0 ;;
+				FILE miscellaneous seewttr /usr/bin/seewttr 755 0 0 ;;
 			backmeup)
-				FILE miscellaneous backmeup /usr/bin/backmeup 755 0 ;;
+				FILE miscellaneous backmeup /usr/bin/backmeup 755 0 0 ;;
 			clean-locales)
-				FILE miscellaneous clean-locales /usr/bin/clean-locales 755 0 ;;
+				FILE miscellaneous clean-locales /usr/bin/clean-locales 755 0 0 ;;
 			mkpass)
-				FILE miscellaneous mkpass /usr/bin/mkpass 755 0 ;;
+				FILE miscellaneous mkpass /usr/bin/mkpass 755 0 0 ;;
 			mplay)
-				FILE miscellaneous mplay /usr/bin/mplay 755 0 ;;
+				FILE miscellaneous mplay /usr/bin/mplay 755 0 0 ;;
 			pagewatch)
-				FILE miscellaneous pagewatch /usr/bin/pagewatch 755 0 ;;
+				FILE miscellaneous pagewatch /usr/bin/pagewatch 755 0 0 ;;
 			redshifter)
-				FILE miscellaneous redshifter /usr/bin/redshifter 755 0 ;;
+				FILE miscellaneous redshifter /usr/bin/redshifter 755 0 0 ;;
 			tozero)
-				FILE miscellaneous tozero /usr/bin/tozero 755 0 ;;
+				FILE miscellaneous tozero /usr/bin/tozero 755 0 0 ;;
 			nosp)
-				FILE miscellaneous nosp /usr/bin/nosp 755 0 ;;
+				FILE miscellaneous nosp /usr/bin/nosp 755 0 0 ;;
 			dlspwalls)
-				FILE miscellaneous dlspwalls /usr/bin/dlspwalls 755 0 ;;
+				FILE miscellaneous dlspwalls /usr/bin/dlspwalls 755 0 0 ;;
 			dlfcmags)
-				FILE miscellaneous dlfcmags /usr/bin/dlfcmags 755 0 ;;
+				FILE miscellaneous dlfcmags /usr/bin/dlfcmags 755 0 0 ;;
 			dlfallwalls)
-				FILE miscellaneous dlfallwalls /usr/bin/dlfallwalls 755 0 ;;
+				FILE miscellaneous dlfallwalls /usr/bin/dlfallwalls 755 0 0 ;;
 			dl-tuxradar-podcasts)
-				FILE miscellaneous dl-tuxradar-podcasts /usr/bin/dl-tuxradar-podcasts 755 0 ;;
+				FILE miscellaneous dl-tuxradar-podcasts /usr/bin/dl-tuxradar-podcasts 755 0 0 ;;
 			*)
 				ERR "$LINENO" "Unavailable WHAT at: $1" ;;
 		esac

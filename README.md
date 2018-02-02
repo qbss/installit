@@ -158,11 +158,11 @@ At which point you just type 'Yes!' exactly as you see it in the above prompt, t
 
 ## UPDATES & KNOWN ISSUES
 
-### **Fri  2 Feb 13:28:57 GMT 2018**
+##### **Fri  2 Feb 13:28:57 GMT 2018**
 
 Sometimes, while it works as expected, updating insit still yields this result:
 
-```bash
+```
 $ sudo insit -S
 File '/usr/bin/insit' downloaded and updated.
 File '/usr/bin/insit' ownership re-set.

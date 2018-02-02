@@ -395,7 +395,7 @@ if ! [ "$AVAIL_SHOW" == "true" ]; then
 				FILE lspkg lspkg /usr/bin/lspkg 755 0
 				FILE lspkg completion /usr/share/bash-completion/completions/lspkg 644 0 ;;
 			lsbins)
-				FILE lsbins lsbins /usr/bin/lsbins 755 0 ;;
+				FILE miscellaneous lsbins /usr/bin/lsbins 755 0 ;;
 			github-ssh-setup)
 				FILE github-ssh-setup github-ssh-setup /usr/bin/github-ssh-setup 755 0 ;;
 			homewatch)

@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Fri  2 Feb 16:41:40 GMT 2018
+# Last Change       - Fri  2 Feb 21:45:14 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -118,8 +118,6 @@ if ! [ "$AVAIL_SHOW" == "true" ]; then
 	[ $UID -eq 0 ] || XERR "$LINENO" "Root access is required."
 elif [ ! "$NOLOG" == "true" -a ! -x /usr/bin/tee ]; then
 	XERR "$LINENO" "Dependency '/usr/bin/tee' not met."
-elif [ -z "$SUDO_UID" ]; then
-	XERR "$LINENO" "Unable to continue -- are you not using sudo?"
 fi
 
 [ "$BEQUIET" == "true" ] && exec 1> /dev/null
@@ -255,6 +253,15 @@ AVAIL=(
 	"wcdl - Crawl WallpapersCraft for desktop backgrounds."
 )
 
+if [ "$AVAIL_SHOW" == "true" ]; then
+	printf "%s\n" "${AVAIL[@]}"
+	exit 0
+fi
+
+if [ -z "$SUDO_UID" ]; then
+	XERR "$LINENO" "Unable to continue -- are you not using sudo?"
+fi
+
 if [ "$SELF" == "true" ]; then
 	FILE installit insit /usr/bin/insit 755 0 0
 	FILE installit completion /usr/share/bash-completion/completions/insit 644 0 0
@@ -267,236 +274,232 @@ if [ "$CUSTOM" == "true" ]; then
 	exit 0
 fi
 
-if ! [ "$AVAIL_SHOW" == "true" ]; then
-	while [ "$1" ]; do
-		case "$1" in
-			capnum)
-				FILE miscellaneous capnum /usr/bin/capnum 755 0 0 ;;
-			mfw)
-				FILE miscellaneous mfw /usr/bin/mfw 755 0 0 ;;
-			reviewer)
-				FILE reviewer reviewer /usr/bin/reviewer 755 0 0
-				FILE reviewer completion /usr/share/bash-completion/completions/reviewer 644 0 0 ;;
-			ubuntu-syschk)
-				FILE ubuntu-syschk ubuntu-syschk /usr/bin/ubuntu-syschk 755 0 0
-				FILE ubuntu-syschk completion /usr/share/bash-completion/completions/ubuntu-syschk 644 0 0 ;;
-			simplify-ubuntu)
-				FILE simplify-ubuntu simplify-ubuntu /usr/bin/simplify-ubuntu 755 0 0
-				FILE simplify-ubuntu completion /usr/share/bash-completion/completions/simplify-ubuntu 644 0 0
-				FILE miscellaneous clean-locales /usr/bin/clean-locales 755 0 0
-				FILE lspkg lspkg /usr/bin/lspkg 755 0 0 ;;
-			forex)
-				FILE miscellaneous forex /usr/bin/forex 755 0 0 ;;
-			autoscrot)
-				FILE autoscrot autoscrot /usr/bin/autoscrot 755 0 0 ;;
-			apt-undo-install)
-				FILE apt-undo-install apt-undo-install /usr/bin/apt-undo-install 755 0 0
-				FILE apt-undo-install completion /usr/share/bash-completion/completions/apt-undo-install 644 0 0 ;;
-			binwatch)
-				FILE binwatch binwatch /usr/bin/binwatch 755 0 0 ;;
-			bl)
-				FILE bl bl /usr/bin/bl 755 0 0 ;;
-			nxbt)
-				FILE nxbt nxbt /usr/bin/nxbt 755 0 0
-				FILE nxbt completion /usr/share/bash-completion/completions/nxbt 644 0 0 ;;
-			catmedia)
-				FILE catmedia catmedia /usr/bin/catmedia 755 0 0 ;;
-			cpufreq)
-				FILE cpufreq cpufreq /usr/bin/cpufreq 755 0 0 ;;
-			dwwdl)
-				FILE dwwdl dwwdl /usr/bin/dwwdl 755 0 0 ;;
-			notify-upgrade)
-				FILE notify-upgrade notify-upgrade /usr/bin/notify-upgrade 755 0 0
-				FILE miscellaneous Cron_Tasks/APT_Update_Cron /etc/cron.daily/APT_Update_Cron 755 0 0 ;;
-			roks)
-				FILE roks roks /usr/bin/roks 755 0 0
-				FILE roks completion /usr/share/bash-completion/completions/roks 644 0 0 ;;
-			bdl)
-				FILE bdl bdl /usr/bin/bdl 755 0 0
-				FILE bdl completion /usr/share/bash-completion/completions/bdl 644 0 0 ;;
-			bashconfig)
-				LOGIT "Displaying bashconfig WARNING"
-				while read -r; do
-					printf "%s\n" "$REPLY"
-				done <<-EOF
-					WARNING: This will install and replace the following:
+while [ "$1" ]; do
+	case "$1" in
+		capnum)
+			FILE miscellaneous capnum /usr/bin/capnum 755 0 0 ;;
+		mfw)
+			FILE miscellaneous mfw /usr/bin/mfw 755 0 0 ;;
+		reviewer)
+			FILE reviewer reviewer /usr/bin/reviewer 755 0 0
+			FILE reviewer completion /usr/share/bash-completion/completions/reviewer 644 0 0 ;;
+		ubuntu-syschk)
+			FILE ubuntu-syschk ubuntu-syschk /usr/bin/ubuntu-syschk 755 0 0
+			FILE ubuntu-syschk completion /usr/share/bash-completion/completions/ubuntu-syschk 644 0 0 ;;
+		simplify-ubuntu)
+			FILE simplify-ubuntu simplify-ubuntu /usr/bin/simplify-ubuntu 755 0 0
+			FILE simplify-ubuntu completion /usr/share/bash-completion/completions/simplify-ubuntu 644 0 0
+			FILE miscellaneous clean-locales /usr/bin/clean-locales 755 0 0
+			FILE lspkg lspkg /usr/bin/lspkg 755 0 0 ;;
+		forex)
+			FILE miscellaneous forex /usr/bin/forex 755 0 0 ;;
+		autoscrot)
+			FILE autoscrot autoscrot /usr/bin/autoscrot 755 0 0 ;;
+		apt-undo-install)
+			FILE apt-undo-install apt-undo-install /usr/bin/apt-undo-install 755 0 0
+			FILE apt-undo-install completion /usr/share/bash-completion/completions/apt-undo-install 644 0 0 ;;
+		binwatch)
+			FILE binwatch binwatch /usr/bin/binwatch 755 0 0 ;;
+		bl)
+			FILE bl bl /usr/bin/bl 755 0 0 ;;
+		nxbt)
+			FILE nxbt nxbt /usr/bin/nxbt 755 0 0
+			FILE nxbt completion /usr/share/bash-completion/completions/nxbt 644 0 0 ;;
+		catmedia)
+			FILE catmedia catmedia /usr/bin/catmedia 755 0 0 ;;
+		cpufreq)
+			FILE cpufreq cpufreq /usr/bin/cpufreq 755 0 0 ;;
+		dwwdl)
+			FILE dwwdl dwwdl /usr/bin/dwwdl 755 0 0 ;;
+		notify-upgrade)
+			FILE notify-upgrade notify-upgrade /usr/bin/notify-upgrade 755 0 0
+			FILE miscellaneous Cron_Tasks/APT_Update_Cron /etc/cron.daily/APT_Update_Cron 755 0 0 ;;
+		roks)
+			FILE roks roks /usr/bin/roks 755 0 0
+			FILE roks completion /usr/share/bash-completion/completions/roks 644 0 0 ;;
+		bdl)
+			FILE bdl bdl /usr/bin/bdl 755 0 0
+			FILE bdl completion /usr/share/bash-completion/completions/bdl 644 0 0 ;;
+		bashconfig)
+			LOGIT "Displaying bashconfig WARNING"
+			while read -r; do
+				printf "%s\n" "$REPLY"
+			done <<-EOF
+				WARNING: This will install and replace the following:
 
-					  $HOME/.profile
-					  $HOME/.bash_aliases
-					  $HOME/.bash_functions
-					  $HOME/.bashrc
-					  $HOME/ShellPlugins/Bell_Alarm
-					  $HOME/ShellPlugins/Cleaner_RK_Scan
-					  $HOME/ShellPlugins/Clear_CD_LS
-					  $HOME/ShellPlugins/CPU_Intensive_Proc
-					  $HOME/ShellPlugins/Create_VM
-					  $HOME/ShellPlugins/Get_Bad_Hosts
-					  $HOME/ShellPlugins/Git_Status_All
-					  $HOME/ShellPlugins/List_Signals
-					  $HOME/ShellPlugins/Load_File_Links2
-					  $HOME/ShellPlugins/Loop_This
-					  $HOME/ShellPlugins/NIR_Difference
-					  $HOME/ShellPlugins/Play_Download_MPSY
-					  $HOME/ShellPlugins/Shell_Alias_Correc
-					  $HOME/ShellPlugins/Times_Table
+				  $HOME/.profile
+				  $HOME/.bash_aliases
+				  $HOME/.bash_functions
+				  $HOME/.bashrc
+				  $HOME/ShellPlugins/Bell_Alarm
+				  $HOME/ShellPlugins/Cleaner_RK_Scan
+				  $HOME/ShellPlugins/Clear_CD_LS
+				  $HOME/ShellPlugins/CPU_Intensive_Proc
+				  $HOME/ShellPlugins/Create_VM
+				  $HOME/ShellPlugins/Get_Bad_Hosts
+				  $HOME/ShellPlugins/Git_Status_All
+				  $HOME/ShellPlugins/List_Signals
+				  $HOME/ShellPlugins/Load_File_Links2
+				  $HOME/ShellPlugins/Loop_This
+				  $HOME/ShellPlugins/NIR_Difference
+				  $HOME/ShellPlugins/Play_Download_MPSY
+				  $HOME/ShellPlugins/Shell_Alias_Correc
+				  $HOME/ShellPlugins/Times_Table
 
-				EOF
+			EOF
 
-				LOGIT "Prompting user to continue or not"
-				read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
-				[[ "$REPLY" == "Yes!" ]] || { printf "No action taken -- quitting.\n"; exit 1; }
+			LOGIT "Prompting user to continue or not"
+			read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
+			[[ "$REPLY" == "Yes!" ]] || { printf "No action taken -- quitting.\n"; exit 1; }
 
-				FILE bashconfig .profile $HOME/.profile 644 "$SUDO_UID" "$SUDO_GID"
-				FILE bashconfig .bash_aliases $HOME/.bash_aliases 644 "$SUDO_UID" "$SUDO_GID"
-				FILE bashconfig .bash_functions $HOME/.bash_functions 644 "$SUDO_UID" "$SUDO_GID"
-				FILE bashconfig .bashrc $HOME/.bashrc 644 "$SUDO_UID" "$SUDO_GID"
+			FILE bashconfig .profile $HOME/.profile 644 "$SUDO_UID" "$SUDO_GID"
+			FILE bashconfig .bash_aliases $HOME/.bash_aliases 644 "$SUDO_UID" "$SUDO_GID"
+			FILE bashconfig .bash_functions $HOME/.bash_functions 644 "$SUDO_UID" "$SUDO_GID"
+			FILE bashconfig .bashrc $HOME/.bashrc 644 "$SUDO_UID" "$SUDO_GID"
 
-				if ! [ -d "$HOME/ShellPlugins" ]; then
-					LOGIT "Creating $HOME/ShellPlugins directory"
-					/bin/mkdir "$HOME/ShellPlugins"
-				fi
+			if ! [ -d "$HOME/ShellPlugins" ]; then
+				LOGIT "Creating $HOME/ShellPlugins directory"
+				/bin/mkdir "$HOME/ShellPlugins"
+			fi
 
-				LOGIT "Setting $HOME/ShellPlugins to $SUDO_UID UID and $SUDO_GID GID"
-				/bin/chown "$SUDO_UID":"$SUDO_GID" "$HOME/ShellPlugins"
+			LOGIT "Setting $HOME/ShellPlugins to $SUDO_UID UID and $SUDO_GID GID"
+			/bin/chown "$SUDO_UID":"$SUDO_GID" "$HOME/ShellPlugins"
 
-				FILE bashconfig ShellPlugins/Bell_Alarm $HOME/ShellPlugins/Bell_Alarm 644 $SUDO_UID "$SUDO_GID"
-				FILE bashconfig ShellPlugins/Cleaner_RK_Scan $HOME/ShellPlugins/Cleaner_RK_Scan 644 $SUDO_UID "$SUDO_GID"
-				FILE bashconfig ShellPlugins/Clear_CD_LS $HOME/ShellPlugins/Clear_CD_LS 644 $SUDO_UID "$SUDO_GID"
-				FILE bashconfig ShellPlugins/CPU_Intensive_Procs $HOME/ShellPlugins/CPU_Intensive_Procs 644 $SUDO_UID "$SUDO_GID"
-				FILE bashconfig ShellPlugins/Create_VM $HOME/ShellPlugins/Create_VM 644 $SUDO_UID "$SUDO_GID"
-				FILE bashconfig ShellPlugins/Get_Bad_Hosts $HOME/ShellPlugins/Get_Bad_Hosts 644 $SUDO_UID "$SUDO_GID"
-				FILE bashconfig ShellPlugins/Git_Status_All $HOME/ShellPlugins/Git_Status_All 644 $SUDO_UID "$SUDO_GID"
-				FILE bashconfig ShellPlugins/List_Signals $HOME/ShellPlugins/List_Signals 644 $SUDO_UID "$SUDO_GID"
-				FILE bashconfig ShellPlugins/Load_File_Links2 $HOME/ShellPlugins/Load_File_Links2 644 $SUDO_UID "$SUDO_GID"
-				FILE bashconfig ShellPlugins/Loop_This $HOME/ShellPlugins/Loop_This 644 $SUDO_UID "$SUDO_GID"
-				FILE bashconfig ShellPlugins/NIR_Difference $HOME/ShellPlugins/NIR_Difference 644 $SUDO_UID "$SUDO_GID"
-				FILE bashconfig ShellPlugins/Play_Download_MPSYT $HOME/ShellPlugins/Play_Download_MPSYT 644 $SUDO_UID "$SUDO_GID"
-				FILE bashconfig ShellPlugins/Shell_Alias_Correcting $HOME/ShellPlugins/Shell_Alias_Correcting 644 $SUDO_UID "$SUDO_GID"
-				FILE bashconfig ShellPlugins/Times_Table $HOME/ShellPlugins/Times_Table 644 $SUDO_UID "$SUDO_GID" ;;
-			i3config)
-				LOGIT "Displaying i3config WARNING"
-				while read -r; do
-					printf "%s\n" "$REPLY"
-				done <<-EOF
-					WARNING: This will install and replace the following:
+			FILE bashconfig ShellPlugins/Bell_Alarm $HOME/ShellPlugins/Bell_Alarm 644 $SUDO_UID "$SUDO_GID"
+			FILE bashconfig ShellPlugins/Cleaner_RK_Scan $HOME/ShellPlugins/Cleaner_RK_Scan 644 $SUDO_UID "$SUDO_GID"
+			FILE bashconfig ShellPlugins/Clear_CD_LS $HOME/ShellPlugins/Clear_CD_LS 644 $SUDO_UID "$SUDO_GID"
+			FILE bashconfig ShellPlugins/CPU_Intensive_Procs $HOME/ShellPlugins/CPU_Intensive_Procs 644 $SUDO_UID "$SUDO_GID"
+			FILE bashconfig ShellPlugins/Create_VM $HOME/ShellPlugins/Create_VM 644 $SUDO_UID "$SUDO_GID"
+			FILE bashconfig ShellPlugins/Get_Bad_Hosts $HOME/ShellPlugins/Get_Bad_Hosts 644 $SUDO_UID "$SUDO_GID"
+			FILE bashconfig ShellPlugins/Git_Status_All $HOME/ShellPlugins/Git_Status_All 644 $SUDO_UID "$SUDO_GID"
+			FILE bashconfig ShellPlugins/List_Signals $HOME/ShellPlugins/List_Signals 644 $SUDO_UID "$SUDO_GID"
+			FILE bashconfig ShellPlugins/Load_File_Links2 $HOME/ShellPlugins/Load_File_Links2 644 $SUDO_UID "$SUDO_GID"
+			FILE bashconfig ShellPlugins/Loop_This $HOME/ShellPlugins/Loop_This 644 $SUDO_UID "$SUDO_GID"
+			FILE bashconfig ShellPlugins/NIR_Difference $HOME/ShellPlugins/NIR_Difference 644 $SUDO_UID "$SUDO_GID"
+			FILE bashconfig ShellPlugins/Play_Download_MPSYT $HOME/ShellPlugins/Play_Download_MPSYT 644 $SUDO_UID "$SUDO_GID"
+			FILE bashconfig ShellPlugins/Shell_Alias_Correcting $HOME/ShellPlugins/Shell_Alias_Correcting 644 $SUDO_UID "$SUDO_GID"
+			FILE bashconfig ShellPlugins/Times_Table $HOME/ShellPlugins/Times_Table 644 $SUDO_UID "$SUDO_GID" ;;
+		i3config)
+			LOGIT "Displaying i3config WARNING"
+			while read -r; do
+				printf "%s\n" "$REPLY"
+			done <<-EOF
+				WARNING: This will install and replace the following:
 
-					  $HOME/.config/i3/config
-					  $HOME/.i3a/dtrecord
-					  $HOME/.i3a/feh_slides
-					  $HOME/.i3a/initialize
-					  $HOME/.i3a/key_autorepeat
-					  $HOME/.i3a/scrot_sel_take
-					  $HOME/.i3a/scrot_take
-					  $HOME/.i3a/scrot_win_take
-					  $HOME/.i3a/sink_lower
-					  $HOME/.i3a/sink_mute
-					  $HOME/.i3a/sink_raise
-					  $HOME/.i3a/source_lower
-					  $HOME/.i3a/source_mute
-					  $HOME/.i3a/source_raise
-					  $HOME/.i3a/term_font_size
-					  $HOME/.i3a/term_font_size_py
-					  $HOME/.i3a/terminal
-					  $HOME/.i3a/track_notify
-					  $HOME/.i3a/use_dmenu
+				  $HOME/.config/i3/config
+				  $HOME/.i3a/dtrecord
+				  $HOME/.i3a/feh_slides
+				  $HOME/.i3a/initialize
+				  $HOME/.i3a/key_autorepeat
+				  $HOME/.i3a/scrot_sel_take
+				  $HOME/.i3a/scrot_take
+				  $HOME/.i3a/scrot_win_take
+				  $HOME/.i3a/sink_lower
+				  $HOME/.i3a/sink_mute
+				  $HOME/.i3a/sink_raise
+				  $HOME/.i3a/source_lower
+				  $HOME/.i3a/source_mute
+				  $HOME/.i3a/source_raise
+				  $HOME/.i3a/term_font_size
+				  $HOME/.i3a/term_font_size_py
+				  $HOME/.i3a/terminal
+				  $HOME/.i3a/track_notify
+				  $HOME/.i3a/use_dmenu
 
-				EOF
+			EOF
 
-				LOGIT "Prompting user to continue or not"
-				read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
-				[[ "$REPLY" == "Yes!" ]] || { printf "No action taken -- quitting.\n"; exit 1; }
+			LOGIT "Prompting user to continue or not"
+			read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
+			[[ "$REPLY" == "Yes!" ]] || { printf "No action taken -- quitting.\n"; exit 1; }
 
-				FILE i3config config $HOME/.config/i3/config 644 "$SUDO_UID" "$SUDO_GID"
+			FILE i3config config $HOME/.config/i3/config 644 "$SUDO_UID" "$SUDO_GID"
 
-				if ! [ -d "$HOME/.i3a" ]; then
-					LOGIT "Creating $HOME/.i3a directory"
-					/bin/mkdir "$HOME/.i3a"
-				fi
+			if ! [ -d "$HOME/.i3a" ]; then
+				LOGIT "Creating $HOME/.i3a directory"
+				/bin/mkdir "$HOME/.i3a"
+			fi
 
-				LOGIT "Setting $HOME/.i3a to $SUDO_UID UID and $SUDO_GID GID"
+			LOGIT "Setting $HOME/.i3a to $SUDO_UID UID and $SUDO_GID GID"
 
-				FILE i3config .i3a/dtrecord $HOME/.i3a/dtrecord 644 "$SUDO_UID" "$SUDO_GID"
-				FILE i3config .i3a/feh_slides $HOME/.i3a/feh_slides 644 "$SUDO_UID" "$SUDO_GID"
-				FILE i3config .i3a/initialize $HOME/.i3a/initialize 644 "$SUDO_UID" "$SUDO_GID"
-				FILE i3config .i3a/key_autorepeat $HOME/.i3a/key_autorepeat 644 "$SUDO_UID" "$SUDO_GID"
-				FILE i3config .i3a/scrot_sel_take $HOME/.i3a/scrot_sel_take 644 "$SUDO_UID" "$SUDO_GID"
-				FILE i3config .i3a/scrot_take $HOME/.i3a/scrot_take 644 "$SUDO_UID" "$SUDO_GID"
-				FILE i3config .i3a/scrot_win_take $HOME/.i3a/scrot_win_take 644 "$SUDO_UID" "$SUDO_GID"
-				FILE i3config .i3a/sink_lower $HOME/.i3a/sink_lower 644 "$SUDO_UID" "$SUDO_GID"
-				FILE i3config .i3a/sink_mute $HOME/.i3a/sink_mute 644 "$SUDO_UID" "$SUDO_GID"
-				FILE i3config .i3a/sink_raise $HOME/.i3a/sink_raise 644 "$SUDO_UID" "$SUDO_GID"
-				FILE i3config .i3a/source_lower $HOME/.i3a/source_lower 644 "$SUDO_UID" "$SUDO_GID"
-				FILE i3config .i3a/source_mute $HOME/.i3a/source_mute 644 "$SUDO_UID" "$SUDO_GID"
-				FILE i3config .i3a/source_raise $HOME/.i3a/source_raise 644 "$SUDO_UID" "$SUDO_GID"
-				FILE i3config .i3a/term_font_size $HOME/.i3a/term_font_size 644 "$SUDO_UID" "$SUDO_GID"
-				FILE i3config .i3a/term_font_size_py $HOME/.i3a/term_font_size_py 644 "$SUDO_UID" "$SUDO_GID"
-				FILE i3config .i3a/terminal $HOME/.i3a/terminal 644 "$SUDO_UID" "$SUDO_GID"
-				FILE i3config .i3a/track_notify $HOME/.i3a/track_notify 644 "$SUDO_UID" "$SUDO_GID"
-				FILE i3config .i3a/use_dmenu $HOME/.i3a/use_dmenu 644 "$SUDO_UID" "$SUDO_GID" ;;
-			kernelchk)
-				FILE kernelchk kernelchk /usr/bin/kernelchk 755 0 0 ;;
-			get-uuid)
-				FILE get-uuid get-uuid /usr/bin/get-uuid 755 0 0
-				FILE get-uuid get-uuid.desktop /usr/share/applications/get-uuid.desktop 644 0 0 ;;
-			wcdl)
-				FILE wcdl wcdl /usr/bin/wcdl 755 0 0
-				FILE wcdl wcdl-cacheparse /usr/bin/wcdl-cacheparse 755 0 0 ;;
-			getline)
-				FILE getline getline /usr/bin/getline 755 0 0 ;;
-			mansaver)
-				FILE mansaver mansaver /usr/bin/mansaver 755 0 0 ;;
-			lspkg)
-				FILE lspkg lspkg /usr/bin/lspkg 755 0 0
-				FILE lspkg completion /usr/share/bash-completion/completions/lspkg 644 0 0 ;;
-			lsbins)
-				FILE miscellaneous lsbins /usr/bin/lsbins 755 0 0 ;;
-			github-ssh-setup)
-				FILE github-ssh-setup github-ssh-setup /usr/bin/github-ssh-setup 755 0 0 ;;
-			homewatch)
-				FILE homewatch homewatch /usr/bin/homewatch 755 0 0 ;;
-			getip)
-				FILE getip getip /usr/bin/getip 755 0 0
-				FILE getip completion /usr/share/bash-completion/completions/getip 644 0 0 ;;
-			ripmydvd)
-				FILE ripmydvd ripmydvd /usr/bin/ripmydvd 755 0 0 ;;
-			simwea)
-				FILE simwea simwea /usr/bin/simwea 755 0 0 ;;
-			medlog)
-				FILE miscellaneous medlog /usr/bin/medlog 755 0 0 ;;
-			mif)
-				FILE miscellaneous mif /usr/bin/mif 755 0 0 ;;
-			seewttr)
-				FILE miscellaneous seewttr /usr/bin/seewttr 755 0 0 ;;
-			backmeup)
-				FILE miscellaneous backmeup /usr/bin/backmeup 755 0 0 ;;
-			clean-locales)
-				FILE miscellaneous clean-locales /usr/bin/clean-locales 755 0 0 ;;
-			mkpass)
-				FILE miscellaneous mkpass /usr/bin/mkpass 755 0 0 ;;
-			mplay)
-				FILE miscellaneous mplay /usr/bin/mplay 755 0 0 ;;
-			pagewatch)
-				FILE miscellaneous pagewatch /usr/bin/pagewatch 755 0 0 ;;
-			redshifter)
-				FILE miscellaneous redshifter /usr/bin/redshifter 755 0 0 ;;
-			tozero)
-				FILE miscellaneous tozero /usr/bin/tozero 755 0 0 ;;
-			nosp)
-				FILE miscellaneous nosp /usr/bin/nosp 755 0 0 ;;
-			dlspwalls)
-				FILE miscellaneous dlspwalls /usr/bin/dlspwalls 755 0 0 ;;
-			dlfcmags)
-				FILE miscellaneous dlfcmags /usr/bin/dlfcmags 755 0 0 ;;
-			dlfallwalls)
-				FILE miscellaneous dlfallwalls /usr/bin/dlfallwalls 755 0 0 ;;
-			dl-tuxradar-podcasts)
-				FILE miscellaneous dl-tuxradar-podcasts /usr/bin/dl-tuxradar-podcasts 755 0 0 ;;
-			*)
-				ERR "$LINENO" "Unavailable WHAT at: $1" ;;
-		esac
+			FILE i3config .i3a/dtrecord $HOME/.i3a/dtrecord 644 "$SUDO_UID" "$SUDO_GID"
+			FILE i3config .i3a/feh_slides $HOME/.i3a/feh_slides 644 "$SUDO_UID" "$SUDO_GID"
+			FILE i3config .i3a/initialize $HOME/.i3a/initialize 644 "$SUDO_UID" "$SUDO_GID"
+			FILE i3config .i3a/key_autorepeat $HOME/.i3a/key_autorepeat 644 "$SUDO_UID" "$SUDO_GID"
+			FILE i3config .i3a/scrot_sel_take $HOME/.i3a/scrot_sel_take 644 "$SUDO_UID" "$SUDO_GID"
+			FILE i3config .i3a/scrot_take $HOME/.i3a/scrot_take 644 "$SUDO_UID" "$SUDO_GID"
+			FILE i3config .i3a/scrot_win_take $HOME/.i3a/scrot_win_take 644 "$SUDO_UID" "$SUDO_GID"
+			FILE i3config .i3a/sink_lower $HOME/.i3a/sink_lower 644 "$SUDO_UID" "$SUDO_GID"
+			FILE i3config .i3a/sink_mute $HOME/.i3a/sink_mute 644 "$SUDO_UID" "$SUDO_GID"
+			FILE i3config .i3a/sink_raise $HOME/.i3a/sink_raise 644 "$SUDO_UID" "$SUDO_GID"
+			FILE i3config .i3a/source_lower $HOME/.i3a/source_lower 644 "$SUDO_UID" "$SUDO_GID"
+			FILE i3config .i3a/source_mute $HOME/.i3a/source_mute 644 "$SUDO_UID" "$SUDO_GID"
+			FILE i3config .i3a/source_raise $HOME/.i3a/source_raise 644 "$SUDO_UID" "$SUDO_GID"
+			FILE i3config .i3a/term_font_size $HOME/.i3a/term_font_size 644 "$SUDO_UID" "$SUDO_GID"
+			FILE i3config .i3a/term_font_size_py $HOME/.i3a/term_font_size_py 644 "$SUDO_UID" "$SUDO_GID"
+			FILE i3config .i3a/terminal $HOME/.i3a/terminal 644 "$SUDO_UID" "$SUDO_GID"
+			FILE i3config .i3a/track_notify $HOME/.i3a/track_notify 644 "$SUDO_UID" "$SUDO_GID"
+			FILE i3config .i3a/use_dmenu $HOME/.i3a/use_dmenu 644 "$SUDO_UID" "$SUDO_GID" ;;
+		kernelchk)
+			FILE kernelchk kernelchk /usr/bin/kernelchk 755 0 0 ;;
+		get-uuid)
+			FILE get-uuid get-uuid /usr/bin/get-uuid 755 0 0
+			FILE get-uuid get-uuid.desktop /usr/share/applications/get-uuid.desktop 644 0 0 ;;
+		wcdl)
+			FILE wcdl wcdl /usr/bin/wcdl 755 0 0
+			FILE wcdl wcdl-cacheparse /usr/bin/wcdl-cacheparse 755 0 0 ;;
+		getline)
+			FILE getline getline /usr/bin/getline 755 0 0 ;;
+		mansaver)
+			FILE mansaver mansaver /usr/bin/mansaver 755 0 0 ;;
+		lspkg)
+			FILE lspkg lspkg /usr/bin/lspkg 755 0 0
+			FILE lspkg completion /usr/share/bash-completion/completions/lspkg 644 0 0 ;;
+		lsbins)
+			FILE miscellaneous lsbins /usr/bin/lsbins 755 0 0 ;;
+		github-ssh-setup)
+			FILE github-ssh-setup github-ssh-setup /usr/bin/github-ssh-setup 755 0 0 ;;
+		homewatch)
+			FILE homewatch homewatch /usr/bin/homewatch 755 0 0 ;;
+		getip)
+			FILE getip getip /usr/bin/getip 755 0 0
+			FILE getip completion /usr/share/bash-completion/completions/getip 644 0 0 ;;
+		ripmydvd)
+			FILE ripmydvd ripmydvd /usr/bin/ripmydvd 755 0 0 ;;
+		simwea)
+			FILE simwea simwea /usr/bin/simwea 755 0 0 ;;
+		medlog)
+			FILE miscellaneous medlog /usr/bin/medlog 755 0 0 ;;
+		mif)
+			FILE miscellaneous mif /usr/bin/mif 755 0 0 ;;
+		seewttr)
+			FILE miscellaneous seewttr /usr/bin/seewttr 755 0 0 ;;
+		backmeup)
+			FILE miscellaneous backmeup /usr/bin/backmeup 755 0 0 ;;
+		clean-locales)
+			FILE miscellaneous clean-locales /usr/bin/clean-locales 755 0 0 ;;
+		mkpass)
+			FILE miscellaneous mkpass /usr/bin/mkpass 755 0 0 ;;
+		mplay)
+			FILE miscellaneous mplay /usr/bin/mplay 755 0 0 ;;
+		pagewatch)
+			FILE miscellaneous pagewatch /usr/bin/pagewatch 755 0 0 ;;
+		redshifter)
+			FILE miscellaneous redshifter /usr/bin/redshifter 755 0 0 ;;
+		tozero)
+			FILE miscellaneous tozero /usr/bin/tozero 755 0 0 ;;
+		nosp)
+			FILE miscellaneous nosp /usr/bin/nosp 755 0 0 ;;
+		dlspwalls)
+			FILE miscellaneous dlspwalls /usr/bin/dlspwalls 755 0 0 ;;
+		dlfcmags)
+			FILE miscellaneous dlfcmags /usr/bin/dlfcmags 755 0 0 ;;
+		dlfallwalls)
+			FILE miscellaneous dlfallwalls /usr/bin/dlfallwalls 755 0 0 ;;
+		dl-tuxradar-podcasts)
+			FILE miscellaneous dl-tuxradar-podcasts /usr/bin/dl-tuxradar-podcasts 755 0 0 ;;
+		*)
+			ERR "$LINENO" "Unavailable WHAT at: $1" ;;
+	esac
 
-		shift
-	done
-else
-	printf "%s\n" "${AVAIL[@]}"
-fi
+	shift
+done

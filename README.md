@@ -158,6 +158,12 @@ At which point you just type 'Yes!' exactly as you see it in the above prompt, t
 
 ## UPDATES & KNOWN ISSUES
 
+* Fri  2 Feb 15:22:14 GMT 2018
+
+The small lsbins shell program has been moved to miscellaneous; it doesn't really merit having a repository of its own, since it's so small and basic, with little need for any big updates.
+
+If you'd like to install lsbins, or update an existing installation thereof, then please *update* insit beforehand.
+
 * Fri  2 Feb 13:28:57 GMT 2018
 
 Sometimes, while it works as expected, updating insit still yields this result:

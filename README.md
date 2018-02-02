@@ -1,18 +1,18 @@
-# insit
+#insit
 Installer for many shell programs from terminalforlife.
 
 **MASTER** - _Hopefully stable branch._\
 **DEV** - _Development Branch (latest changes)_
 
-INTRODUCTION
-------------
+##INTRODUCTION
+##------------
 
 Just download and install this handy-dandy installer in order to run it and install all of the TFL programs, scripts, tools, utilities, or whatever else (mostly) is up for grabs here. Don't worry, the installer can, per your request, update itself as well.
 
 As of 29th January 2018, bash completion is now fully supported and working in insit. This is also gradually coming to other TFL programs, such as apt-undo-install, lspkg, simplify-ubuntu, and ubuntu-syschk, so watch this space!
 
-HOW TO GET THIS INSTALLER
--------------------------
+##HOW TO GET THIS INSTALLER
+##-------------------------
 
 Execute the following one-liner to download and install insit:
 
@@ -34,8 +34,8 @@ sudo bash insit -S
 
 While that command is ordinarily for updating a pre-existing installation of insit, it'll also serve to install it -- bonus.
 
-EXAMPLE
--------
+##EXAMPLE
+##-------
 
 Now that you've done that, all that's left is to load up insit to peruse the catalogue of my work at your own leisure. Here is its `--help` output, as of 29th January 2018:
 
@@ -158,3 +158,25 @@ Enter 'Yes!' if you're sure you wish to continue:
 ```
 
 At which point you just type 'Yes!' exactly as you see it in the above prompt, then press the Enter key, and away you go! Just, fair warning, be absolutely sure to have **backed up your files** before you give the go-ahead.
+
+##UPDATES & KNOWN ISSUES
+##----------------------
+
+###**Fri  2 Feb 13:28:57 GMT 2018**
+
+Sometimes, while it works as expected, updating insit still yields this result:
+
+```bash
+$ sudo insit -S
+File '/usr/bin/insit' downloaded and updated.
+File '/usr/bin/insit' ownership re-set.
+File '/usr/bin/insit' mode re-set.
+File '/usr/share/bash-completion/completions/insit' downloaded and updated.
+File '/usr/share/bash-completion/completions/insit' ownership re-set.
+File '/usr/share/bash-completion/completions/insit' mode re-set.
+/usr/bin/insit: line 227: it: command not found
+/usr/bin/insit: line 228: syntax error near unexpected token `fi'
+/usr/bin/insit: line 228: `fi'
+```
+
+I'm hoping the latest commit(s) will fix this. As a result of this hopefully-a-fix, it'll no longer be possible to update insit _and_ install and/or update something. This will likely be revised at a later date.

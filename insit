@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sat  3 Feb 19:13:13 GMT 2018
+# Last Change       - Sat  3 Feb 19:40:23 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -25,10 +25,11 @@ for DEP in /usr/bin/wget /bin/{mv,rm,chmod,chown,mkdir}; {
 
 [ $DEPCOUNT -eq 0 ] || exit 1
 
-# Newer versions of wget by default request unwanted server-side compression. This
-# is at least observed in Solus 3 (rolling-release distro) as of 3rd February 2018.
-/usr/bin/wget --compression=none 2>&1 > /dev/null
-[ $? -eq 2 ] && WGET_COMPRESS="--compression=none"
+# Newer versions of wget by default request unwanted server-side compression.
+read -a WGET_VERSION_LINE <<< "$(/usr/bin/wget --version)"
+if [ 0${WGET_VERSION_LINE[2]//[!0-9]} -ge 01192 ]; then
+	XERR "$LINENO" "Your version of wget is currently unsupported."
+fi
 
 USAGE(){
 	while read -r; do
@@ -162,8 +163,7 @@ FILE(){
 			#TODO - This is sloppy - IMPROVE!
 			if [ -f "$3" ]; then
 				LOGIT "Downloading $URL/$1/$BRANCH/$2 over $3"
-				if /usr/bin/wget $WGET_COMPRESS --quiet\
-					"$URL/$1/raw/$BRANCH/$2" -O "$3" &> /dev/null; then
+				if /usr/bin/wget -q "$URL/$1/raw/$BRANCH/$2" -O "$3" &> /dev/null; then
 					printf "File '%s' downloaded and updated.\n" "$3"
 				else
 					ERR "$LINENO" "Unable to download and/or update '$3' file."
@@ -185,8 +185,7 @@ FILE(){
 				fi
 			else
 				LOGIT "Downloading $URL/$1/$BRANCH/$2 to $3"
-				if /usr/bin/wget $WGET_COMPRESS --quiet\
-					"$URL/$1/raw/$BRANCH/$2" -O "$3" &> /dev/null; then
+				if /usr/bin/wget -q "$URL/$1/raw/$BRANCH/$2" -O "$3" &> /dev/null; then
 					printf "File '%s' downloaded.\n" "$3"
 				else
 					ERR "$LINENO" "Unable to download '$3' file."

@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sat  3 Feb 18:58:20 GMT 2018
+# Last Change       - Sat  3 Feb 19:13:13 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -25,11 +25,16 @@ for DEP in /usr/bin/wget /bin/{mv,rm,chmod,chown,mkdir}; {
 
 [ $DEPCOUNT -eq 0 ] || exit 1
 
+# Newer versions of wget by default request unwanted server-side compression. This
+# is at least observed in Solus 3 (rolling-release distro) as of 3rd February 2018.
+/usr/bin/wget --compression=none 2>&1 > /dev/null
+[ $? -eq 2 ] && WGET_COMPRESS="--compression=none"
+
 USAGE(){
 	while read -r; do
 		printf "%s\n" "$REPLY"
 	done <<-EOF
-		            INSIT (2nd February 2018)
+		            INSIT (3rd February 2018)
 		            Written by terminalforlife (terminalforlife@yahoo.com)
 
 		            Installer for many shell programs from terminalforlife.
@@ -76,9 +81,6 @@ USAGE(){
 		SITE:       https://github.com/terminalforlife
 	EOF
 }
-
-# Keeping the OLD_URL around in-case it's needed.
-OLD_URL="https://raw.githubusercontent.com/terminalforlife"
 
 LOGFILE="/var/log/tfl_insit.log"
 URL="github.com/terminalforlife"
@@ -160,7 +162,8 @@ FILE(){
 			#TODO - This is sloppy - IMPROVE!
 			if [ -f "$3" ]; then
 				LOGIT "Downloading $URL/$1/$BRANCH/$2 over $3"
-				if /usr/bin/wget -q "$URL/$1/raw/$BRANCH/$2" -O "$3" &> /dev/null; then
+				if /usr/bin/wget $WGET_COMPRESS --quiet\
+					"$URL/$1/raw/$BRANCH/$2" -O "$3" &> /dev/null; then
 					printf "File '%s' downloaded and updated.\n" "$3"
 				else
 					ERR "$LINENO" "Unable to download and/or update '$3' file."
@@ -182,7 +185,8 @@ FILE(){
 				fi
 			else
 				LOGIT "Downloading $URL/$1/$BRANCH/$2 to $3"
-				if /usr/bin/wget -q "$URL/$1/raw/$BRANCH/$2" -O "$3" &> /dev/null; then
+				if /usr/bin/wget $WGET_COMPRESS --quiet\
+					"$URL/$1/raw/$BRANCH/$2" -O "$3" &> /dev/null; then
 					printf "File '%s' downloaded.\n" "$3"
 				else
 					ERR "$LINENO" "Unable to download '$3' file."

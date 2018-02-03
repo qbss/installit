@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sat  3 Feb 19:40:23 GMT 2018
+# Last Change       - Sat  3 Feb 20:51:13 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -472,7 +472,8 @@ while [ "$1" ]; do
 		ripmydvd)
 			FILE ripmydvd ripmydvd /usr/bin/ripmydvd 755 0 0 ;;
 		simwea)
-			FILE simwea simwea /usr/bin/simwea 755 0 0 ;;
+			FILE simwea simwea /usr/bin/simwea 755 0 0
+			FILE simwea completion /usr/share/bash-completion/completions/simwea 644 0 0 ;;
 		medlog)
 			FILE miscellaneous medlog /usr/bin/medlog 755 0 0 ;;
 		mif)

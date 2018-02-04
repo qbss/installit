@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sat  3 Feb 20:51:13 GMT 2018
+# Last Change       - Sun  4 Feb 15:59:31 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -35,7 +35,7 @@ USAGE(){
 	while read -r; do
 		printf "%s\n" "$REPLY"
 	done <<-EOF
-		            INSIT (3rd February 2018)
+		            INSIT (4th February 2018)
 		            Written by terminalforlife (terminalforlife@yahoo.com)
 
 		            Installer for many shell programs from terminalforlife.
@@ -445,7 +445,8 @@ while [ "$1" ]; do
 			FILE i3config .i3a/track_notify $HOME/.i3a/track_notify 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3a/use_dmenu $HOME/.i3a/use_dmenu 644 "$SUDO_UID" "$SUDO_GID" ;;
 		kernelchk)
-			FILE kernelchk kernelchk /usr/bin/kernelchk 755 0 0 ;;
+			FILE kernelchk kernelchk /usr/bin/kernelchk 755 0 0
+			FILE kernelchk completion /usr/share/bash-completion/completions/kernelchk 644 0 0 ;;
 		get-uuid)
 			FILE get-uuid get-uuid /usr/bin/get-uuid 755 0 0
 			FILE get-uuid get-uuid.desktop /usr/share/applications/get-uuid.desktop 644 0 0 ;;

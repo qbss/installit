@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sun  4 Feb 15:59:31 GMT 2018
+# Last Change       - Tue  6 Feb 18:00:54 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -35,7 +35,7 @@ USAGE(){
 	while read -r; do
 		printf "%s\n" "$REPLY"
 	done <<-EOF
-		            INSIT (4th February 2018)
+		            INSIT (6th February 2018)
 		            Written by terminalforlife (terminalforlife@yahoo.com)
 
 		            Installer for many shell programs from terminalforlife.
@@ -392,6 +392,9 @@ while [ "$1" ]; do
 				WARNING: This will install and replace the following:
 
 				  $HOME/.config/i3/config
+				  $HOME/.i3babove
+				  $HOME/.i3bbelow
+				  $HOME/.libi3bview
 				  $HOME/.i3a/dtrecord
 				  $HOME/.i3a/feh_slides
 				  $HOME/.i3a/initialize
@@ -418,6 +421,9 @@ while [ "$1" ]; do
 			[[ "$REPLY" == "Yes!" ]] || { printf "No action taken -- quitting.\n"; exit 1; }
 
 			FILE i3config config $HOME/.config/i3/config 644 "$SUDO_UID" "$SUDO_GID"
+			FILE i3config .libi3bview $HOME/.libi3bview 644 "$SUDO_UID" "$SUDO_GID"
+			FILE i3config .i3babove $HOME/.i3babove 644 "$SUDO_UID" "$SUDO_GID"
+			FILE i3config .i3bbelow $HOME/.i3bbelow 644 "$SUDO_UID" "$SUDO_GID"
 
 			if ! [ -d "$HOME/.i3a" ]; then
 				LOGIT "Creating $HOME/.i3a directory"

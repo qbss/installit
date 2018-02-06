@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Tue  6 Feb 18:00:54 GMT 2018
+# Last Change       - Tue  6 Feb 18:07:46 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -395,7 +395,6 @@ while [ "$1" ]; do
 				  $HOME/.i3babove
 				  $HOME/.i3bbelow
 				  $HOME/.libi3bview
-				  $HOME/.i3a/dtrecord
 				  $HOME/.i3a/feh_slides
 				  $HOME/.i3a/initialize
 				  $HOME/.i3a/key_autorepeat
@@ -432,7 +431,6 @@ while [ "$1" ]; do
 
 			LOGIT "Setting $HOME/.i3a to $SUDO_UID UID and $SUDO_GID GID"
 
-			FILE i3config .i3a/dtrecord $HOME/.i3a/dtrecord 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3a/feh_slides $HOME/.i3a/feh_slides 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3a/initialize $HOME/.i3a/initialize 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3a/key_autorepeat $HOME/.i3a/key_autorepeat 644 "$SUDO_UID" "$SUDO_GID"

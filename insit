@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Mon 12 Feb 18:15:24 GMT 2018
+# Last Change       - Mon 12 Feb 18:15:45 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -422,7 +422,7 @@ while [ "$1" ]; do
 			FILE bashconfig ShellPlugins/Shell_Alias_Correcting $HOME/ShellPlugins/Shell_Alias_Correcting 644 $SUDO_UID "$SUDO_GID"
 			FILE bashconfig ShellPlugins/Times_Table $HOME/ShellPlugins/Times_Table 644 $SUDO_UID "$SUDO_GID"
 
-			APT_INSTALL fonts-symbola
+			APT_INSTALL fonts-symbola ;;
 		i3config)
 			LOGIT "Displaying i3config WARNING"
 			while read -r; do
@@ -491,7 +491,7 @@ while [ "$1" ]; do
 			FILE i3config .i3a/use_dmenu $HOME/.i3a/use_dmenu 644 "$SUDO_UID" "$SUDO_GID"
 
 			APT_INSTALL i3-wm i3blocks suckless-tools compton moc\
-				terminology libnotify-bin dunst pulseaudio-utils
+				terminology libnotify-bin dunst pulseaudio-utils ;;
 		kernelchk)
 			FILE kernelchk kernelchk /usr/bin/kernelchk 755 0 0
 			FILE kernelchk completion /usr/share/bash-completion/completions/kernelchk 644 0 0 ;;

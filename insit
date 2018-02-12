@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Mon 12 Feb 18:27:39 GMT 2018
+# Last Change       - Mon 12 Feb 18:28:26 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -139,6 +139,7 @@ fi
 LOGIT(){
 	if ! [ $UID -eq 0 ]; then
 		ERR "$LINENO" "Logging disabled -- insufficient permissions."
+		return 1
 	fi
 
 	if [ "$LOGIT" == "true" ]; then
@@ -146,8 +147,7 @@ LOGIT(){
 			XERR "$LINENO" "System directory '/var/log' not found."
 		else
 			printf -v DATETIME "%(%F_%X)T" "-1"
-			printf "[%s]: %s\n" "$DATETIME" "$1"\
-				>> "$LOGFILE" 2> /dev/null
+			printf "[%s]: %s\n" "$DATETIME" "$1" >> "$LOGFILE"
 
 			readarray A < "$LOGFILE"
 			if [ "${#A[@]}" -gt 4000 ]; then

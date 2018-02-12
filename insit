@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Mon 12 Feb 03:06:15 GMT 2018
+# Last Change       - Mon 12 Feb 03:44:08 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -35,7 +35,7 @@ USAGE(){
 	while read -r; do
 		printf "%s\n" "$REPLY"
 	done <<-EOF
-		            INSIT (11th February 2018)
+		            INSIT (12th February 2018)
 		            Written by terminalforlife (terminalforlife@yahoo.com)
 
 		            Installer for many shell programs from terminalforlife.
@@ -482,7 +482,8 @@ while [ "$1" ]; do
 		medlog)
 			FILE miscellaneous medlog /usr/bin/medlog 755 0 0 ;;
 		mif)
-			FILE miscellaneous mif /usr/bin/mif 755 0 0 ;;
+			FILE miscellaneous mif /usr/bin/mif 755 0 0
+			FILE miscellaneous Completions/mif /usr/share/bash-completion/completions/mif 644 0 0 ;;
 		seewttr)
 			FILE miscellaneous seewttr /usr/bin/seewttr 755 0 0 ;;
 		backmeup)

@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Mon 12 Feb 18:15:45 GMT 2018
+# Last Change       - Mon 12 Feb 18:26:21 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -136,13 +136,11 @@ fi
 [ "$BEQUIET" == "true" ] && exec 1> /dev/null
 [ "$DEBUGME" == "true" ] && set -xeu
 
-if ! [ $UID -eq 0 ]; then
-	ERR "$LINENO" "Logging disabled -- insufficient permissions."
-else
-	unset LOGIT
-fi
-
 LOGIT(){
+	if ! [ $UID -eq 0 ]; then
+		ERR "$LINENO" "Logging disabled -- insufficient permissions."
+	fi
+
 	if [ "$LOGIT" == "true" ]; then
 		if ! [ -d "${LOGFILE%/*}" ]; then
 			XERR "$LINENO" "System directory '/var/log' not found."

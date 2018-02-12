@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Mon 12 Feb 18:04:34 GMT 2018
+# Last Change       - Mon 12 Feb 18:15:24 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ USAGE(){
 		            --available|-A          - Output all available programs.
 		            --branch|-B NAME        - Where NAME is the branch to use.
 		            --self-update|-S        - Update insit to the latest stable version.
-		            --ignore-root           - Disregard whether you have root access.
+		            --ignore-root|-I        - Disregard whether you have root access.
 		            --custom|-C             - Execute your own FILE function line.
 		            --log|-L                - Log and time-stamp actions to take.
 
@@ -110,16 +110,12 @@ while [ "$1" ]; do
 		--self-update|-S)
 			UPDATE="true"
 			SELF="true" ;;
-		--ignore-root)
+		--ignore-root|-I)
 			IGNORE_ROOT="true" ;;
 		--custom|-C)
 			CUSTOM="true" ;;
 		--log|-L)
-			if ! [ $UID -eq 0 ]; then
-				ERR "$LINENO" "Logging disabled -- insufficient permissions."
-			else
-				LOGIT="true"
-			fi ;;
+			LOGIT="true" ;;
 		-*)
 			XERR "$LINENO" "Incorrect argument(s) specified." ;;
 		*)
@@ -139,6 +135,12 @@ fi
 
 [ "$BEQUIET" == "true" ] && exec 1> /dev/null
 [ "$DEBUGME" == "true" ] && set -xeu
+
+if ! [ $UID -eq 0 ]; then
+	ERR "$LINENO" "Logging disabled -- insufficient permissions."
+else
+	unset LOGIT
+fi
 
 LOGIT(){
 	if [ "$LOGIT" == "true" ]; then
@@ -359,11 +361,6 @@ while [ "$1" ]; do
 			FILE bdl bdl /usr/bin/bdl 755 0 0
 			FILE bdl completion /usr/share/bash-completion/completions/bdl 644 0 0 ;;
 		bashconfig)
-			if ! [ "$IGNORE_ROOT" == "true" ]; then
-				IGNORE_ROOT_STATUS="true"
-				IGNORE_ROOT="true"
-			fi
-
 			LOGIT "Displaying bashconfig WARNING"
 			while read -r; do
 				printf "%s\n" "$REPLY"
@@ -426,14 +423,7 @@ while [ "$1" ]; do
 			FILE bashconfig ShellPlugins/Times_Table $HOME/ShellPlugins/Times_Table 644 $SUDO_UID "$SUDO_GID"
 
 			APT_INSTALL fonts-symbola
-
-			[ "$IGNORE_ROOT_STATUS" == "true" ] || IGNORE_ROOT="true" ;;
 		i3config)
-			if ! [ "$IGNORE_ROOT" == "true" ]; then
-				IGNORE_ROOT_STATUS="true"
-				IGNORE_ROOT="true"
-			fi
-
 			LOGIT "Displaying i3config WARNING"
 			while read -r; do
 				printf "%s\n" "$REPLY"
@@ -502,8 +492,6 @@ while [ "$1" ]; do
 
 			APT_INSTALL i3-wm i3blocks suckless-tools compton moc\
 				terminology libnotify-bin dunst pulseaudio-utils
-
-			[ "$IGNORE_ROOT_STATUS" == "true" ] || IGNORE_ROOT="true" ;;
 		kernelchk)
 			FILE kernelchk kernelchk /usr/bin/kernelchk 755 0 0
 			FILE kernelchk completion /usr/share/bash-completion/completions/kernelchk 644 0 0 ;;

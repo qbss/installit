@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sun 11 Feb 13:29:14 GMT 2018
+# Last Change       - Mon 12 Feb 03:06:15 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -213,7 +213,7 @@ FILE(){
 AVAIL=(
 	"apt-undo-install - Undo the last package(s) install executed with apt-get."
 	"autoscrot - Tool to take full screenshots at user-specified intervals using scrot."
-	"backmeup - Small tool I use to quickly and easily back up my HOME."
+	"backmeup - A simple tool to quickly and easily back up your HOME."
 	"bashconfig - My own bash settings and shell plugins for use by anybody."
 	"bdl - Easily and quickly download a batch of files using wget."
 	"binwatch - Output list of executables found in your PATH"

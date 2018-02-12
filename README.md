@@ -15,13 +15,13 @@ As of 29th January 2018, bash completion is now fully supported and working in i
 Execute the following one-liner to download and install insit:
 
 ```bash
-sudo wget -q https://raw.githubusercontent.com/terminalforlife/installit/master/insit -O /usr/bin/insit && sudo chmod 755 /usr/bin/insit
+sudo wget -q https://github.com/terminalforlife/installit/raw/master/insit -O /usr/bin/insit && sudo chmod 755 /usr/bin/insit
 ```
 
 Then, if you have bash completion installed (which most do), then execute this command as well:
 
 ```bash
-sudo wget -q https://raw.githubusercontent.com/terminalforlife/installit/master/completion -O /usr/share/bash-completion/completions/insit && sudo chmod 644 /usr/share/bash-completion/completions/insit
+sudo wget -q https://github.com/terminalforlife/installit/raw/master/completion -O /usr/share/bash-completion/completions/insit && sudo chmod 644 /usr/share/bash-completion/completions/insit
 ```
 
 Or, if you'd prefer, you could clone or download (via the green button) this installit repository, then, once you've got access to the insit program, run the following from within the very same directory, to install the latest insit:
@@ -34,11 +34,11 @@ While that command is ordinarily for updating a pre-existing installation of ins
 
 ## EXAMPLE
 
-Now that you've done that, all that's left is to load up insit to peruse the catalogue of my work at your own leisure. Here is its `--help` output, as of 29th January 2018:
+Now that you've done that, all that's left is to load up insit to peruse the catalogue of my work at your own leisure. Here is its `--help` output, as of 12th February 2018:
 
 ```
 $ insit --help
-            INSIT (29th January 2018)
+            INSIT (12th February 2018)
             Written by terminalforlife (terminalforlife@yahoo.com)
 
             Installer for many shell programs from terminalforlife.
@@ -53,7 +53,9 @@ OPTS:       --help|-h|-?            - Displays this help information.
             --available|-A          - Output all available programs.
             --branch|-B NAME        - Where NAME is the branch to use.
             --self-update|-S        - Update insit to the latest stable version.
+            --ignore-root|-I        - Disregard whether you have root access.
             --custom|-C             - Execute your own FILE function line.
+            --log|-L                - Log and time-stamp actions to take.
 
 NOTE:       Where WHAT is the program(s) to install.
 
@@ -67,7 +69,7 @@ NOTE:       Where WHAT is the program(s) to install.
 
 EXAMPLE:    sudo insit -B dev -U -C miscellaneous mfw /usr/bin/mfw 755 0
             sudo insit -U notify-upgrade lspkg lsbins apt-undo-install
-            sudo insit --quiet --uninstall bl medlog wcdl clean-locales
+            sudo insit -q --log --uninstall bl medlog wcdl clean-locales
 
 WARNING:    Uninstalling with this program is permanent!
 
@@ -78,6 +80,8 @@ WARNING:    Uninstalling with this program is permanent!
             All programs, scripts, and other files from the below SITE will contain
             the comment header you see within this file, so grepping for the E-Mail
             address or GitHub URL below would be a good way to check.
+
+FILE:       The log file is stored in: /var/log/tfl_insit.log
 
 SITE:       https://github.com/terminalforlife
 ```
@@ -157,6 +161,10 @@ Enter 'Yes!' if you're sure you wish to continue:
 At which point you just type 'Yes!' exactly as you see it in the above prompt, then press the Enter key, and away you go! Just, fair warning, be absolutely sure to have **backed up your files** before you give the go-ahead.
 
 ## UPDATES & KNOWN ISSUES
+
+* Mon 12 Feb 18:37:22 GMT 2018
+
+Using -L and --ignore-root results in admittedly excessive amounts of ERRORs (L0141).
 
 * Fri  2 Feb 15:22:14 GMT 2018
 

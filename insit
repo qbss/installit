@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Mon 12 Feb 17:47:28 GMT 2018
+# Last Change       - Mon 12 Feb 17:53:04 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -135,6 +135,10 @@ fi
 [ "$DEBUGME" == "true" ] && set -xeu
 
 LOGIT(){
+	if ! [ $UID -eq 0 ]; then
+		ERR "$LINENO" "Logging disabled -- insufficient permissions."
+	fi
+
 	if [ "$LOGIT" == "true" ]; then
 		if ! [ -d "${LOGFILE%/*}" ]; then
 			XERR "$LINENO" "System directory '/var/log' not found."
@@ -220,7 +224,7 @@ APT_INSTALL(){
 		if [ "$(/usr/bin/lsb_release -is)" == "Ubuntu" ]; then
 			read -e -p "Enter 'APT' to install associated packages via APT: "
 
-			if ! [[ "$REPLY" == "Yes!" ]]; then
+			if ! [[ "$REPLY" == "APT" ]]; then
 				printf "No DEB packages installed -- quitting.\n"
 				exit 1
 			else

@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Mon 12 Feb 03:44:08 GMT 2018
+# Last Change       - Mon 12 Feb 03:54:52 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -491,7 +491,8 @@ while [ "$1" ]; do
 		clean-locales)
 			FILE miscellaneous clean-locales /usr/bin/clean-locales 755 0 0 ;;
 		mkpass)
-			FILE miscellaneous mkpass /usr/bin/mkpass 755 0 0 ;;
+			FILE miscellaneous mkpass /usr/bin/mkpass 755 0 0
+			FILE miscellaneous Completions/mkpass /usr/share/bash-completion/completions/mkpass 644 0 0 ;;
 		mplay)
 			FILE miscellaneous mplay /usr/bin/mplay 755 0 0 ;;
 		pagewatch)

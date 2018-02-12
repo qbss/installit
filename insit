@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Mon 12 Feb 17:53:04 GMT 2018
+# Last Change       - Mon 12 Feb 17:56:49 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -113,7 +113,11 @@ while [ "$1" ]; do
 		--custom|-C)
 			CUSTOM="true" ;;
 		--log|-L)
-			LOGIT="true" ;;
+			LOGIT="true"
+
+			if ! [ $UID -eq 0 ]; then
+				ERR "$LINENO" "Logging disabled -- insufficient permissions."
+			fi ;;
 		-*)
 			XERR "$LINENO" "Incorrect argument(s) specified." ;;
 		*)
@@ -135,10 +139,6 @@ fi
 [ "$DEBUGME" == "true" ] && set -xeu
 
 LOGIT(){
-	if ! [ $UID -eq 0 ]; then
-		ERR "$LINENO" "Logging disabled -- insufficient permissions."
-	fi
-
 	if [ "$LOGIT" == "true" ]; then
 		if ! [ -d "${LOGFILE%/*}" ]; then
 			XERR "$LINENO" "System directory '/var/log' not found."
@@ -234,14 +234,14 @@ APT_INSTALL(){
 						-o Dpkg::Progress-Fancy=true\
 						install $@
 				else
-					XERR "$LINENO" "Dependency '/usr/bin/apt-get' not found."
+					ERR "$LINENO" "Dependency '/usr/bin/apt-get' not found."
 				fi
 			fi
 		else
 			ERR "$LINENO" "Cannot detect an Ubuntu base. No additional packages installed."
 		fi
 	else
-		XERR "$LINENO" "Unknown distribution base. Do you have /usr/bin/lsb_release?"
+		ERR "$LINENO" "Unknown distribution base. Do you have /usr/bin/lsb_release?"
 	fi
 }
 

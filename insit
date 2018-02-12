@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Mon 12 Feb 17:56:49 GMT 2018
+# Last Change       - Mon 12 Feb 17:58:42 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -113,10 +113,10 @@ while [ "$1" ]; do
 		--custom|-C)
 			CUSTOM="true" ;;
 		--log|-L)
-			LOGIT="true"
-
 			if ! [ $UID -eq 0 ]; then
 				ERR "$LINENO" "Logging disabled -- insufficient permissions."
+			else
+				LOGIT="true"
 			fi ;;
 		-*)
 			XERR "$LINENO" "Incorrect argument(s) specified." ;;

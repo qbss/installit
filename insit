@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Mon 12 Feb 03:54:52 GMT 2018
+# Last Change       - Mon 12 Feb 17:40:44 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -50,6 +50,7 @@ USAGE(){
 		            --available|-A          - Output all available programs.
 		            --branch|-B NAME        - Where NAME is the branch to use.
 		            --self-update|-S        - Update insit to the latest stable version.
+		            --ignore-root           - Disregard whether you have root access.
 		            --custom|-C             - Execute your own FILE function line.
 		            --log|-L                - Log and time-stamp actions to take.
 
@@ -107,6 +108,8 @@ while [ "$1" ]; do
 		--self-update|-S)
 			UPDATE="true"
 			SELF="true" ;;
+		--ignore-root)
+			IGNORE_ROOT="true" ;;
 		--custom|-C)
 			CUSTOM="true" ;;
 		--log|-L)
@@ -120,8 +123,10 @@ while [ "$1" ]; do
 	shift
 done
 
-if ! [ "$AVAIL_SHOW" == "true" ]; then
-	[ $UID -eq 0 ] || XERR "$LINENO" "Root access is required."
+if ! [ "$AVAIL_SHOW" == "true" -o "$IGNORE_ROOT" == "true" ]; then
+	if ! [ $UID -eq 0 ]; then
+		XERR "$LINENO" "Unable to continue -- do you have root access?"
+	fi
 elif [ ! "$NOLOG" == "true" -a ! -x /usr/bin/tee ]; then
 	XERR "$LINENO" "Dependency '/usr/bin/tee' not met."
 fi
@@ -210,6 +215,32 @@ FILE(){
 	fi
 }
 
+APT_INSTALL(){
+	if [ -x /usr/bin/lsb_release ]; then
+		if [ "$(/usr/bin/lsb_release -is)" == "Ubuntu" ]; then
+			read -e -p "Enter 'APT' to install associated packages via APT: "
+
+			if ! [[ "$REPLY" == "Yes!" ]]; then
+				printf "No DEB packages installed -- quitting.\n"
+				exit 1
+			else
+				if [ -x /usr/bin/apt-get ]; then
+					/usr/bin/apt-get --quiet --show-progress\
+						-o Dpkg::Progress=true\
+						-o Dpkg::Progress-Fancy=true\
+						install $@
+				else
+					XERR "$LINENO" "Dependency '/usr/bin/apt-get' not found."
+				fi
+			fi
+		else
+			ERR "$LINENO" "Cannot detect an Ubuntu base. No additional packages installed."
+		fi
+	else
+		XERR "$LINENO" "Unknown distribution base. Do you have /usr/bin/lsb_release?"
+	fi
+}
+
 AVAIL=(
 	"apt-undo-install - Undo the last package(s) install executed with apt-get."
 	"autoscrot - Tool to take full screenshots at user-specified intervals using scrot."
@@ -262,10 +293,6 @@ AVAIL=(
 if [ "$AVAIL_SHOW" == "true" ]; then
 	printf "%s\n" "${AVAIL[@]}"
 	exit 0
-fi
-
-if [ -z "$SUDO_UID" ]; then
-	XERR "$LINENO" "Unable to continue -- are you not using sudo?"
 fi
 
 if [ "$SELF" == "true" ]; then
@@ -326,6 +353,11 @@ while [ "$1" ]; do
 			FILE bdl bdl /usr/bin/bdl 755 0 0
 			FILE bdl completion /usr/share/bash-completion/completions/bdl 644 0 0 ;;
 		bashconfig)
+			if ! [ "$IGNORE_ROOT" == "true" ]; then
+				IGNORE_ROOT_STATUS="true"
+				IGNORE_ROOT="true"
+			fi
+
 			LOGIT "Displaying bashconfig WARNING"
 			while read -r; do
 				printf "%s\n" "$REPLY"
@@ -383,8 +415,17 @@ while [ "$1" ]; do
 			FILE bashconfig ShellPlugins/NIR_Difference $HOME/ShellPlugins/NIR_Difference 644 $SUDO_UID "$SUDO_GID"
 			FILE bashconfig ShellPlugins/Play_Download_MPSYT $HOME/ShellPlugins/Play_Download_MPSYT 644 $SUDO_UID "$SUDO_GID"
 			FILE bashconfig ShellPlugins/Shell_Alias_Correcting $HOME/ShellPlugins/Shell_Alias_Correcting 644 $SUDO_UID "$SUDO_GID"
-			FILE bashconfig ShellPlugins/Times_Table $HOME/ShellPlugins/Times_Table 644 $SUDO_UID "$SUDO_GID" ;;
+			FILE bashconfig ShellPlugins/Times_Table $HOME/ShellPlugins/Times_Table 644 $SUDO_UID "$SUDO_GID"
+
+			APT_INSTALL fonts-symbola
+
+			[ "$IGNORE_ROOT_STATUS" == "true" ] || IGNORE_ROOT="true"
 		i3config)
+			if ! [ "$IGNORE_ROOT" == "true" ]; then
+				IGNORE_ROOT_STATUS="true"
+				IGNORE_ROOT="true"
+			fi
+
 			LOGIT "Displaying i3config WARNING"
 			while read -r; do
 				printf "%s\n" "$REPLY"
@@ -447,7 +488,12 @@ while [ "$1" ]; do
 			FILE i3config .i3a/term_font_size_py $HOME/.i3a/term_font_size_py 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3a/terminal $HOME/.i3a/terminal 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3a/track_notify $HOME/.i3a/track_notify 644 "$SUDO_UID" "$SUDO_GID"
-			FILE i3config .i3a/use_dmenu $HOME/.i3a/use_dmenu 644 "$SUDO_UID" "$SUDO_GID" ;;
+			FILE i3config .i3a/use_dmenu $HOME/.i3a/use_dmenu 644 "$SUDO_UID" "$SUDO_GID"
+
+			APT_INSTALL i3-wm i3blocks suckless-tools compton moc\
+				terminology libnotify-bin dunst pulseaudio-utils
+
+			[ "$IGNORE_ROOT_STATUS" == "true" ] || IGNORE_ROOT="true" ;;
 		kernelchk)
 			FILE kernelchk kernelchk /usr/bin/kernelchk 755 0 0
 			FILE kernelchk completion /usr/share/bash-completion/completions/kernelchk 644 0 0 ;;

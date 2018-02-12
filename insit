@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Mon 12 Feb 17:40:44 GMT 2018
+# Last Change       - Mon 12 Feb 17:47:28 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -378,8 +378,9 @@ while [ "$1" ]; do
 				  $HOME/ShellPlugins/List_Signals
 				  $HOME/ShellPlugins/Load_File_Links2
 				  $HOME/ShellPlugins/Loop_This
+				  $HOME/ShellPlugins/LSPKG_Set
 				  $HOME/ShellPlugins/NIR_Difference
-				  $HOME/ShellPlugins/Play_Download_MPSY
+				  $HOME/ShellPlugins/Play_Download_MPSYT
 				  $HOME/ShellPlugins/Shell_Alias_Correc
 				  $HOME/ShellPlugins/Times_Table
 
@@ -412,6 +413,7 @@ while [ "$1" ]; do
 			FILE bashconfig ShellPlugins/List_Signals $HOME/ShellPlugins/List_Signals 644 $SUDO_UID "$SUDO_GID"
 			FILE bashconfig ShellPlugins/Load_File_Links2 $HOME/ShellPlugins/Load_File_Links2 644 $SUDO_UID "$SUDO_GID"
 			FILE bashconfig ShellPlugins/Loop_This $HOME/ShellPlugins/Loop_This 644 $SUDO_UID "$SUDO_GID"
+			FILE bashconfig ShellPlugins/LSPKG_Set $HOME/ShellPlugins/LSPKG_Set 644 $SUDO_UID "$SUDO_GID"
 			FILE bashconfig ShellPlugins/NIR_Difference $HOME/ShellPlugins/NIR_Difference 644 $SUDO_UID "$SUDO_GID"
 			FILE bashconfig ShellPlugins/Play_Download_MPSYT $HOME/ShellPlugins/Play_Download_MPSYT 644 $SUDO_UID "$SUDO_GID"
 			FILE bashconfig ShellPlugins/Shell_Alias_Correcting $HOME/ShellPlugins/Shell_Alias_Correcting 644 $SUDO_UID "$SUDO_GID"
@@ -419,7 +421,7 @@ while [ "$1" ]; do
 
 			APT_INSTALL fonts-symbola
 
-			[ "$IGNORE_ROOT_STATUS" == "true" ] || IGNORE_ROOT="true"
+			[ "$IGNORE_ROOT_STATUS" == "true" ] || IGNORE_ROOT="true" ;;
 		i3config)
 			if ! [ "$IGNORE_ROOT" == "true" ]; then
 				IGNORE_ROOT_STATUS="true"
@@ -437,6 +439,7 @@ while [ "$1" ]; do
 				  $HOME/.i3bbelow
 				  $HOME/.libi3bview
 				  $HOME/.i3a/feh_slides
+				  $HOME/.i3a/hush_the_mic
 				  $HOME/.i3a/initialize
 				  $HOME/.i3a/key_autorepeat
 				  $HOME/.i3a/scrot_sel_take
@@ -473,6 +476,7 @@ while [ "$1" ]; do
 			LOGIT "Setting $HOME/.i3a to $SUDO_UID UID and $SUDO_GID GID"
 
 			FILE i3config .i3a/feh_slides $HOME/.i3a/feh_slides 644 "$SUDO_UID" "$SUDO_GID"
+			FILE i3config .i3a/hush_the_mic $HOME/.i3a/hush_the_mic 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3a/initialize $HOME/.i3a/initialize 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3a/key_autorepeat $HOME/.i3a/key_autorepeat 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3a/scrot_sel_take $HOME/.i3a/scrot_sel_take 644 "$SUDO_UID" "$SUDO_GID"

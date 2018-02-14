@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Mon 12 Feb 18:28:26 GMT 2018
+# Last Change       - Wed 14 Feb 18:54:59 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -37,7 +37,7 @@ USAGE(){
 	while read -r; do
 		printf "%s\n" "$REPLY"
 	done <<-EOF
-		            INSIT (12th February 2018)
+		            INSIT (14th February 2018)
 		            Written by terminalforlife (terminalforlife@yahoo.com)
 
 		            Installer for many shell programs from terminalforlife.
@@ -269,6 +269,7 @@ AVAIL=(
 	"getip - View your internal and/or external IP address."
 	"getline - Pure Bourne Again Shell way to handle a plain text file."
 	"get-uuid - Grab and copy your file system's UUID with this simple, easy-to-use GUI."
+	"ghipc - Check the validity of IP addresses of GitHub servers."
 	"github-ssh-setup - Simple shell program to create an SSH key pair for GitHub."
 	"homewatch - Output files in HOME which have been modified today."
 	"i3config - My own i3-wm settings and shell plugins for use by anybody."
@@ -314,6 +315,8 @@ fi
 
 while [ "$1" ]; do
 	case "$1" in
+		ghipc)
+			FILE miscellaneous ghipc /usr/bin/ghipc 755 0 0 ;;
 		capnum)
 			FILE miscellaneous capnum /usr/bin/capnum 755 0 0 ;;
 		mfw)

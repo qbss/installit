@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Thu 15 Feb 03:01:21 GMT 2018
+# Last Change       - Thu 15 Feb 05:04:05 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -563,3 +563,5 @@ while [ "$1" ]; do
 
 	shift
 done
+
+# vim: noexpandtab colorcolumn=80 tabstop=8 noswapfile nobackup

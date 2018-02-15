@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Thu 15 Feb 02:52:02 GMT 2018
+# Last Change       - Thu 15 Feb 02:59:35 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -355,7 +355,7 @@ while [ "$1" ]; do
 			FILE dwwdl dwwdl /usr/bin/dwwdl 755 0 0 ;;
 		notify-upgrade)
 			FILE notify-upgrade notify-upgrade /usr/bin/notify-upgrade 755 0 0
-			FILE miscellaneous Cron_Tasks/APT_Update_Cron /etc/cron.daily/APT_Update_Cron 755 0 0 ;;
+			FILE miscellaneous Cron_Tasks/APT_Update_Cron/etc/cron.hourly/APT_Update_Cron 755 0 0 ;;
 		roks)
 			FILE roks roks /usr/bin/roks 755 0 0
 			FILE roks completion /usr/share/bash-completion/completions/roks 644 0 0 ;;

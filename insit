@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Wed 14 Feb 18:54:59 GMT 2018
+# Last Change       - Thu 15 Feb 02:45:33 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -37,7 +37,7 @@ USAGE(){
 	while read -r; do
 		printf "%s\n" "$REPLY"
 	done <<-EOF
-		            INSIT (14th February 2018)
+		            INSIT (15th February 2018)
 		            Written by terminalforlife (terminalforlife@yahoo.com)
 
 		            Installer for many shell programs from terminalforlife.
@@ -393,7 +393,7 @@ while [ "$1" ]; do
 
 			LOGIT "Prompting user to continue or not"
 			read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
-			[[ "$REPLY" == "Yes!" ]] || { printf "No action taken -- quitting.\n"; exit 1; }
+			[[ "$REPLY" == "Yes!" ]] || { printf "No action taken --quitting.\n"; continue; }
 
 			FILE bashconfig .profile $HOME/.profile 644 "$SUDO_UID" "$SUDO_GID"
 			FILE bashconfig .bash_aliases $HOME/.bash_aliases 644 "$SUDO_UID" "$SUDO_GID"
@@ -459,7 +459,7 @@ while [ "$1" ]; do
 
 			LOGIT "Prompting user to continue or not"
 			read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
-			[[ "$REPLY" == "Yes!" ]] || { printf "No action taken -- quitting.\n"; exit 1; }
+			[[ "$REPLY" == "Yes!" ]] || { printf "No action taken --quitting.\n"; continue; }
 
 			FILE i3config config $HOME/.config/i3/config 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .libi3bview $HOME/.libi3bview 644 "$SUDO_UID" "$SUDO_GID"

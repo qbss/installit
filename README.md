@@ -162,6 +162,10 @@ At which point you just type 'Yes!' exactly as you see it in the above prompt, t
 
 ## UPDATES & KNOWN ISSUES
 
+* Thu 15 Feb 03:02:47 GMT 2018
+
+The file APT_Update_Cron now gets correctly added to /etc/cron.hourly when notify-upgrade is installed, instead of /etc/cron.daily.
+
 * Mon 12 Feb 18:37:22 GMT 2018
 
 Using -L and --ignore-root results in admittedly excessive amounts of ERRORs (L0141).

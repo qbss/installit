@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Thu 15 Feb 05:04:05 GMT 2018
+# Last Change       - Tue 20 Feb 07:57:04 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -37,7 +37,7 @@ USAGE(){
 	while read -r; do
 		printf "%s\n" "$REPLY"
 	done <<-EOF
-		            INSIT (15th February 2018)
+		            INSIT (20th February 2018)
 		            Written by terminalforlife (terminalforlife@yahoo.com)
 
 		            Installer for many shell programs from terminalforlife.
@@ -255,6 +255,7 @@ AVAIL=(
 	"bashconfig - My own bash settings and shell plugins for use by anybody."
 	"bdl - Easily and quickly download a batch of files using wget."
 	"binwatch - Output list of executables found in your PATH"
+	"bios-info - Show basic BIOS keys and their values."
 	"bl - Much simpler, quicker version of blkid."
 	"capnum - Small tool to notify of NumLock and CapsLock status changes."
 	"catmedia - Concatenate media files originally separated in parts."
@@ -315,6 +316,8 @@ fi
 
 while [ "$1" ]; do
 	case "$1" in
+		bios-info)
+			FILE miscellaneous bios-info /usr/bin/bios-info 755 0 0 ;;
 		ghipc)
 			FILE miscellaneous ghipc /usr/bin/ghipc 755 0 0 ;;
 		capnum)

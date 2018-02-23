@@ -156,6 +156,10 @@ At which point you just type 'Yes!' exactly as you see it in the above prompt, t
 
 ## UPDATES & KNOWN ISSUES
 
+* Fri 23 Feb 18:23:01 GMT 2018
+
+At long last, insit now support wget version 1.19.2.
+
 * Thu 15 Feb 03:02:47 GMT 2018
 
 The file APT_Update_Cron now gets correctly added to /etc/cron.hourly when notify-upgrade is installed, instead of /etc/cron.daily.

@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Tue 20 Feb 07:57:04 GMT 2018
+# Last Change       - Fri 23 Feb 17:38:44 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -28,16 +28,14 @@ for DEP in /usr/bin/wget /bin/{mv,rm,chmod,chown,mkdir}; {
 [ $DEPCOUNT -eq 0 ] || exit 1
 
 # Newer versions of wget by default request unwanted server-side compression.
-read -a WGET_VERSION_LINE <<< "$(/usr/bin/wget --version)"
-if [ 0${WGET_VERSION_LINE[2]//[!0-9]} -ge 01192 ]; then
-	XERR "$LINENO" "Your version of wget is currently unsupported."
-fi
+read -a WGET_VER_LINE <<< "$(/usr/bin/wget --version)"
+[ 0${WGET_VER_LINE[2]//[!0-9]} -ge 01192 ] && NOWARC="--no-warc-compression"
 
 USAGE(){
 	while read -r; do
 		printf "%s\n" "$REPLY"
 	done <<-EOF
-		            INSIT (20th February 2018)
+		            INSIT (23th February 2018)
 		            Written by terminalforlife (terminalforlife@yahoo.com)
 
 		            Installer for many shell programs from terminalforlife.
@@ -175,7 +173,7 @@ FILE(){
 			#TODO - This is sloppy - IMPROVE!
 			if [ -f "$3" ]; then
 				LOGIT "Downloading $URL/$1/$BRANCH/$2 over $3"
-				if /usr/bin/wget -q "$URL/$1/raw/$BRANCH/$2" -O "$3" &> /dev/null; then
+				if /usr/bin/wget -q $NOWARC "$URL/$1/raw/$BRANCH/$2" -O "$3" &> /dev/null; then
 					printf "File '%s' downloaded and updated.\n" "$3"
 				else
 					ERR "$LINENO" "Unable to download and/or update '$3' file."
@@ -197,7 +195,7 @@ FILE(){
 				fi
 			else
 				LOGIT "Downloading $URL/$1/$BRANCH/$2 to $3"
-				if /usr/bin/wget -q "$URL/$1/raw/$BRANCH/$2" -O "$3" &> /dev/null; then
+				if /usr/bin/wget -q $NOWARC "$URL/$1/raw/$BRANCH/$2" -O "$3" &> /dev/null; then
 					printf "File '%s' downloaded.\n" "$3"
 				else
 					ERR "$LINENO" "Unable to download '$3' file."
@@ -255,7 +253,7 @@ AVAIL=(
 	"bashconfig - My own bash settings and shell plugins for use by anybody."
 	"bdl - Easily and quickly download a batch of files using wget."
 	"binwatch - Output list of executables found in your PATH"
-	"bios-info - Show basic BIOS keys and their values."
+	"bios-info - Simple tool to show basic BIOS keys and their values."
 	"bl - Much simpler, quicker version of blkid."
 	"capnum - Small tool to notify of NumLock and CapsLock status changes."
 	"catmedia - Concatenate media files originally separated in parts."
@@ -567,4 +565,4 @@ while [ "$1" ]; do
 	shift
 done
 
-# vim: noexpandtab colorcolumn=80 tabstop=8 noswapfile nobackup
+# vim: noexpandtab colorcolumn=84 tabstop=8 noswapfile nobackup

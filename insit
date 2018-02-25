@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sun 25 Feb 19:41:46 GMT 2018
+# Last Change       - Sun 25 Feb 19:43:40 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -43,7 +43,7 @@ USAGE(){
 		SYNTAX:     insit [OPTS] WHAT1 WHAT2 WHAT3 . . .
 
 		OPTS:       --help|-h|-?            - Displays this help information.
-		            --verbose|-v            - Display the logged output.
+		            --verbose|-v            - Also display the log output.
 		            --debug                 - Enables the built-in bash debugging.
 		            --quiet|-q              - Runs in quiet mode. Errors still output.
 		            --update|-U             - Replace and update existing files.

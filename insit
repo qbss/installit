@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sun 25 Feb 19:31:06 GMT 2018
+# Last Change       - Sun 25 Feb 19:41:46 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -43,6 +43,7 @@ USAGE(){
 		SYNTAX:     insit [OPTS] WHAT1 WHAT2 WHAT3 . . .
 
 		OPTS:       --help|-h|-?            - Displays this help information.
+		            --verbose|-v            - Display the logged output.
 		            --debug                 - Enables the built-in bash debugging.
 		            --quiet|-q              - Runs in quiet mode. Errors still output.
 		            --update|-U             - Replace and update existing files.
@@ -91,6 +92,12 @@ while [ "$1" ]; do
 	case "$1" in
 		--help|-h|-\?)
 			USAGE; exit 0 ;;
+		--verbose|-v)
+			if [ -x /usr/bin/tee ]; then
+				VERBOSE="true"
+			else
+				XERR "$LINENO" "Dependency '/usr/bin/tee' not met."
+			fi ;;
 		--debug)
 			DEBUGME="true" ;;
 		--quiet|-q)
@@ -144,7 +151,12 @@ LOGIT(){
 			XERR "$LINENO" "System directory '/var/log' not found."
 		else
 			printf -v DATETIME "%(%F_%X)T" "-1"
-			printf "[%s]: %s\n" "$DATETIME" "$1" >> "$LOGFILE"
+			if [ "$VERBOSE" == "true" ]; then
+				printf "[%s]: %s\n" "$DATETIME" "$1"\
+					| /usr/bin/tee -a "$LOGFILE"
+			else
+				printf "[%s]: %s\n" "$DATETIME" "$1" >> "$LOGFILE"
+			fi
 
 			readarray A < "$LOGFILE"
 			if [ "${#A[@]}" -gt 4000 ]; then

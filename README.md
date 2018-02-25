@@ -158,6 +158,8 @@ At which point you just type 'Yes!' exactly as you see it in the above prompt, t
 
 Logging is now more aggressive, to further assist any debugging endeavors. I've also added the ability to view the logging output while using insit, using the `--verbose` or `-v` flags; this should work whether logging is enabled or not, but of course the intended result is that logging won't be saved, just shown.
 
+Uninstalling items available using insit, now supports gvfs-trash, meaning insit will send files to trash, rather than permanently deleting them. This is only done if gvfs-trash is detected by insit. The user will be informed, as usual.
+
 * Fri 23 Feb 18:23:01 GMT 2018
 
 At long last, insit now support wget version 1.19.2.

@@ -28,18 +28,18 @@ While that command is ordinarily for updating a pre-existing installation of ins
 
 ## EXAMPLE
 
-Now that you've done that, all that's left is to load up insit to peruse the catalogue of my work at your own leisure. Here is its `--help` output, as of 12th February 2018:
+Now that you've done that, all that's left is to load up insit to peruse the catalogue of my work at your own leisure. Here is its `--help` output, as of 25th February 2018:
 
 ```
 $ insit --help
-            INSIT (12th February 2018)
+            INSIT (25th February 2018)
             Written by terminalforlife (terminalforlife@yahoo.com)
-
             Installer for many shell programs from terminalforlife.
 
 SYNTAX:     insit [OPTS] WHAT1 WHAT2 WHAT3 . . .
 
 OPTS:       --help|-h|-?            - Displays this help information.
+            --verbose|-v            - Also display the log output.
             --debug                 - Enables the built-in bash debugging.
             --quiet|-q              - Runs in quiet mode. Errors still output.
             --update|-U             - Replace and update existing files.
@@ -65,9 +65,7 @@ EXAMPLE:    sudo insit -B dev -U -C miscellaneous mfw /usr/bin/mfw 755 0
             sudo insit -U notify-upgrade lspkg lsbins apt-undo-install
             sudo insit -q --log --uninstall bl medlog wcdl clean-locales
 
-WARNING:    Uninstalling with this program is permanent!
-
-            Using the --update|-U flags will overwrite existing files, so, if an
+WARNING:    Using the --update|-U flags will overwrite existing files, so, if an
             executable just so happens to have the same name, take care not to
             replace it by mistake!
 
@@ -155,6 +153,10 @@ Enter 'Yes!' if you're sure you wish to continue:
 At which point you just type 'Yes!' exactly as you see it in the above prompt, then press the Enter key, and away you go! Just, fair warning, be absolutely sure to have **backed up your files** before you give the go-ahead.
 
 ## UPDATES & KNOWN ISSUES
+
+* Sun 25 Feb 19:45:34 GMT 2018
+
+Logging is now more aggressive, to further assist any debugging endeavors. I've also added the ability to view the logging output while using insit, using the `--verbose` or `-v` flags; this should work whether logging is enabled or not, but of course the intended result is that logging won't be saved, just shown.
 
 * Fri 23 Feb 18:23:01 GMT 2018
 

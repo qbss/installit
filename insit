@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sun 25 Feb 19:43:40 GMT 2018
+# Last Change       - Thu  1 Mar 15:35:39 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -35,7 +35,7 @@ USAGE(){
 	while read -r; do
 		printf "%s\n" "$REPLY"
 	done <<-EOF
-		            INSIT (25th February 2018)
+		            INSIT (1st March 2018)
 		            Written by terminalforlife (terminalforlife@yahoo.com)
 
 		            Installer for many shell programs from terminalforlife.
@@ -359,7 +359,7 @@ AVAIL=(
 	"simwea - Display various weather statistics on a terminal."
 	"tozero - Simple program to display a countdown for a target date."
 	"ubuntu-syschk - Performs various non-root system health checks on Ubuntu."
-	"wcdl - Crawl WallpapersCraft for desktop backgrounds."
+	"wcdl - Crawl WallpapersCraft for desktop backgrounds. Includes wcdl tools."
 )
 
 if [ "$AVAIL_SHOW" == "true" ]; then
@@ -648,6 +648,8 @@ while [ "$1" ]; do
 			FILE wcdl wcdl /usr/bin/wcdl 755 0 0
 			LOGIT "FILE wcdl wcdl-cacheparse /usr/bin/wcdl-cacheparse 755 0 0"
 			FILE wcdl wcdl-cacheparse /usr/bin/wcdl-cacheparse 755 0 0
+			LOGIT "FILE wcdl wcdl-crosschk /usr/bin/wcdl-crosschk 755 0 0"
+			FILE wcdl wcdl-crosschk /usr/bin/wcdl-crosschk 755 0 0
 			LOGIT "FILE wcdl completion /usr/share/bash-completion/completions/wcdl 644 0 0"
 			FILE wcdl completion /usr/share/bash-completion/completions/wcdl 644 0 0 ;;
 		getline)

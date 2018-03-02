@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Fri  2 Mar 19:25:25 GMT 2018
+# Last Change       - Fri  2 Mar 19:41:34 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -281,7 +281,8 @@ APT_INSTALL(){
 			if [ "${X[0]//\"}" == "ID_LIKE" ]; then
 				if ! [[ "${X[1]//\"}" =~ (debian|ubuntu) ]]; then
 					LOGIT "Unsupported '${X[1]//\"}' base detected"
-					XERR "$LINENO" "Unsupported distribution base."
+					ERR "$LINENO" "Unsupported distribution base."
+					return 1
 				fi
 	
 				break
@@ -289,12 +290,14 @@ APT_INSTALL(){
 		done < "$OSFILE"
 	else
 		LOGIT "Failed to find or read $OSFILE"
-		XERR "$LINENO" "Cannot identify your LSB/Distro type."
+		ERR "$LINENO" "Cannot identify your LSB/Distro type."
+		return 1
 	fi
 
 	if ! [ -x /usr/bin/apt-get ]; then
 		LOGIT "Failed to find dependency $OSFILE"
-		XERR "$LINENO" "Dependency '/usr/bin/apt-get' not found."
+		ERR "$LINENO" "Dependency '/usr/bin/apt-get' not found."
+		return 1
 	fi
 
 	read -e -p "Enter 'APT' to install associated packages via APT: "
@@ -307,6 +310,7 @@ APT_INSTALL(){
 		if ! /usr/bin/apt-get --quiet --show-progress -o Dpkg::Progress=true\
 			-o Dpkg::Progress-Fancy=true install $@; then
 			LOGIT "APT failed to install $@"
+			return 1
 		fi
 	fi
 }
@@ -408,7 +412,9 @@ while [ "$1" ]; do
 			fi
 
 			LOGIT "FILE miscellaneous dunstrc $HOME/.config/dunst/dunstrc 600 $SUDO_UID $SUDO_GID"
-			FILE miscellaneous dunstrc $HOME/.config/dunst/dunstrc 600 $SUDO_UID $SUDO_GID ;;
+			FILE miscellaneous dunstrc $HOME/.config/dunst/dunstrc 600 $SUDO_UID $SUDO_GID
+
+			[ -x /usr/bin/dunst ] || APT_INSTALL dunst ;;
 		tflvim)
 			if [ -f $HOME/.vimrc -o -f $HOME/.vim/colors/tfl.vim ]; then
 				LOGIT "Displaying tflvim WARNING"
@@ -435,7 +441,9 @@ while [ "$1" ]; do
 			LOGIT "FILE miscellaneous tfl.vim $HOME/.vim/colors/tfl.vim 600 $SUDO_UID $SUDO_GID"
 			FILE miscellaneous tfl.vim $HOME/.vim/colors/tfl.vim 600 $SUDO_UID $SUDO_GID
 			LOGIT "FILE miscellaneous .vimrc $HOME/.vimrc 600 $SUDO_UID $SUDO_GID"
-			FILE miscellaneous .vimrc $HOME/.vimrc 600 $SUDO_UID $SUDO_GID ;;
+			FILE miscellaneous .vimrc $HOME/.vimrc 600 $SUDO_UID $SUDO_GID
+
+			[ -x /usr/bin/vim ] || APT_INSTALL vim ;;
 		compconf)
 			if [ -f $HOME/.config/compton.conf ]; then
 				LOGIT "Displaying compconf WARNING"
@@ -459,7 +467,9 @@ while [ "$1" ]; do
 			fi
 
 			LOGIT "FILE miscellaneous compton.conf $HOME/.config/compton.conf 600 $SUDO_UID $SUDO_GID"
-			FILE miscellaneous compton.conf $HOME/.config/compton.conf 600 $SUDO_UID $SUDO_GID ;;
+			FILE miscellaneous compton.conf $HOME/.config/compton.conf 600 $SUDO_UID $SUDO_GID
+
+			[ -x /usr/bin/compton ] || APT_INSTALL compton ;;
 		jotd)
 			LOGIT "FILE miscellaneous jotd /usr/bin/jotd 755 0 0"
 			FILE miscellaneous jotd /usr/bin/jotd 755 0 0 ;;

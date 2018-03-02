@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Fri  2 Mar 19:14:51 GMT 2018
+# Last Change       - Fri  2 Mar 19:20:02 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -329,6 +329,7 @@ AVAIL=(
 	"dlfcmags - Download issues of the Full Circle magazine PDFs."
 	"dlspwalls - Download a collection of steampunk wallpapers."
 	"dl-tuxradar-podcasts - Small shell program to download the TuxRadar podcasts."
+	"dunstconfig - The terminalforlife configuration file for dunst."
 	"dwwdl - Download all of the available DistroWatch Weekly podcasts."
 	"forex - Easily convert various currency rates straight from the terminal."
 	"getip - View your internal and/or external IP address."
@@ -384,6 +385,28 @@ fi
 
 while [ "$1" ]; do
 	case "$1" in
+		dunstconfig)
+			LOGIT "Displaying dunstconfig WARNING"
+			while read -r; do
+				printf "%s\n" "$REPLY"
+			done <<-EOF
+				WARNING: This will install and replace the following:
+
+				  $HOME/.config/dunst/dunstrc
+
+			EOF
+
+			LOGIT "Prompting user to continue or not"
+			read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
+			[[ "$REPLY" == "Yes!" ]] || { printf "No action taken -- skipping.\n"; shift; continue; }
+
+			if ! [ -d $HOME/.config/dunst ]; then
+				LOGIT "Creating $HOME/.config/dunst"
+				/bin/mkdir $HOME/.config/dunst
+			fi
+
+			LOGIT "FILE miscellaneous dunstrc $HOME/.config/dunst/dunstrc 600 $SUDO_UID $SUDO_GID"
+			FILE miscellaneous dunstrc $HOME/.config/dunst/dunstrc 600 $SUDO_UID $SUDO_GID
 		tflvim)
 			LOGIT "Displaying tflvim WARNING"
 			while read -r; do

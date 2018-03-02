@@ -3,13 +3,9 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Fri  2 Mar 19:41:34 GMT 2018
+# Last Change       - Fri  2 Mar 19:46:23 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
-#----------------------------------------------------------------------------------
-# This installer replaces the old installit. The aim of this installer is to do
-# away with the need to have several installers, but instead combining them all
-# into one easy-to-use installer, while making it more practical to update.
 #----------------------------------------------------------------------------------
 
 #TODO - Incorporate an 'undo' update action, in-case an update breaks something.

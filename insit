@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Fri  2 Mar 19:20:32 GMT 2018
+# Last Change       - Fri  2 Mar 19:25:25 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -386,19 +386,21 @@ fi
 while [ "$1" ]; do
 	case "$1" in
 		dunstconfig)
-			LOGIT "Displaying dunstconfig WARNING"
-			while read -r; do
-				printf "%s\n" "$REPLY"
-			done <<-EOF
-				WARNING: This will install and replace the following:
+			if [ -f $HOME/.config/dunst/dunstrc ]; then
+				LOGIT "Displaying dunstconfig WARNING"
+				while read -r; do
+					printf "%s\n" "$REPLY"
+				done <<-EOF
+					WARNING: This will install and replace the following:
 
-				  $HOME/.config/dunst/dunstrc
+					  $HOME/.config/dunst/dunstrc
 
-			EOF
+				EOF
 
-			LOGIT "Prompting user to continue or not"
-			read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
-			[[ "$REPLY" == "Yes!" ]] || { printf "No action taken -- skipping.\n"; shift; continue; }
+				LOGIT "Prompting user to continue or not"
+				read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
+				[[ "$REPLY" == "Yes!" ]] || { printf "No action taken -- skipping.\n"; shift; continue; }
+			fi
 
 			if ! [ -d $HOME/.config/dunst ]; then
 				LOGIT "Creating $HOME/.config/dunst"
@@ -408,20 +410,22 @@ while [ "$1" ]; do
 			LOGIT "FILE miscellaneous dunstrc $HOME/.config/dunst/dunstrc 600 $SUDO_UID $SUDO_GID"
 			FILE miscellaneous dunstrc $HOME/.config/dunst/dunstrc 600 $SUDO_UID $SUDO_GID ;;
 		tflvim)
-			LOGIT "Displaying tflvim WARNING"
-			while read -r; do
-				printf "%s\n" "$REPLY"
-			done <<-EOF
-				WARNING: This will install and replace the following:
+			if [ -f $HOME/.vimrc -o -f $HOME/.vim/colors/tfl.vim ]; then
+				LOGIT "Displaying tflvim WARNING"
+				while read -r; do
+					printf "%s\n" "$REPLY"
+				done <<-EOF
+					WARNING: This will install and replace the following:
 
-				  $HOME/.vimrc
-				  $HOME/.config/colors/tfl.vim
+					  $HOME/.vimrc
+					  $HOME/.config/colors/tfl.vim
 
-			EOF
+				EOF
 
-			LOGIT "Prompting user to continue or not"
-			read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
-			[[ "$REPLY" == "Yes!" ]] || { printf "No action taken -- skipping.\n"; shift; continue; }
+				LOGIT "Prompting user to continue or not"
+				read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
+				[[ "$REPLY" == "Yes!" ]] || { printf "No action taken -- skipping.\n"; shift; continue; }
+			fi
 
 			if ! [ -d $HOME/.vim/colors ]; then
 				LOGIT "Creating $HOME/.vim/colors directory"

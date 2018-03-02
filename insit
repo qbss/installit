@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Fri  2 Mar 19:46:23 GMT 2018
+# Last Change       - Fri  2 Mar 20:19:28 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -360,6 +360,7 @@ AVAIL=(
 	"seewttr - Super-simple wrapper-like script to get your weather."
 	"simplify-ubuntu - Small project to lighten standard Ubuntu 16.04.3 LTS installations."
 	"simwea - Display various weather statistics on a terminal."
+	"snotes - ???"
 	"tflvim - The terminalforlife theme and .vimrc configuration file for VIM."
 	"tozero - Simple program to display a countdown for a target date."
 	"ubuntu-syschk - Performs various non-root system health checks on Ubuntu."
@@ -385,6 +386,9 @@ fi
 
 while [ "$1" ]; do
 	case "$1" in
+		snotes)
+			LOGIT "FILE miscellaneous snotes /usr/bin/snotes 755 0 0"
+			FILE miscellaneous snotes /usr/bin/snotes 755 0 0 ;;
 		dunstconfig)
 			if [ -f $HOME/.config/dunst/dunstrc ]; then
 				LOGIT "Displaying dunstconfig WARNING"

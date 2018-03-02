@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Fri  2 Mar 14:30:43 GMT 2018
+# Last Change       - Fri  2 Mar 19:14:51 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -323,6 +323,7 @@ AVAIL=(
 	"capnum - Small tool to notify of NumLock and CapsLock status changes."
 	"catmedia - Concatenate media files originally separated in parts."
 	"clean-locales - Remove some unnecessary non-English localizations."
+	"compconf - The terminalforlife configuration file for compton."
 	"cpufreq - Lightweight Bourne Shell utility to output your CPU frequencies."
 	"dlfallwalls - Download a collection of Autumn/Fall wallpapers."
 	"dlfcmags - Download issues of the Full Circle magazine PDFs."
@@ -358,6 +359,7 @@ AVAIL=(
 	"seewttr - Super-simple wrapper-like script to get your weather."
 	"simplify-ubuntu - Small project to lighten standard Ubuntu 16.04.3 LTS installations."
 	"simwea - Display various weather statistics on a terminal."
+	"tflvim - The terminalforlife theme and .vimrc configuration file for VIM."
 	"tozero - Simple program to display a countdown for a target date."
 	"ubuntu-syschk - Performs various non-root system health checks on Ubuntu."
 	"wcdl - Crawl WallpapersCraft for desktop backgrounds. Includes wcdl tools."
@@ -382,6 +384,55 @@ fi
 
 while [ "$1" ]; do
 	case "$1" in
+		tflvim)
+			LOGIT "Displaying tflvim WARNING"
+			while read -r; do
+				printf "%s\n" "$REPLY"
+			done <<-EOF
+				WARNING: This will install and replace the following:
+
+				  $HOME/.vimrc
+				  $HOME/.config/colors/tfl.vim
+
+			EOF
+
+			LOGIT "Prompting user to continue or not"
+			read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
+			[[ "$REPLY" == "Yes!" ]] || { printf "No action taken -- skipping.\n"; shift; continue; }
+
+			if ! [ -d $HOME/.vim/colors ]; then
+				LOGIT "Creating $HOME/.vim/colors directory"
+				/bin/mkdir $HOME/.vim/colors
+			fi
+
+			LOGIT "FILE miscellaneous tfl.vim $HOME/.vim/colors/tfl.vim 600 $SUDO_UID $SUDO_GID"
+			FILE miscellaneous tfl.vim $HOME/.vim/colors/tfl.vim 600 $SUDO_UID $SUDO_GID
+			LOGIT "FILE miscellaneous .vimrc $HOME/.vimrc 600 $SUDO_UID $SUDO_GID"
+			FILE miscellaneous .vimrc $HOME/.vimrc 600 $SUDO_UID $SUDO_GID ;;
+		compconf)
+			if [ -f $HOME/.config/compton.conf ]; then
+				LOGIT "Displaying compconf WARNING"
+				while read -r; do
+					printf "%s\n" "$REPLY"
+				done <<-EOF
+					WARNING: This will install and replace the following:
+
+					  $HOME/.config/compton.conf
+
+				EOF
+
+				LOGIT "Prompting user to continue or not"
+				read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
+				[[ "$REPLY" == "Yes!" ]] || { printf "No action taken -- skipping.\n"; shift; continue; }
+			fi
+
+			if ! [ -d $HOME/.config ]; then
+				LOGIT "Creating $HOME/.config directory"
+				/bin/mkdir $HOME/.config
+			fi
+
+			LOGIT "FILE miscellaneous compton.conf $HOME/.config/compton.conf 600 $SUDO_UID $SUDO_GID"
+			FILE miscellaneous compton.conf $HOME/.config/compton.conf 600 $SUDO_UID $SUDO_GID ;;
 		jotd)
 			LOGIT "FILE miscellaneous jotd /usr/bin/jotd 755 0 0"
 			FILE miscellaneous jotd /usr/bin/jotd 755 0 0 ;;

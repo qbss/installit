@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Fri  2 Mar 19:20:02 GMT 2018
+# Last Change       - Fri  2 Mar 19:20:32 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -406,7 +406,7 @@ while [ "$1" ]; do
 			fi
 
 			LOGIT "FILE miscellaneous dunstrc $HOME/.config/dunst/dunstrc 600 $SUDO_UID $SUDO_GID"
-			FILE miscellaneous dunstrc $HOME/.config/dunst/dunstrc 600 $SUDO_UID $SUDO_GID
+			FILE miscellaneous dunstrc $HOME/.config/dunst/dunstrc 600 $SUDO_UID $SUDO_GID ;;
 		tflvim)
 			LOGIT "Displaying tflvim WARNING"
 			while read -r; do

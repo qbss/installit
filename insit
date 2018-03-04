@@ -3,10 +3,12 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sat  3 Mar 06:06:51 GMT 2018
+# Last Change       - Sun  4 Mar 19:50:40 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
+
+_VERSION_="2018-03-04"
 
 #TODO - Incorporate an 'undo' update action, in-case an update breaks something.
 
@@ -31,7 +33,7 @@ USAGE(){
 	while read -r; do
 		printf "%s\n" "$REPLY"
 	done <<-EOF
-		            INSIT (2nd March 2018)
+		            INSIT ($_VERSION_)
 		            Written by terminalforlife (terminalforlife@yahoo.com)
 
 		            Installer for many shell programs from terminalforlife.
@@ -39,8 +41,9 @@ USAGE(){
 		SYNTAX:     insit [OPTS] WHAT1 WHAT2 WHAT3 . . .
 
 		OPTS:       --help|-h|-?            - Displays this help information.
-		            --verbose|-v            - Also display the log output.
-		            --debug                 - Enables the built-in bash debugging.
+		            --verbose|-V            - Also display the log output.
+		            --version|-v            - Output only the version datestamp.
+		            --debug|-D              - Enables the built-in bash debugging.
 		            --quiet|-q              - Runs in quiet mode. Errors still output.
 		            --update|-U             - Replace and update existing files.
 		            --uninstall|-u          - Uninstall files installed here.
@@ -88,13 +91,16 @@ while [ "$1" ]; do
 	case "$1" in
 		--help|-h|-\?)
 			USAGE; exit 0 ;;
-		--verbose|-v)
+		--verbose|-V)
 			if [ -x /usr/bin/tee ]; then
 				VERBOSE="true"
 			else
 				XERR "$LINENO" "Dependency '/usr/bin/tee' not met."
 			fi ;;
-		--debug)
+		--version|-v)
+			printf "%s\n" "$_VERSION_"
+			exit 0 ;;
+		--debug|-D)
 			DEBUGME="true" ;;
 		--quiet|-q)
 			BEQUIET="true" ;;
@@ -280,7 +286,7 @@ APT_INSTALL(){
 					ERR "$LINENO" "Unsupported distribution base."
 					return 1
 				fi
-	
+
 				break
 			fi
 		done < "$OSFILE"

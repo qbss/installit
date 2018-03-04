@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sun  4 Mar 19:50:40 GMT 2018
+# Last Change       - Sun  4 Mar 20:35:22 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -173,6 +173,7 @@ FILE(){
 	# FILE project_name "source_file.sh" "/usr/bin/target_file" 755
 	if [ "$UNINSTALL" == "true" ]; then
 		if ! [ -x /usr/bin/gvfs-trash ]; then
+			#TODO - Duh. This appears every FILE call. Fix?
 			local MSG="This will delete installed files"
 			read -e -n 1 -p "$MSG -- continue? "
 			if [[ "$REPLY" == [yY] ]]; then

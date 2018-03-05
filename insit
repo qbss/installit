@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Mon  5 Mar 16:28:28 GMT 2018
+# Last Change       - Mon  5 Mar 16:37:05 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -394,7 +394,7 @@ fi
 while [ "$1" ]; do
 	case "$1" in
 		vimconfig)
-			LOGIT "Displaying tflvim WARNING"
+			LOGIT "Displaying vimconfig WARNING"
 			while read -r; do
 				printf "%s\n" "$REPLY"
 			done <<-EOF
@@ -416,7 +416,7 @@ while [ "$1" ]; do
 			fi
 
 			LOGIT "FILE vimconfig colors/tfl.vim $HOME/.vim/colors/tfl.vim 600 $SUDO_UID $SUDO_GID"
-			FILE vimconfig tfl.vim $HOME/.vim/colors/tfl.vim 600 $SUDO_UID $SUDO_GID
+			FILE vimconfig colors/tfl.vim $HOME/.vim/colors/tfl.vim 600 $SUDO_UID $SUDO_GID
 			LOGIT "FILE vimconfig .vimrc $HOME/.vimrc 600 $SUDO_UID $SUDO_GID"
 			FILE vimconfig .vimrc $HOME/.vimrc 600 $SUDO_UID $SUDO_GID
 

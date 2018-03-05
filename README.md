@@ -15,7 +15,7 @@ As of 29th January 2018, bash completion is now fully supported and working in i
 Execute the following one-liner to download and install insit:
 
 ```bash
-sudo wget -q https://github.com/terminalforlife/installit/raw/master/insit -O /usr/bin/insit && sudo chmod 755 /usr/bin/insit; sudo insit -S
+wget -q https://github.com/terminalforlife/installit/raw/master/insit && sudo bash insit -S
 ```
 
 Or, if you'd prefer, you could clone or download (via the green button) this installit repository, then, once you've got access to the insit program, run the following from within the very same directory, to install the latest insit:

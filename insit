@@ -3,12 +3,12 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sun  4 Mar 20:35:22 GMT 2018
+# Last Change       - Mon  5 Mar 16:28:28 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
 
-_VERSION_="2018-03-04"
+_VERSION_="2018-03-05"
 
 #TODO - Incorporate an 'undo' update action, in-case an update breaks something.
 
@@ -368,9 +368,9 @@ AVAIL=(
 	"simplify-ubuntu - Small project to lighten standard Ubuntu 16.04.3 LTS installations."
 	"simwea - Display various weather statistics on a terminal."
 	"snotes - Search your programming notes on-the-fly with this simple tool."
-	"tflvim - The terminalforlife theme and .vimrc configuration file for VIM."
 	"tozero - Simple program to display a countdown for a target date."
 	"ubuntu-syschk - Performs various non-root system health checks on Ubuntu and similar."
+	"vimconfig - Various TFL configuration files for the Vi-IMproved (VIM) modal text editor."
 	"wcdl - Crawl WallpapersCraft for desktop backgrounds. Includes wcdl tools."
 )
 
@@ -393,6 +393,42 @@ fi
 
 while [ "$1" ]; do
 	case "$1" in
+		vimconfig)
+			LOGIT "Displaying tflvim WARNING"
+			while read -r; do
+				printf "%s\n" "$REPLY"
+			done <<-EOF
+				WARNING: This will install and replace the following:
+
+				  $HOME/.vimrc
+				  $HOME/.vim/colors/tfl.vim
+				  $HOME/.vim/plugin/datepaste.vim
+
+			EOF
+
+			LOGIT "Prompting user to continue or not"
+			read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
+			[[ "$REPLY" == "Yes!" ]] || { printf "No action taken -- skipping.\n"; shift; continue; }
+
+			if ! [ -d $HOME/.vim/colors ]; then
+				LOGIT "Creating $HOME/.vim/colors directory"
+				/bin/mkdir -p $HOME/.vim/colors
+			fi
+
+			LOGIT "FILE vimconfig colors/tfl.vim $HOME/.vim/colors/tfl.vim 600 $SUDO_UID $SUDO_GID"
+			FILE vimconfig tfl.vim $HOME/.vim/colors/tfl.vim 600 $SUDO_UID $SUDO_GID
+			LOGIT "FILE vimconfig .vimrc $HOME/.vimrc 600 $SUDO_UID $SUDO_GID"
+			FILE vimconfig .vimrc $HOME/.vimrc 600 $SUDO_UID $SUDO_GID
+
+			if ! [ -d $HOME/.vim/plugin ]; then
+				LOGIT "Creating $HOME/.vim/plugin directory"
+				/bin/mkdir -p $HOME/.vim/plugin
+			fi
+
+			LOGIT "FILE vimconfig plugin/datepaste.vim $HOME/.vim/plugin/datepaste.vim 600 $SUDO_UID $SUDO_GID"
+			FILE vimconfig plugin/datepaste.vim $HOME/.vim/plugin/datepaste.vim 600 $SUDO_UID $SUDO_GID
+
+			[ -x /usr/bin/vim ] || APT_INSTALL vim ;;
 		snotes)
 			LOGIT "FILE miscellaneous snotes /usr/bin/snotes 755 0 0"
 			FILE miscellaneous snotes /usr/bin/snotes 755 0 0 ;;
@@ -422,35 +458,6 @@ while [ "$1" ]; do
 			FILE miscellaneous dunstrc $HOME/.config/dunst/dunstrc 600 $SUDO_UID $SUDO_GID
 
 			[ -x /usr/bin/dunst ] || APT_INSTALL dunst ;;
-		tflvim)
-			if [ -f $HOME/.vimrc -o -f $HOME/.vim/colors/tfl.vim ]; then
-				LOGIT "Displaying tflvim WARNING"
-				while read -r; do
-					printf "%s\n" "$REPLY"
-				done <<-EOF
-					WARNING: This will install and replace the following:
-
-					  $HOME/.vimrc
-					  $HOME/.config/colors/tfl.vim
-
-				EOF
-
-				LOGIT "Prompting user to continue or not"
-				read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
-				[[ "$REPLY" == "Yes!" ]] || { printf "No action taken -- skipping.\n"; shift; continue; }
-			fi
-
-			if ! [ -d $HOME/.vim/colors ]; then
-				LOGIT "Creating $HOME/.vim/colors directory"
-				/bin/mkdir $HOME/.vim/colors
-			fi
-
-			LOGIT "FILE miscellaneous tfl.vim $HOME/.vim/colors/tfl.vim 600 $SUDO_UID $SUDO_GID"
-			FILE miscellaneous tfl.vim $HOME/.vim/colors/tfl.vim 600 $SUDO_UID $SUDO_GID
-			LOGIT "FILE miscellaneous .vimrc $HOME/.vimrc 600 $SUDO_UID $SUDO_GID"
-			FILE miscellaneous .vimrc $HOME/.vimrc 600 $SUDO_UID $SUDO_GID
-
-			[ -x /usr/bin/vim ] || APT_INSTALL vim ;;
 		compconf)
 			if [ -f $HOME/.config/compton.conf ]; then
 				LOGIT "Displaying compconf WARNING"

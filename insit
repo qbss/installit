@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Tue  6 Mar 22:29:01 GMT 2018
+# Last Change       - Tue  6 Mar 23:04:57 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -14,6 +14,8 @@ _VERSION_="2018-03-06"
 
 XERR(){ printf "[L%0.4d] ERROR: %s\n" "$1" "$2" 1>&2; exit 1; }
 ERR(){ printf "[L%0.4d] ERROR: %s\n" "$1" "$2" 1>&2; }
+
+DOM="https://github.com"
 
 USAGE(){
 	while read -r; do
@@ -61,13 +63,13 @@ USAGE(){
 
 		FILE:       The log file is stored in: /var/log/tfl_insit.log
 
-		SITE:       https://github.com/terminalforlife
+		SITE:       $DOM/terminalforlife
 	EOF
 }
 
 OSFILE="/etc/os-release"
 LOGFILE="/var/log/tfl_insit.log"
-URL="github.com/terminalforlife"
+URL="$DOM/terminalforlife"
 BRANCH="master"
 
 while [ "$1" ]; do
@@ -354,6 +356,20 @@ fi
 
 if ! [ $UID -eq 0 ]; then
 	ERR "$LINENO" "Logging disabled -- insufficient permissions."
+fi
+
+if [ "$CHECK_VERSION" == "true" ]; then
+	VERSION_URL="$DOM/terminalforlife/installit/raw/dev/version"
+	LATEST=`/usr/bin/wget -q "$VERSION_URL" -O -`
+	if [ ${LATEST//-} -gt ${_VERSION_//-} ]; then
+		while read -r; do
+			printf "%s\n" "$REPLY"
+		done <<-EOF
+			New version available:    $LATEST
+			Current version:          $_VERSION_
+
+		EOF
+	fi
 fi
 
 if [ "$SELF" == "true" ]; then

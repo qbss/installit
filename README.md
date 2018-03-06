@@ -175,7 +175,7 @@ $ sudo cat /var/log/tfl_insit.log
 [2018-03-06_22:25:54]: Set /usr/share/bash-completion/completions/apt-undo-install to 644 permissions
 ```
 
-Want a list of all of the items available with insit? Be sure to update insit to be sure you're seeing the latest list, but as of now:
+Want a list of all of the items available with insit? As of version 2018-03-06:
 
 ```
 $ insit -A

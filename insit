@@ -3,12 +3,12 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Mon  5 Mar 23:59:54 GMT 2018
+# Last Change       - Tue  6 Mar 20:58:51 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
 
-_VERSION_="2018-03-05"
+_VERSION_="2018-03-06"
 
 #TODO - Incorporate an 'undo' update action, in-case an update breaks something.
 
@@ -139,15 +139,14 @@ elif [ ! "$NOLOG" == "true" -a ! -x /usr/bin/tee ]; then
 	XERR "$LINENO" "Dependency '/usr/bin/tee' not met."
 fi
 
+if ! [ $UID -eq 0 ]; then
+	ERR "$LINENO" "Logging disabled -- insufficient permissions."
+fi
+
 [ "$BEQUIET" == "true" ] && exec 1> /dev/null
 [ "$DEBUGME" == "true" ] && set -xeu
 
 LOGIT(){
-	if ! [ $UID -eq 0 ]; then
-		ERR "$LINENO" "Logging disabled -- insufficient permissions."
-		return 1
-	fi
-
 	if [ "$LOGIT" == "true" ]; then
 		if ! [ -d "${LOGFILE%/*}" ]; then
 			XERR "$LINENO" "System directory '/var/log' not found."
@@ -418,6 +417,7 @@ while [ "$1" ]; do
 				  $HOME/.vim/plugin/sudosave.vim
 				  $HOME/.vim/plugin/textwidth.vim
 				  $HOME/.vim/plugin/tflsnips.vim
+				  $HOME/.vim/plugin/togtrans.vim
 				  $HOME/.vim/plugin/virtedit.vim
 
 			EOF
@@ -473,6 +473,8 @@ while [ "$1" ]; do
 			FILE vimconfig plugin/textwidth.vim $HOME/.vim/plugin/textwidth.vim 600 $SUDO_UID $SUDO_GID
 			LOGIT "FILE vimconfig plugin/tflsnips.vim $HOME/.vim/plugin/tflsnips.vim 600 $SUDO_UID $SUDO_GID"
 			FILE vimconfig plugin/tflsnips.vim $HOME/.vim/plugin/tflsnips.vim 600 $SUDO_UID $SUDO_GID
+			LOGIT "FILE vimconfig plugin/togtrans.vim $HOME/.vim/plugin/togtrans.vim 600 $SUDO_UID $SUDO_GID"
+			FILE vimconfig plugin/togtrans.vim $HOME/.vim/plugin/togtrans.vim 600 $SUDO_UID $SUDO_GID
 			LOGIT "FILE vimconfig plugin/virtedit.vim $HOME/.vim/plugin/virtedit.vim 600 $SUDO_UID $SUDO_GID"
 			FILE vimconfig plugin/virtedit.vim $HOME/.vim/plugin/virtedit.vim 600 $SUDO_UID $SUDO_GID
 

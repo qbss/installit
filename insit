@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Tue  6 Mar 23:04:57 GMT 2018
+# Last Change       - Tue  6 Mar 23:16:54 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -361,14 +361,18 @@ fi
 if [ "$CHECK_VERSION" == "true" ]; then
 	VERSION_URL="$DOM/terminalforlife/installit/raw/dev/version"
 	LATEST=`/usr/bin/wget -q "$VERSION_URL" -O -`
-	if [ ${LATEST//-} -gt ${_VERSION_//-} ]; then
-		while read -r; do
-			printf "%s\n" "$REPLY"
-		done <<-EOF
-			New version available:    $LATEST
-			Current version:          $_VERSION_
+	if [[ "${LATEST//-}" =~ ^[0-9]{8}$ ]]; then
+		if [ ${LATEST//-} -gt ${_VERSION_//-} ]; then
+			while read -r; do
+				printf "%s\n" "$REPLY"
+			done <<-EOF
+				New version available:    $LATEST
+				Current version:          $_VERSION_
 
-		EOF
+			EOF
+		fi
+	else
+		ERR "$LINENO" "There's an issue with the update availability check."
 	fi
 fi
 

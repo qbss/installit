@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Mon  5 Mar 16:37:05 GMT 2018
+# Last Change       - Mon  5 Mar 23:59:54 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -402,7 +402,23 @@ while [ "$1" ]; do
 
 				  $HOME/.vimrc
 				  $HOME/.vim/colors/tfl.vim
+				  $HOME/.vim/plugin/altnums.vim
+				  $HOME/.vim/plugin/autoscroll.vim
+				  $HOME/.vim/plugin/banger.vim
+				  $HOME/.vim/plugin/comtog.vim
 				  $HOME/.vim/plugin/datepaste.vim
+				  $HOME/.vim/plugin/exefile.vim
+				  $HOME/.vim/plugin/headup.vim
+				  $HOME/.vim/plugin/listmode.vim
+				  $HOME/.vim/plugin/moredoc.vim
+				  $HOME/.vim/plugin/mouseon.vim
+				  $HOME/.vim/plugin/noarrows.vim
+				  $HOME/.vim/plugin/sanekeys.vim
+				  $HOME/.vim/plugin/simplyhard.vim
+				  $HOME/.vim/plugin/sudosave.vim
+				  $HOME/.vim/plugin/textwidth.vim
+				  $HOME/.vim/plugin/tflsnips.vim
+				  $HOME/.vim/plugin/virtedit.vim
 
 			EOF
 
@@ -425,8 +441,40 @@ while [ "$1" ]; do
 				/bin/mkdir -p $HOME/.vim/plugin
 			fi
 
+			LOGIT "FILE vimconfig plugin/altnums.vim $HOME/.vim/plugin/altnums.vim 600 $SUDO_UID $SUDO_GID"
+			FILE vimconfig plugin/altnums.vim $HOME/.vim/plugin/altnums.vim 600 $SUDO_UID $SUDO_GID
+			LOGIT "FILE vimconfig plugin/autoscroll.vim $HOME/.vim/plugin/autoscroll.vim 600 $SUDO_UID $SUDO_GID"
+			FILE vimconfig plugin/autoscroll.vim $HOME/.vim/plugin/autoscroll.vim 600 $SUDO_UID $SUDO_GID
+			LOGIT "FILE vimconfig plugin/banger.vim $HOME/.vim/plugin/banger.vim 600 $SUDO_UID $SUDO_GID"
+			FILE vimconfig plugin/banger.vim $HOME/.vim/plugin/banger.vim 600 $SUDO_UID $SUDO_GID
+			LOGIT "FILE vimconfig plugin/comtog.vim $HOME/.vim/plugin/comtog.vim 600 $SUDO_UID $SUDO_GID"
+			FILE vimconfig plugin/comtog.vim $HOME/.vim/plugin/comtog.vim 600 $SUDO_UID $SUDO_GID
 			LOGIT "FILE vimconfig plugin/datepaste.vim $HOME/.vim/plugin/datepaste.vim 600 $SUDO_UID $SUDO_GID"
 			FILE vimconfig plugin/datepaste.vim $HOME/.vim/plugin/datepaste.vim 600 $SUDO_UID $SUDO_GID
+			LOGIT "FILE vimconfig plugin/exefile.vim $HOME/.vim/plugin/exefile.vim 600 $SUDO_UID $SUDO_GID"
+			FILE vimconfig plugin/exefile.vim $HOME/.vim/plugin/exefile.vim 600 $SUDO_UID $SUDO_GID
+			LOGIT "FILE vimconfig plugin/headup.vim $HOME/.vim/plugin/headup.vim 600 $SUDO_UID $SUDO_GID"
+			FILE vimconfig plugin/headup.vim $HOME/.vim/plugin/headup.vim 600 $SUDO_UID $SUDO_GID
+			LOGIT "FILE vimconfig plugin/listmode.vim $HOME/.vim/plugin/listmode.vim 600 $SUDO_UID $SUDO_GID"
+			FILE vimconfig plugin/listmode.vim $HOME/.vim/plugin/listmode.vim 600 $SUDO_UID $SUDO_GID
+			LOGIT "FILE vimconfig plugin/moredoc.vim $HOME/.vim/plugin/moredoc.vim 600 $SUDO_UID $SUDO_GID"
+			FILE vimconfig plugin/moredoc.vim $HOME/.vim/plugin/moredoc.vim 600 $SUDO_UID $SUDO_GID
+			LOGIT "FILE vimconfig plugin/mouseon.vim $HOME/.vim/plugin/mouseon.vim 600 $SUDO_UID $SUDO_GID"
+			FILE vimconfig plugin/mouseon.vim $HOME/.vim/plugin/mouseon.vim 600 $SUDO_UID $SUDO_GID
+			LOGIT "FILE vimconfig plugin/noarrows.vim $HOME/.vim/plugin/noarrows.vim 600 $SUDO_UID $SUDO_GID"
+			FILE vimconfig plugin/noarrows.vim $HOME/.vim/plugin/noarrows.vim 600 $SUDO_UID $SUDO_GID
+			LOGIT "FILE vimconfig plugin/sanekeys.vim $HOME/.vim/plugin/sanekeys.vim 600 $SUDO_UID $SUDO_GID"
+			FILE vimconfig plugin/sanekeys.vim $HOME/.vim/plugin/sanekeys.vim 600 $SUDO_UID $SUDO_GID
+			LOGIT "FILE vimconfig plugin/simplyhard.vim $HOME/.vim/plugin/simplyhard.vim 600 $SUDO_UID $SUDO_GID"
+			FILE vimconfig plugin/simplyhard.vim $HOME/.vim/plugin/simplyhard.vim 600 $SUDO_UID $SUDO_GID
+			LOGIT "FILE vimconfig plugin/sudosave.vim $HOME/.vim/plugin/sudosave.vim 600 $SUDO_UID $SUDO_GID"
+			FILE vimconfig plugin/sudosave.vim $HOME/.vim/plugin/sudosave.vim 600 $SUDO_UID $SUDO_GID
+			LOGIT "FILE vimconfig plugin/textwidth.vim $HOME/.vim/plugin/textwidth.vim 600 $SUDO_UID $SUDO_GID"
+			FILE vimconfig plugin/textwidth.vim $HOME/.vim/plugin/textwidth.vim 600 $SUDO_UID $SUDO_GID
+			LOGIT "FILE vimconfig plugin/tflsnips.vim $HOME/.vim/plugin/tflsnips.vim 600 $SUDO_UID $SUDO_GID"
+			FILE vimconfig plugin/tflsnips.vim $HOME/.vim/plugin/tflsnips.vim 600 $SUDO_UID $SUDO_GID
+			LOGIT "FILE vimconfig plugin/virtedit.vim $HOME/.vim/plugin/virtedit.vim 600 $SUDO_UID $SUDO_GID"
+			FILE vimconfig plugin/virtedit.vim $HOME/.vim/plugin/virtedit.vim 600 $SUDO_UID $SUDO_GID
 
 			[ -x /usr/bin/vim ] || APT_INSTALL vim ;;
 		snotes)

@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Tue  6 Mar 23:16:54 GMT 2018
+# Last Change       - Tue  6 Mar 23:26:44 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -31,6 +31,7 @@ USAGE(){
 		OPTS:       --help|-h|-?            - Displays this help information.
 		            --verbose|-V            - Also display the log output.
 		            --version|-v            - Output only the version datestamp.
+		            --no-check              - Do not check for version updates.
 		            --debug|-D              - Enables the built-in bash debugging.
 		            --quiet|-q              - Runs in quiet mode. Errors still output.
 		            --update|-U             - Replace and/or update existing files.
@@ -81,6 +82,8 @@ while [ "$1" ]; do
 		--version|-v)
 			printf "%s\n" "$_VERSION_"
 			exit 0 ;;
+		--no-check)
+			NO_VERSION_CHECK="true" ;;
 		--debug|-D)
 			DEBUGME="true" ;;
 		--quiet|-q)
@@ -358,11 +361,14 @@ if ! [ $UID -eq 0 ]; then
 	ERR "$LINENO" "Logging disabled -- insufficient permissions."
 fi
 
-if [ "$CHECK_VERSION" == "true" ]; then
+if ! [ "$NO_VERSION_CHECK" == "true" ]; then
+	LOGIT "Checking version for update availability"
 	VERSION_URL="$DOM/terminalforlife/installit/raw/dev/version"
 	LATEST=`/usr/bin/wget -q "$VERSION_URL" -O -`
 	if [[ "${LATEST//-}" =~ ^[0-9]{8}$ ]]; then
 		if [ ${LATEST//-} -gt ${_VERSION_//-} ]; then
+			LOGIT "A newer version of insit detected"
+
 			while read -r; do
 				printf "%s\n" "$REPLY"
 			done <<-EOF
@@ -372,6 +378,7 @@ if [ "$CHECK_VERSION" == "true" ]; then
 			EOF
 		fi
 	else
+		LOGIT "Update availability error(s) detected"
 		ERR "$LINENO" "There's an issue with the update availability check."
 	fi
 fi

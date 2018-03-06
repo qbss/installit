@@ -42,6 +42,7 @@ SYNTAX:     insit [OPTS] WHAT1 WHAT2 WHAT3 . . .
 OPTS:       --help|-h|-?            - Displays this help information.
             --verbose|-V            - Also display the log output.
             --version|-v            - Output only the version datestamp.
+            --no-check              - Do not check for version updates.
             --debug|-D              - Enables the built-in bash debugging.
             --quiet|-q              - Runs in quiet mode. Errors still output.
             --update|-U             - Replace and/or update existing files.
@@ -166,13 +167,22 @@ You'll probably be glad to know that insit also supports helpful logging via /va
 
 ```
 $ sudo cat /var/log/tfl_insit.log
-[2018-03-06_22:25:54]: FILE apt-undo-install completion /usr/share/bash-completion/completions/apt-undo-install 644 0 0
-[2018-03-06_22:25:54]: Downloading github.com/terminalforlife/apt-undo-install/master/completion to /usr/share/bash-completion/completions/apt-undo-install
-[2018-03-06_22:25:54]: Downloaded github.com/terminalforlife/apt-undo-install/master/completion to /usr/share/bash-completion/completions/apt-undo-install
-[2018-03-06_22:25:54]: Setting /usr/share/bash-completion/completions/apt-undo-install to 0 UID and 0 GID
-[2018-03-06_22:25:54]: Set /usr/share/bash-completion/completions/apt-undo-install to 0 UID and 0 GID
-[2018-03-06_22:25:54]: Setting /usr/share/bash-completion/completions/apt-undo-install to 644 permissions
-[2018-03-06_22:25:54]: Set /usr/share/bash-completion/completions/apt-undo-install to 644 permissions
+[2018-03-06_23:57:00]: Checking version for update availability
+[2018-03-06_23:57:01]: No new version of insit detected
+[2018-03-06_23:57:01]: FILE apt-undo-install apt-undo-install /usr/bin/apt-undo-install 755 0 0
+[2018-03-06_23:57:01]: Downloading https://github.com/terminalforlife/apt-undo-install/master/apt-undo-install over /usr/bin/apt-undo-install
+[2018-03-06_23:57:02]: Successfully downloaded https://github.com/terminalforlife/apt-undo-install/master/apt-undo-install over /usr/bin/apt-undo-install
+[2018-03-06_23:57:02]: Re-setting /usr/bin/apt-undo-install to 0 UID and 0 GID
+[2018-03-06_23:57:02]: Successfully re-set /usr/bin/apt-undo-install to 0 UID and 0 GID
+[2018-03-06_23:57:02]: Re-setting /usr/bin/apt-undo-install to 755 permissions
+[2018-03-06_23:57:02]: Successfully re-set /usr/bin/apt-undo-install to 755 permissions
+[2018-03-06_23:57:02]: FILE apt-undo-install completion /usr/share/bash-completion/completions/apt-undo-install 644 0 0
+[2018-03-06_23:57:02]: Downloading https://github.com/terminalforlife/apt-undo-install/master/completion over /usr/share/bash-completion/completions/apt-undo-install
+[2018-03-06_23:57:03]: Successfully downloaded https://github.com/terminalforlife/apt-undo-install/master/completion over /usr/share/bash-completion/completions/apt-undo-install
+[2018-03-06_23:57:03]: Re-setting /usr/share/bash-completion/completions/apt-undo-install to 0 UID and 0 GID
+[2018-03-06_23:57:03]: Successfully re-set /usr/share/bash-completion/completions/apt-undo-install to 0 UID and 0 GID
+[2018-03-06_23:57:03]: Re-setting /usr/share/bash-completion/completions/apt-undo-install to 644 permissions
+[2018-03-06_23:57:03]: Successfully re-set /usr/share/bash-completion/completions/apt-undo-install to 644 permissions
 ```
 
 Want a list of all of the items available with insit? As of version 2018-03-06:

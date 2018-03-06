@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Tue  6 Mar 22:06:46 GMT 2018
+# Last Change       - Tue  6 Mar 22:09:04 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -93,11 +93,7 @@ while [ "$1" ]; do
 		--help|-h|-\?)
 			USAGE; exit 0 ;;
 		--verbose|-V)
-			if [ -x /usr/bin/tee ]; then
-				VERBOSE="true"
-			else
-				XERR "$LINENO" "Dependency '/usr/bin/tee' not met."
-			fi ;;
+			VERBOSE="true" ;;
 		--version|-v)
 			printf "%s\n" "$_VERSION_"
 			exit 0 ;;
@@ -136,8 +132,6 @@ if ! [ "$AVAIL_SHOW" == "true" -o "$IGNORE_ROOT" == "true" ]; then
 	if ! [ $UID -eq 0 ]; then
 		XERR "$LINENO" "Unable to continue -- do you have root access?"
 	fi
-elif [ ! "$NOLOG" == "true" -a ! -x /usr/bin/tee ]; then
-	XERR "$LINENO" "Dependency '/usr/bin/tee' not met."
 fi
 
 [ "$BEQUIET" == "true" ] && exec 1> /dev/null
@@ -150,8 +144,8 @@ LOGIT(){
 		else
 			printf -v DATETIME "%(%F_%X)T" "-1"
 			if [ "$VERBOSE" == "true" ]; then
-				printf "[%s]: %s\n" "$DATETIME" "$1"\
-					| /usr/bin/tee -a "$LOGFILE"
+				printf "[%s]: %s\n" "$DATETIME" "$1" >> "$LOGFILE"
+				printf "[%s]: %s\n" "$DATETIME" "$1"
 			else
 				printf "[%s]: %s\n" "$DATETIME" "$1" >> "$LOGFILE"
 			fi

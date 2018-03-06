@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Tue  6 Mar 22:18:32 GMT 2018
+# Last Change       - Tue  6 Mar 22:26:10 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -160,6 +160,7 @@ LOGIT(){
 }
 
 FILE(){
+	LOGIT "FILE $1 $2 $3 $4 $5 $6"
 	if [ "$UNINSTALL" == "true" ]; then
 		if [ -f "$3" ]; then
 			if [ "$HASGVFS" == "true" ]; then
@@ -426,9 +427,7 @@ while [ "$1" ]; do
 				/bin/mkdir -p $HOME/.vim/colors
 			fi
 
-			LOGIT "FILE vimconfig colors/tfl.vim $HOME/.vim/colors/tfl.vim 600 $SUDO_UID $SUDO_GID"
 			FILE vimconfig colors/tfl.vim $HOME/.vim/colors/tfl.vim 600 $SUDO_UID $SUDO_GID
-			LOGIT "FILE vimconfig .vimrc $HOME/.vimrc 600 $SUDO_UID $SUDO_GID"
 			FILE vimconfig .vimrc $HOME/.vimrc 600 $SUDO_UID $SUDO_GID
 
 			if ! [ -d $HOME/.vim/plugin ]; then
@@ -436,46 +435,27 @@ while [ "$1" ]; do
 				/bin/mkdir -p $HOME/.vim/plugin
 			fi
 
-			LOGIT "FILE vimconfig plugin/altnums.vim $HOME/.vim/plugin/altnums.vim 600 $SUDO_UID $SUDO_GID"
 			FILE vimconfig plugin/altnums.vim $HOME/.vim/plugin/altnums.vim 600 $SUDO_UID $SUDO_GID
-			LOGIT "FILE vimconfig plugin/autoscroll.vim $HOME/.vim/plugin/autoscroll.vim 600 $SUDO_UID $SUDO_GID"
 			FILE vimconfig plugin/autoscroll.vim $HOME/.vim/plugin/autoscroll.vim 600 $SUDO_UID $SUDO_GID
-			LOGIT "FILE vimconfig plugin/banger.vim $HOME/.vim/plugin/banger.vim 600 $SUDO_UID $SUDO_GID"
 			FILE vimconfig plugin/banger.vim $HOME/.vim/plugin/banger.vim 600 $SUDO_UID $SUDO_GID
-			LOGIT "FILE vimconfig plugin/comtog.vim $HOME/.vim/plugin/comtog.vim 600 $SUDO_UID $SUDO_GID"
 			FILE vimconfig plugin/comtog.vim $HOME/.vim/plugin/comtog.vim 600 $SUDO_UID $SUDO_GID
-			LOGIT "FILE vimconfig plugin/datepaste.vim $HOME/.vim/plugin/datepaste.vim 600 $SUDO_UID $SUDO_GID"
 			FILE vimconfig plugin/datepaste.vim $HOME/.vim/plugin/datepaste.vim 600 $SUDO_UID $SUDO_GID
-			LOGIT "FILE vimconfig plugin/exefile.vim $HOME/.vim/plugin/exefile.vim 600 $SUDO_UID $SUDO_GID"
 			FILE vimconfig plugin/exefile.vim $HOME/.vim/plugin/exefile.vim 600 $SUDO_UID $SUDO_GID
-			LOGIT "FILE vimconfig plugin/headup.vim $HOME/.vim/plugin/headup.vim 600 $SUDO_UID $SUDO_GID"
 			FILE vimconfig plugin/headup.vim $HOME/.vim/plugin/headup.vim 600 $SUDO_UID $SUDO_GID
-			LOGIT "FILE vimconfig plugin/listmode.vim $HOME/.vim/plugin/listmode.vim 600 $SUDO_UID $SUDO_GID"
 			FILE vimconfig plugin/listmode.vim $HOME/.vim/plugin/listmode.vim 600 $SUDO_UID $SUDO_GID
-			LOGIT "FILE vimconfig plugin/moredoc.vim $HOME/.vim/plugin/moredoc.vim 600 $SUDO_UID $SUDO_GID"
 			FILE vimconfig plugin/moredoc.vim $HOME/.vim/plugin/moredoc.vim 600 $SUDO_UID $SUDO_GID
-			LOGIT "FILE vimconfig plugin/mouseon.vim $HOME/.vim/plugin/mouseon.vim 600 $SUDO_UID $SUDO_GID"
 			FILE vimconfig plugin/mouseon.vim $HOME/.vim/plugin/mouseon.vim 600 $SUDO_UID $SUDO_GID
-			LOGIT "FILE vimconfig plugin/noarrows.vim $HOME/.vim/plugin/noarrows.vim 600 $SUDO_UID $SUDO_GID"
 			FILE vimconfig plugin/noarrows.vim $HOME/.vim/plugin/noarrows.vim 600 $SUDO_UID $SUDO_GID
-			LOGIT "FILE vimconfig plugin/sanekeys.vim $HOME/.vim/plugin/sanekeys.vim 600 $SUDO_UID $SUDO_GID"
 			FILE vimconfig plugin/sanekeys.vim $HOME/.vim/plugin/sanekeys.vim 600 $SUDO_UID $SUDO_GID
-			LOGIT "FILE vimconfig plugin/simplyhard.vim $HOME/.vim/plugin/simplyhard.vim 600 $SUDO_UID $SUDO_GID"
 			FILE vimconfig plugin/simplyhard.vim $HOME/.vim/plugin/simplyhard.vim 600 $SUDO_UID $SUDO_GID
-			LOGIT "FILE vimconfig plugin/sudosave.vim $HOME/.vim/plugin/sudosave.vim 600 $SUDO_UID $SUDO_GID"
 			FILE vimconfig plugin/sudosave.vim $HOME/.vim/plugin/sudosave.vim 600 $SUDO_UID $SUDO_GID
-			LOGIT "FILE vimconfig plugin/textwidth.vim $HOME/.vim/plugin/textwidth.vim 600 $SUDO_UID $SUDO_GID"
 			FILE vimconfig plugin/textwidth.vim $HOME/.vim/plugin/textwidth.vim 600 $SUDO_UID $SUDO_GID
-			LOGIT "FILE vimconfig plugin/tflsnips.vim $HOME/.vim/plugin/tflsnips.vim 600 $SUDO_UID $SUDO_GID"
 			FILE vimconfig plugin/tflsnips.vim $HOME/.vim/plugin/tflsnips.vim 600 $SUDO_UID $SUDO_GID
-			LOGIT "FILE vimconfig plugin/togtrans.vim $HOME/.vim/plugin/togtrans.vim 600 $SUDO_UID $SUDO_GID"
 			FILE vimconfig plugin/togtrans.vim $HOME/.vim/plugin/togtrans.vim 600 $SUDO_UID $SUDO_GID
-			LOGIT "FILE vimconfig plugin/virtedit.vim $HOME/.vim/plugin/virtedit.vim 600 $SUDO_UID $SUDO_GID"
 			FILE vimconfig plugin/virtedit.vim $HOME/.vim/plugin/virtedit.vim 600 $SUDO_UID $SUDO_GID
 
 			[ -x /usr/bin/vim ] || APT_INSTALL vim ;;
 		snotes)
-			LOGIT "FILE miscellaneous snotes /usr/bin/snotes 755 0 0"
 			FILE miscellaneous snotes /usr/bin/snotes 755 0 0 ;;
 		dunstconfig)
 			if [ -f $HOME/.config/dunst/dunstrc ]; then
@@ -491,7 +471,10 @@ while [ "$1" ]; do
 
 				LOGIT "Prompting user to continue or not"
 				read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
-				[[ "$REPLY" == "Yes!" ]] || { printf "No action taken -- skipping.\n"; shift; continue; }
+				if ! [[ "$REPLY" == "Yes!" ]]; then
+					printf "No action taken -- skipping.\n"
+					shift; continue
+				fi
 			fi
 
 			if ! [ -d $HOME/.config/dunst ]; then
@@ -499,7 +482,6 @@ while [ "$1" ]; do
 				/bin/mkdir $HOME/.config/dunst
 			fi
 
-			LOGIT "FILE miscellaneous dunstrc $HOME/.config/dunst/dunstrc 600 $SUDO_UID $SUDO_GID"
 			FILE miscellaneous dunstrc $HOME/.config/dunst/dunstrc 600 $SUDO_UID $SUDO_GID
 
 			[ -x /usr/bin/dunst ] || APT_INSTALL dunst ;;
@@ -525,91 +507,59 @@ while [ "$1" ]; do
 				/bin/mkdir $HOME/.config
 			fi
 
-			LOGIT "FILE miscellaneous compton.conf $HOME/.config/compton.conf 600 $SUDO_UID $SUDO_GID"
 			FILE miscellaneous compton.conf $HOME/.config/compton.conf 600 $SUDO_UID $SUDO_GID
 
 			[ -x /usr/bin/compton ] || APT_INSTALL compton ;;
 		jotd)
-			LOGIT "FILE miscellaneous jotd /usr/bin/jotd 755 0 0"
 			FILE miscellaneous jotd /usr/bin/jotd 755 0 0 ;;
 		bios-info)
-			LOGIT "FILE miscellaneous bios-info /usr/bin/bios-info 755 0 0"
 			FILE miscellaneous bios-info /usr/bin/bios-info 755 0 0 ;;
 		ghipc)
-			LOGIT "FILE miscellaneous ghipc /usr/bin/ghipc 755 0 0"
 			FILE miscellaneous ghipc /usr/bin/ghipc 755 0 0 ;;
 		capnum)
-			LOGIT "FILE miscellaneous capnum /usr/bin/capnum 755 0 0"
 			FILE miscellaneous capnum /usr/bin/capnum 755 0 0 ;;
 		mfw)
-			LOGIT "FILE miscellaneous mfw /usr/bin/mfw 755 0 0"
 			FILE miscellaneous mfw /usr/bin/mfw 755 0 0 ;;
 		reviewer)
-			LOGIT "FILE reviewer reviewer /usr/bin/reviewer 755 0 0"
 			FILE reviewer reviewer /usr/bin/reviewer 755 0 0
-			LOGIT "FILE reviewer completion /usr/share/bash-completion/completions/reviewer 644 0 0"
 			FILE reviewer completion /usr/share/bash-completion/completions/reviewer 644 0 0 ;;
 		ubuntu-syschk)
-			LOGIT "FILE ubuntu-syschk ubuntu-syschk /usr/bin/ubuntu-syschk 755 0 0"
 			FILE ubuntu-syschk ubuntu-syschk /usr/bin/ubuntu-syschk 755 0 0
-			LOGIT "FILE ubuntu-syschk completion /usr/share/bash-completion/completions/ubuntu-syschk 644 0 0"
 			FILE ubuntu-syschk completion /usr/share/bash-completion/completions/ubuntu-syschk 644 0 0 ;;
 		simplify-ubuntu)
-			LOGIT "FILE simplify-ubuntu simplify-ubuntu /usr/bin/simplify-ubuntu 755 0 0"
 			FILE simplify-ubuntu simplify-ubuntu /usr/bin/simplify-ubuntu 755 0 0
-			LOGIT "FILE simplify-ubuntu completion /usr/share/bash-completion/completions/simplify-ubuntu 644 0 0"
 			FILE simplify-ubuntu completion /usr/share/bash-completion/completions/simplify-ubuntu 644 0 0
-			LOGIT "FILE miscellaneous clean-locales /usr/bin/clean-locales 755 0 0"
 			FILE miscellaneous clean-locales /usr/bin/clean-locales 755 0 0
-			LOGIT "FILE lspkg lspkg /usr/bin/lspkg 755 0 0"
 			FILE lspkg lspkg /usr/bin/lspkg 755 0 0
-			LOGIT "FILE lspkg completion /usr/share/bash-completion/completions/lspkg 644 0 0"
 			FILE lspkg completion /usr/share/bash-completion/completions/lspkg 644 0 0 ;;
 		forex)
-			LOGIT "FILE miscellaneous forex /usr/bin/forex 755 0 0"
 			FILE miscellaneous forex /usr/bin/forex 755 0 0 ;;
 		autoscrot)
-			LOGIT "FILE autoscrot autoscrot /usr/bin/autoscrot 755 0 0"
 			FILE autoscrot autoscrot /usr/bin/autoscrot 755 0 0 ;;
 		apt-undo-install)
-			LOGIT "FILE apt-undo-install apt-undo-install /usr/bin/apt-undo-install 755 0 0"
 			FILE apt-undo-install apt-undo-install /usr/bin/apt-undo-install 755 0 0
-			LOGIT "FILE apt-undo-install completion /usr/share/bash-completion/completions/apt-undo-install 644 0 0"
 			FILE apt-undo-install completion /usr/share/bash-completion/completions/apt-undo-install 644 0 0 ;;
 		binwatch)
-			LOGIT "FILE binwatch binwatch /usr/bin/binwatch 755 0 0"
 			FILE binwatch binwatch /usr/bin/binwatch 755 0 0 ;;
 		bl)
-			LOGIT "FILE bl bl /usr/bin/bl 755 0 0"
 			FILE bl bl /usr/bin/bl 755 0 0 ;;
 		nxbt)
-			LOGIT "FILE nxbt nxbt /usr/bin/nxbt 755 0 0"
 			FILE nxbt nxbt /usr/bin/nxbt 755 0 0
-			LOGIT "FILE nxbt completion /usr/share/bash-completion/completions/nxbt 644 0 0"
 			FILE nxbt completion /usr/share/bash-completion/completions/nxbt 644 0 0 ;;
 		catmedia)
-			LOGIT "FILE catmedia catmedia /usr/bin/catmedia 755 0 0"
 			FILE catmedia catmedia /usr/bin/catmedia 755 0 0 ;;
 		cpufreq)
-			LOGIT "FILE cpufreq cpufreq /usr/bin/cpufreq 755 0 0"
 			FILE cpufreq cpufreq /usr/bin/cpufreq 755 0 0 ;;
 		dwwdl)
-			LOGIT "FILE dwwdl dwwdl /usr/bin/dwwdl 755 0 0"
 			FILE dwwdl dwwdl /usr/bin/dwwdl 755 0 0 ;;
 		notify-upgrade)
-			LOGIT "FILE notify-upgrade notify-upgrade /usr/bin/notify-upgrade 755 0 0"
 			FILE notify-upgrade notify-upgrade /usr/bin/notify-upgrade 755 0 0
-			LOGIT "FILE miscellaneous Cron_Tasks/APT_Update_Cron /etc/cron.hourly/APT_Update_Cron 755 0 0"
 			FILE miscellaneous Cron_Tasks/APT_Update_Cron /etc/cron.hourly/APT_Update_Cron 755 0 0 ;;
 		roks)
-			LOGIT "FILE roks roks /usr/bin/roks 755 0 0"
 			FILE roks roks /usr/bin/roks 755 0 0
-			LOGIT "FILE roks completion /usr/share/bash-completion/completions/roks 644 0 0"
 			FILE roks completion /usr/share/bash-completion/completions/roks 644 0 0 ;;
 		bdl)
-			LOGIT "FILE bdl bdl /usr/bin/bdl 755 0 0"
 			FILE bdl bdl /usr/bin/bdl 755 0 0
-			LOGIT "FILE bdl completion /usr/share/bash-completion/completions/bdl 644 0 0"
 			FILE bdl completion /usr/share/bash-completion/completions/bdl 644 0 0 ;;
 		bashconfig)
 			LOGIT "Displaying bashconfig WARNING"
@@ -644,13 +594,9 @@ while [ "$1" ]; do
 			read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
 			[[ "$REPLY" == "Yes!" ]] || { printf "No action taken -- skipping.\n"; shift; continue; }
 
-			LOGIT "FILE bashconfig .profile $HOME/.profile 644 "$SUDO_UID" "$SUDO_GID""
 			FILE bashconfig .profile $HOME/.profile 644 "$SUDO_UID" "$SUDO_GID"
-			LOGIT "FILE bashconfig .bash_aliases $HOME/.bash_aliases 644 "$SUDO_UID" "$SUDO_GID""
 			FILE bashconfig .bash_aliases $HOME/.bash_aliases 644 "$SUDO_UID" "$SUDO_GID"
-			LOGIT "FILE bashconfig .bash_functions $HOME/.bash_functions 644 "$SUDO_UID" "$SUDO_GID""
 			FILE bashconfig .bash_functions $HOME/.bash_functions 644 "$SUDO_UID" "$SUDO_GID"
-			LOGIT "FILE bashconfig .bashrc $HOME/.bashrc 644 "$SUDO_UID" "$SUDO_GID""
 			FILE bashconfig .bashrc $HOME/.bashrc 644 "$SUDO_UID" "$SUDO_GID"
 
 			if ! [ -d "$HOME/ShellPlugins" ]; then
@@ -661,35 +607,20 @@ while [ "$1" ]; do
 			LOGIT "Setting $HOME/ShellPlugins to $SUDO_UID UID and $SUDO_GID GID"
 			/bin/chown "$SUDO_UID":"$SUDO_GID" "$HOME/ShellPlugins"
 
-			LOGIT "FILE bashconfig ShellPlugins/Bell_Alarm $HOME/ShellPlugins/Bell_Alarm 644 $SUDO_UID "$SUDO_GID""
 			FILE bashconfig ShellPlugins/Bell_Alarm $HOME/ShellPlugins/Bell_Alarm 644 $SUDO_UID "$SUDO_GID"
-			LOGIT "FILE bashconfig ShellPlugins/Cleaner_RK_Scan $HOME/ShellPlugins/Cleaner_RK_Scan 644 $SUDO_UID "$SUDO_GID""
 			FILE bashconfig ShellPlugins/Cleaner_RK_Scan $HOME/ShellPlugins/Cleaner_RK_Scan 644 $SUDO_UID "$SUDO_GID"
-			LOGIT "FILE bashconfig ShellPlugins/Clear_CD_LS $HOME/ShellPlugins/Clear_CD_LS 644 $SUDO_UID "$SUDO_GID""
 			FILE bashconfig ShellPlugins/Clear_CD_LS $HOME/ShellPlugins/Clear_CD_LS 644 $SUDO_UID "$SUDO_GID"
-			LOGIT "FILE bashconfig ShellPlugins/CPU_Intensive_Procs $HOME/ShellPlugins/CPU_Intensive_Procs 644 $SUDO_UID "$SUDO_GID""
 			FILE bashconfig ShellPlugins/CPU_Intensive_Procs $HOME/ShellPlugins/CPU_Intensive_Procs 644 $SUDO_UID "$SUDO_GID"
-			LOGIT "FILE bashconfig ShellPlugins/Create_VM $HOME/ShellPlugins/Create_VM 644 $SUDO_UID "$SUDO_GID""
 			FILE bashconfig ShellPlugins/Create_VM $HOME/ShellPlugins/Create_VM 644 $SUDO_UID "$SUDO_GID"
-			LOGIT "FILE bashconfig ShellPlugins/Get_Bad_Hosts $HOME/ShellPlugins/Get_Bad_Hosts 644 $SUDO_UID "$SUDO_GID""
 			FILE bashconfig ShellPlugins/Get_Bad_Hosts $HOME/ShellPlugins/Get_Bad_Hosts 644 $SUDO_UID "$SUDO_GID"
-			LOGIT "FILE bashconfig ShellPlugins/Git_Status_All $HOME/ShellPlugins/Git_Status_All 644 $SUDO_UID "$SUDO_GID""
 			FILE bashconfig ShellPlugins/Git_Status_All $HOME/ShellPlugins/Git_Status_All 644 $SUDO_UID "$SUDO_GID"
-			LOGIT "FILE bashconfig ShellPlugins/List_Signals $HOME/ShellPlugins/List_Signals 644 $SUDO_UID "$SUDO_GID""
 			FILE bashconfig ShellPlugins/List_Signals $HOME/ShellPlugins/List_Signals 644 $SUDO_UID "$SUDO_GID"
-			LOGIT "FILE bashconfig ShellPlugins/Load_File_Links2 $HOME/ShellPlugins/Load_File_Links2 644 $SUDO_UID "$SUDO_GID""
 			FILE bashconfig ShellPlugins/Load_File_Links2 $HOME/ShellPlugins/Load_File_Links2 644 $SUDO_UID "$SUDO_GID"
-			LOGIT "FILE bashconfig ShellPlugins/Loop_This $HOME/ShellPlugins/Loop_This 644 $SUDO_UID "$SUDO_GID""
 			FILE bashconfig ShellPlugins/Loop_This $HOME/ShellPlugins/Loop_This 644 $SUDO_UID "$SUDO_GID"
-			LOGIT "FILE bashconfig ShellPlugins/LSPKG_Set $HOME/ShellPlugins/LSPKG_Set 644 $SUDO_UID "$SUDO_GID""
 			FILE bashconfig ShellPlugins/LSPKG_Set $HOME/ShellPlugins/LSPKG_Set 644 $SUDO_UID "$SUDO_GID"
-			LOGIT "FILE bashconfig ShellPlugins/NIR_Difference $HOME/ShellPlugins/NIR_Difference 644 $SUDO_UID "$SUDO_GID""
 			FILE bashconfig ShellPlugins/NIR_Difference $HOME/ShellPlugins/NIR_Difference 644 $SUDO_UID "$SUDO_GID"
-			LOGIT "FILE bashconfig ShellPlugins/Play_Download_MPSYT $HOME/ShellPlugins/Play_Download_MPSYT 644 $SUDO_UID "$SUDO_GID""
 			FILE bashconfig ShellPlugins/Play_Download_MPSYT $HOME/ShellPlugins/Play_Download_MPSYT 644 $SUDO_UID "$SUDO_GID"
-			LOGIT "FILE bashconfig ShellPlugins/Shell_Alias_Correcting $HOME/ShellPlugins/Shell_Alias_Correcting 644 $SUDO_UID "$SUDO_GID""
 			FILE bashconfig ShellPlugins/Shell_Alias_Correcting $HOME/ShellPlugins/Shell_Alias_Correcting 644 $SUDO_UID "$SUDO_GID"
-			LOGIT "FILE bashconfig ShellPlugins/Times_Table $HOME/ShellPlugins/Times_Table 644 $SUDO_UID "$SUDO_GID""
 			FILE bashconfig ShellPlugins/Times_Table $HOME/ShellPlugins/Times_Table 644 $SUDO_UID "$SUDO_GID"
 
 			APT_INSTALL fonts-symbola ;;
@@ -729,13 +660,9 @@ while [ "$1" ]; do
 			read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
 			[[ "$REPLY" == "Yes!" ]] || { printf "No action taken -- skipping.\n"; shift; continue; }
 
-			LOGIT "FILE i3config config $HOME/.config/i3/config 644 "$SUDO_UID" "$SUDO_GID""
 			FILE i3config config $HOME/.config/i3/config 644 "$SUDO_UID" "$SUDO_GID"
-			LOGIT "FILE i3config .libi3bview $HOME/.libi3bview 644 "$SUDO_UID" "$SUDO_GID""
 			FILE i3config .libi3bview $HOME/.libi3bview 644 "$SUDO_UID" "$SUDO_GID"
-			LOGIT "FILE i3config .i3babove $HOME/.i3babove 644 "$SUDO_UID" "$SUDO_GID""
 			FILE i3config .i3babove $HOME/.i3babove 644 "$SUDO_UID" "$SUDO_GID"
-			LOGIT "FILE i3config .i3bbelow $HOME/.i3bbelow 644 "$SUDO_UID" "$SUDO_GID""
 			FILE i3config .i3bbelow $HOME/.i3bbelow 644 "$SUDO_UID" "$SUDO_GID"
 
 			if ! [ -d "$HOME/.i3a" ]; then
@@ -745,145 +672,90 @@ while [ "$1" ]; do
 
 			LOGIT "Setting $HOME/.i3a to $SUDO_UID UID and $SUDO_GID GID"
 
-			LOGIT "FILE i3config .i3a/feh_slides $HOME/.i3a/feh_slides 644 "$SUDO_UID" "$SUDO_GID""
 			FILE i3config .i3a/feh_slides $HOME/.i3a/feh_slides 644 "$SUDO_UID" "$SUDO_GID"
-			LOGIT "FILE i3config .i3a/hush_the_mic $HOME/.i3a/hush_the_mic 644 "$SUDO_UID" "$SUDO_GID""
 			FILE i3config .i3a/hush_the_mic $HOME/.i3a/hush_the_mic 644 "$SUDO_UID" "$SUDO_GID"
-			LOGIT "FILE i3config .i3a/initialize $HOME/.i3a/initialize 644 "$SUDO_UID" "$SUDO_GID""
 			FILE i3config .i3a/initialize $HOME/.i3a/initialize 644 "$SUDO_UID" "$SUDO_GID"
-			LOGIT "FILE i3config .i3a/key_autorepeat $HOME/.i3a/key_autorepeat 644 "$SUDO_UID" "$SUDO_GID""
 			FILE i3config .i3a/key_autorepeat $HOME/.i3a/key_autorepeat 644 "$SUDO_UID" "$SUDO_GID"
-			LOGIT "FILE i3config .i3a/scrot_sel_take $HOME/.i3a/scrot_sel_take 644 "$SUDO_UID" "$SUDO_GID""
 			FILE i3config .i3a/scrot_sel_take $HOME/.i3a/scrot_sel_take 644 "$SUDO_UID" "$SUDO_GID"
-			LOGIT "FILE i3config .i3a/scrot_take $HOME/.i3a/scrot_take 644 "$SUDO_UID" "$SUDO_GID""
 			FILE i3config .i3a/scrot_take $HOME/.i3a/scrot_take 644 "$SUDO_UID" "$SUDO_GID"
-			LOGIT "FILE i3config .i3a/scrot_win_take $HOME/.i3a/scrot_win_take 644 "$SUDO_UID" "$SUDO_GID""
 			FILE i3config .i3a/scrot_win_take $HOME/.i3a/scrot_win_take 644 "$SUDO_UID" "$SUDO_GID"
-			LOGIT "FILE i3config .i3a/sink_lower $HOME/.i3a/sink_lower 644 "$SUDO_UID" "$SUDO_GID""
 			FILE i3config .i3a/sink_lower $HOME/.i3a/sink_lower 644 "$SUDO_UID" "$SUDO_GID"
-			LOGIT "FILE i3config .i3a/sink_mute $HOME/.i3a/sink_mute 644 "$SUDO_UID" "$SUDO_GID""
 			FILE i3config .i3a/sink_mute $HOME/.i3a/sink_mute 644 "$SUDO_UID" "$SUDO_GID"
-			LOGIT "FILE i3config .i3a/sink_raise $HOME/.i3a/sink_raise 644 "$SUDO_UID" "$SUDO_GID""
 			FILE i3config .i3a/sink_raise $HOME/.i3a/sink_raise 644 "$SUDO_UID" "$SUDO_GID"
-			LOGIT "FILE i3config .i3a/source_lower $HOME/.i3a/source_lower 644 "$SUDO_UID" "$SUDO_GID""
 			FILE i3config .i3a/source_lower $HOME/.i3a/source_lower 644 "$SUDO_UID" "$SUDO_GID"
-			LOGIT "FILE i3config .i3a/source_mute $HOME/.i3a/source_mute 644 "$SUDO_UID" "$SUDO_GID""
 			FILE i3config .i3a/source_mute $HOME/.i3a/source_mute 644 "$SUDO_UID" "$SUDO_GID"
-			LOGIT "FILE i3config .i3a/source_raise $HOME/.i3a/source_raise 644 "$SUDO_UID" "$SUDO_GID""
 			FILE i3config .i3a/source_raise $HOME/.i3a/source_raise 644 "$SUDO_UID" "$SUDO_GID"
-			LOGIT "FILE i3config .i3a/term_font_size $HOME/.i3a/term_font_size 644 "$SUDO_UID" "$SUDO_GID""
 			FILE i3config .i3a/term_font_size $HOME/.i3a/term_font_size 644 "$SUDO_UID" "$SUDO_GID"
-			LOGIT "FILE i3config .i3a/term_font_size_py $HOME/.i3a/term_font_size_py 644 "$SUDO_UID" "$SUDO_GID""
 			FILE i3config .i3a/term_font_size_py $HOME/.i3a/term_font_size_py 644 "$SUDO_UID" "$SUDO_GID"
-			LOGIT "FILE i3config .i3a/terminal $HOME/.i3a/terminal 644 "$SUDO_UID" "$SUDO_GID""
 			FILE i3config .i3a/terminal $HOME/.i3a/terminal 644 "$SUDO_UID" "$SUDO_GID"
-			LOGIT "FILE i3config .i3a/track_notify $HOME/.i3a/track_notify 644 "$SUDO_UID" "$SUDO_GID""
 			FILE i3config .i3a/track_notify $HOME/.i3a/track_notify 644 "$SUDO_UID" "$SUDO_GID"
-			LOGIT "FILE i3config .i3a/use_dmenu $HOME/.i3a/use_dmenu 644 "$SUDO_UID" "$SUDO_GID""
 			FILE i3config .i3a/use_dmenu $HOME/.i3a/use_dmenu 644 "$SUDO_UID" "$SUDO_GID"
 
 			APT_INSTALL i3-wm i3blocks suckless-tools compton moc\
 				terminology libnotify-bin dunst pulseaudio-utils ;;
 		kernelchk)
-			LOGIT "FILE kernelchk kernelchk /usr/bin/kernelchk 755 0 0"
 			FILE kernelchk kernelchk /usr/bin/kernelchk 755 0 0
-			LOGIT "FILE kernelchk completion /usr/share/bash-completion/completions/kernelchk 644 0 0"
 			FILE kernelchk completion /usr/share/bash-completion/completions/kernelchk 644 0 0 ;;
 		get-uuid)
-			LOGIT "FILE get-uuid get-uuid /usr/bin/get-uuid 755 0 0"
 			FILE get-uuid get-uuid /usr/bin/get-uuid 755 0 0
-			LOGIT "FILE get-uuid get-uuid.desktop /usr/share/applications/get-uuid.desktop 644 0 0"
 			FILE get-uuid get-uuid.desktop /usr/share/applications/get-uuid.desktop 644 0 0 ;;
 		wcdl)
-			LOGIT "FILE wcdl wcdl /usr/bin/wcdl 755 0 0"
 			FILE wcdl wcdl /usr/bin/wcdl 755 0 0
-			LOGIT "FILE wcdl wcdl-cacheparse /usr/bin/wcdl-cacheparse 755 0 0"
 			FILE wcdl wcdl-cacheparse /usr/bin/wcdl-cacheparse 755 0 0
-			LOGIT "FILE wcdl wcdl-crosschk /usr/bin/wcdl-crosschk 755 0 0"
 			FILE wcdl wcdl-crosschk /usr/bin/wcdl-crosschk 755 0 0
-			LOGIT "FILE wcdl completion /usr/share/bash-completion/completions/wcdl 644 0 0"
 			FILE wcdl completion /usr/share/bash-completion/completions/wcdl 644 0 0 ;;
 		getline)
-			LOGIT "FILE getline getline /usr/bin/getline 755 0 0"
 			FILE getline getline /usr/bin/getline 755 0 0 ;;
 		mansaver)
-			LOGIT "FILE mansaver mansaver /usr/bin/mansaver 755 0 0"
 			FILE mansaver mansaver /usr/bin/mansaver 755 0 0 ;;
 		lspkg)
-			LOGIT "FILE lspkg lspkg /usr/bin/lspkg 755 0 0"
 			FILE lspkg lspkg /usr/bin/lspkg 755 0 0
-			LOGIT "FILE lspkg completion /usr/share/bash-completion/completions/lspkg 644 0 0"
 			FILE lspkg completion /usr/share/bash-completion/completions/lspkg 644 0 0 ;;
 		lsbins)
-			LOGIT "FILE miscellaneous lsbins /usr/bin/lsbins 755 0 0"
 			FILE miscellaneous lsbins /usr/bin/lsbins 755 0 0 ;;
 		github-ssh-setup)
-			LOGIT "FILE github-ssh-setup github-ssh-setup /usr/bin/github-ssh-setup 755 0 0"
 			FILE github-ssh-setup github-ssh-setup /usr/bin/github-ssh-setup 755 0 0 ;;
 		homewatch)
-			LOGIT "FILE homewatch homewatch /usr/bin/homewatch 755 0 0"
 			FILE homewatch homewatch /usr/bin/homewatch 755 0 0 ;;
 		getip)
-			LOGIT "FILE getip getip /usr/bin/getip 755 0 0"
 			FILE getip getip /usr/bin/getip 755 0 0
-			LOGIT "FILE getip completion /usr/share/bash-completion/completions/getip 644 0 0"
 			FILE getip completion /usr/share/bash-completion/completions/getip 644 0 0 ;;
 		ripmydvd)
-			LOGIT "FILE ripmydvd ripmydvd /usr/bin/ripmydvd 755 0 0"
 			FILE ripmydvd ripmydvd /usr/bin/ripmydvd 755 0 0 ;;
 		simwea)
-			LOGIT "FILE simwea simwea /usr/bin/simwea 755 0 0"
 			FILE simwea simwea /usr/bin/simwea 755 0 0
-			LOGIT "FILE simwea completion /usr/share/bash-completion/completions/simwea 644 0 0"
 			FILE simwea completion /usr/share/bash-completion/completions/simwea 644 0 0 ;;
 		medlog)
-			LOGIT "FILE miscellaneous medlog /usr/bin/medlog 755 0 0"
 			FILE miscellaneous medlog /usr/bin/medlog 755 0 0 ;;
 		mif)
-			LOGIT "FILE miscellaneous mif /usr/bin/mif 755 0 0"
 			FILE miscellaneous mif /usr/bin/mif 755 0 0
-			LOGIT "FILE miscellaneous Completions/mif /usr/share/bash-completion/completions/mif 644 0 0"
 			FILE miscellaneous Completions/mif /usr/share/bash-completion/completions/mif 644 0 0 ;;
 		seewttr)
-			LOGIT "FILE miscellaneous seewttr /usr/bin/seewttr 755 0 0"
 			FILE miscellaneous seewttr /usr/bin/seewttr 755 0 0 ;;
 		backmeup)
-			LOGIT "FILE miscellaneous backmeup /usr/bin/backmeup 755 0 0"
 			FILE miscellaneous backmeup /usr/bin/backmeup 755 0 0 ;;
 		clean-locales)
-			LOGIT "FILE miscellaneous clean-locales /usr/bin/clean-locales 755 0 0"
 			FILE miscellaneous clean-locales /usr/bin/clean-locales 755 0 0 ;;
 		mkpass)
-			LOGIT "FILE miscellaneous mkpass /usr/bin/mkpass 755 0 0"
 			FILE miscellaneous mkpass /usr/bin/mkpass 755 0 0
-			LOGIT "FILE miscellaneous Completions/mkpass /usr/share/bash-completion/completions/mkpass 644 0 0"
 			FILE miscellaneous Completions/mkpass /usr/share/bash-completion/completions/mkpass 644 0 0 ;;
 		mplay)
-			LOGIT "FILE miscellaneous mplay /usr/bin/mplay 755 0 0"
 			FILE miscellaneous mplay /usr/bin/mplay 755 0 0 ;;
 		pagewatch)
-			LOGIT "FILE miscellaneous pagewatch /usr/bin/pagewatch 755 0 0"
 			FILE miscellaneous pagewatch /usr/bin/pagewatch 755 0 0 ;;
 		redshifter)
-			LOGIT "FILE miscellaneous redshifter /usr/bin/redshifter 755 0 0"
 			FILE miscellaneous redshifter /usr/bin/redshifter 755 0 0 ;;
 		tozero)
-			LOGIT "FILE miscellaneous tozero /usr/bin/tozero 755 0 0"
 			FILE miscellaneous tozero /usr/bin/tozero 755 0 0 ;;
 		nosp)
-			LOGIT "FILE miscellaneous nosp /usr/bin/nosp 755 0 0"
 			FILE miscellaneous nosp /usr/bin/nosp 755 0 0 ;;
 		dlspwalls)
-			LOGIT "FILE miscellaneous dlspwalls /usr/bin/dlspwalls 755 0 0"
 			FILE miscellaneous dlspwalls /usr/bin/dlspwalls 755 0 0 ;;
 		dlfcmags)
-			LOGIT "FILE miscellaneous dlfcmags /usr/bin/dlfcmags 755 0 0"
 			FILE miscellaneous dlfcmags /usr/bin/dlfcmags 755 0 0 ;;
 		dlfallwalls)
-			LOGIT "FILE miscellaneous dlfallwalls /usr/bin/dlfallwalls 755 0 0"
 			FILE miscellaneous dlfallwalls /usr/bin/dlfallwalls 755 0 0 ;;
 		dl-tuxradar-podcasts)
-			LOGIT "FILE miscellaneous dl-tuxradar-podcasts /usr/bin/dl-tuxradar-podcasts 755 0 0"
 			FILE miscellaneous dl-tuxradar-podcasts /usr/bin/dl-tuxradar-podcasts 755 0 0 ;;
 		*)
 			ERR "$LINENO" "Unavailable WHAT at: $1" ;;

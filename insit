@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Tue  6 Mar 22:09:04 GMT 2018
+# Last Change       - Tue  6 Mar 22:17:07 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -181,6 +181,7 @@ FILE(){
 			fi
 		else
 			ERR "$LINENO" "File '$3' not found."
+			return 1
 		fi
 	else
 		#TODO - The below line needs to test for whether update or self are
@@ -191,62 +192,61 @@ FILE(){
 			ERR "$LINENO" "File already exists: $3"
 			return 1
 		else
-			#TODO - This is sloppy - IMPROVE!
 			if [ -f "$3" ]; then
 				LOGIT "Downloading $URL/$1/$BRANCH/$2 over $3"
 				if /usr/bin/wget -q $NOWARC "$URL/$1/raw/$BRANCH/$2" -O "$3" &> /dev/null; then
 					LOGIT "Downloaded $URL/$1/$BRANCH/$2 over $3"
 					printf "File '%s' downloaded and updated.\n" "$3"
+
+					LOGIT "Re-setting $3 to $5 UID and $6 GID"
+					if /bin/chown $5:$6 "$3" &> /dev/null; then
+						LOGIT "Re-set $3 to $5 UID and $6 GID"
+						printf "File '%s' ownership re-set.\n" "$3"
+					else
+						LOGIT "Failed to re-set $3 to $5 UID and $6 GID"
+						ERR "$LINENO" "Unable to re-set the ownership of '$3' file."
+					fi
+
+					LOGIT "Re-setting $3 to $4 permissions"
+					if /bin/chmod "$4" "$3" &> /dev/null; then
+						LOGIT "Re-set $3 to $4 permissions"
+						printf "File '%s' mode re-set.\n" "$3"
+					else
+						LOGIT "Failed to re-set $3 to $4 permissions"
+						ERR "$LINENO" "Unable to re-set the mode of '$3' file."
+					fi
 				else
 					LOGIT "Failed to download $URL/$1/$BRANCH/$2 over $3"
 					ERR "$LINENO" "Unable to download and/or update '$3' file."
 					return 1
-				fi
-
-				LOGIT "Re-setting $3 to $5 UID and $6 GID"
-				if /bin/chown $5:$6 "$3" &> /dev/null; then
-					LOGIT "Re-set $3 to $5 UID and $6 GID"
-					printf "File '%s' ownership re-set.\n" "$3"
-				else
-					LOGIT "Failed to re-set $3 to $5 UID and $6 GID"
-					ERR "$LINENO" "Unable to re-set the ownership of '$3' file."
-				fi
-
-				LOGIT "Re-setting $3 to $4 permissions"
-				if /bin/chmod "$4" "$3" &> /dev/null; then
-					LOGIT "Re-set $3 to $4 permissions"
-					printf "File '%s' mode re-set.\n" "$3"
-				else
-					LOGIT "Failed to re-set $3 to $4 permissions"
-					ERR "$LINENO" "Unable to re-set the mode of '$3' file."
 				fi
 			else
 				LOGIT "Downloading $URL/$1/$BRANCH/$2 to $3"
 				if /usr/bin/wget -q $NOWARC "$URL/$1/raw/$BRANCH/$2" -O "$3" &> /dev/null; then
 					LOGIT "Downloaded $URL/$1/$BRANCH/$2 to $3"
 					printf "File '%s' downloaded.\n" "$3"
+
+					LOGIT "Setting $3 to $6 UID and $5 GID"
+					if /bin/chown $5:$6 "$3" &> /dev/null; then
+						LOGIT "Set $3 to $6 UID and $5 GID"
+						printf "File '%s' ownership set.\n" "$3"
+					else
+						LOGIT "Failed to set $3 to $6 UID and $5 GID"
+						ERR "$LINENO" "Unable to set the ownership of '$3' file."
+					fi
+
+					LOGIT "Setting $3 to $4 permissions"
+					if /bin/chmod "$4" "$3" &> /dev/null; then
+						LOGIT "Set $3 to $4 permissions"
+						printf "File '%s' mode set.\n" "$3"
+					else
+						LOGIT "Failed to set $3 to $4 permissions"
+						ERR "$LINENO" "Unable to set the mode of '$3' file."
+					fi
 				else
 					LOGIT "Failed to download $URL/$1/$BRANCH/$2 to $3"
 					ERR "$LINENO" "Unable to download '$3' file."
 					return 1
-				fi
-
-				LOGIT "Setting $3 to $6 UID and $5 GID"
-				if /bin/chown $5:$6 "$3" &> /dev/null; then
-					LOGIT "Set $3 to $6 UID and $5 GID"
-					printf "File '%s' ownership set.\n" "$3"
-				else
-					LOGIT "Failed to set $3 to $6 UID and $5 GID"
-					ERR "$LINENO" "Unable to set the ownership of '$3' file."
-				fi
-
-				LOGIT "Setting $3 to $4 permissions"
-				if /bin/chmod "$4" "$3" &> /dev/null; then
-					LOGIT "Set $3 to $4 permissions"
-					printf "File '%s' mode set.\n" "$3"
-				else
-					LOGIT "Failed to set $3 to $4 permissions"
-					ERR "$LINENO" "Unable to set the mode of '$3' file."
 				fi
 			fi
 		fi

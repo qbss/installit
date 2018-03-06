@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Tue  6 Mar 22:17:07 GMT 2018
+# Last Change       - Tue  6 Mar 22:18:32 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -350,14 +350,16 @@ AVAIL=(
 	"wcdl - Crawl WallpapersCraft for desktop backgrounds. Includes wcdl tools."
 )
 
+if [ "$AVAIL_SHOW" == "true" ]; then
+	printf "%s\n" "${AVAIL[@]}"
+	exit 0
+fi
+
 if ! [ $UID -eq 0 ]; then
 	ERR "$LINENO" "Logging disabled -- insufficient permissions."
 fi
 
-if [ "$AVAIL_SHOW" == "true" ]; then
-	printf "%s\n" "${AVAIL[@]}"
-	exit 0
-elif [ "$SELF" == "true" ]; then
+if [ "$SELF" == "true" ]; then
 	LOGIT "FILE installit insit /usr/bin/insit 755 0 0"
 	FILE installit insit /usr/bin/insit 755 0 0
 	LOGIT "FILE installit completion /usr/share/bash-completion/completions/insit 644 0 0"

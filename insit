@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Tue  6 Mar 23:47:11 GMT 2018
+# Last Change       - Tue  6 Mar 23:53:44 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -379,6 +379,8 @@ if ! [ "$NO_VERSION_CHECK" == "true" ]; then
 		LOGIT "Update availability error(s) detected"
 		ERR "$LINENO" "There's an issue with the update availability check."
 	fi
+else
+	LOGIT "Bypassing version availability check"
 fi
 
 if [ "$SELF" == "true" ]; then

@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit (Based on the older, Installit)
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Tue  6 Mar 20:58:51 GMT 2018
+# Last Change       - Tue  6 Mar 22:06:46 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -45,7 +45,7 @@ USAGE(){
 		            --version|-v            - Output only the version datestamp.
 		            --debug|-D              - Enables the built-in bash debugging.
 		            --quiet|-q              - Runs in quiet mode. Errors still output.
-		            --update|-U             - Replace and update existing files.
+		            --update|-U             - Replace and/or update existing files.
 		            --uninstall|-u          - Uninstall files installed here.
 		            --available|-A          - Output all available programs.
 		            --branch|-B NAME        - Where NAME is the branch to use.
@@ -62,7 +62,8 @@ USAGE(){
 		              2: Name of the file, per the URL, to download.
 		              3: Desired name of the file to be Downloaded.
 		              4: The permissions (mode), such as 755 or 644.
-		              5: The file's owner and group, such as 0 or \$USER.
+		              5: The file's owner, such as 0 or \$USER.
+		              6: The file's group, such as 1000.
 
 		EXAMPLE:    sudo insit -B dev -U -C miscellaneous mfw /usr/bin/mfw 755 0
 		            sudo insit -U notify-upgrade lspkg lsbins apt-undo-install
@@ -139,10 +140,6 @@ elif [ ! "$NOLOG" == "true" -a ! -x /usr/bin/tee ]; then
 	XERR "$LINENO" "Dependency '/usr/bin/tee' not met."
 fi
 
-if ! [ $UID -eq 0 ]; then
-	ERR "$LINENO" "Logging disabled -- insufficient permissions."
-fi
-
 [ "$BEQUIET" == "true" ] && exec 1> /dev/null
 [ "$DEBUGME" == "true" ] && set -xeu
 
@@ -169,41 +166,27 @@ LOGIT(){
 }
 
 FILE(){
-	# FILE project_name "source_file.sh" "/usr/bin/target_file" 755
 	if [ "$UNINSTALL" == "true" ]; then
-		if ! [ -x /usr/bin/gvfs-trash ]; then
-			#TODO - Duh. This appears every FILE call. Fix?
-			local MSG="This will delete installed files"
-			read -e -n 1 -p "$MSG -- continue? "
-			if [[ "$REPLY" == [yY] ]]; then
-				LOGIT "Deleting $3"
-				if /bin/rm "$3"; then
-					LOGIT "Deleted $3"
-					printf "File '%s' deleted.\n" "$3"
-				else
-					LOGIT "Failed to delete $3"
-					ERR "Unable to delete: $3"
-				fi
-			else
-				LOGIT "Quit at uninstallation prompt"
-				printf "No action taken -- quitting.\n"
-			fi
-		else
-			local MSG="This will send installed files to the trash"
-			read -e -n 1 -p "$MSG -- continue? "
-			if [[ "$REPLY" == [yY] ]]; then
+		if [ -f "$3" ]; then
+			if [ "$HASGVFS" == "true" ]; then
 				LOGIT "Trashing $3"
 				if /usr/bin/gvfs-trash "$3"; then
 					LOGIT "Trashed $3"
 					printf "File '%s' sent to trash.\n" "$3"
 				else
-					LOGIT "Failed to trash $3"
-					ERR "Unable to trash: $3"
+					LOGIT "Error(s) trying to trash $3"
 				fi
 			else
-				LOGIT "Quit at uninstallation prompt"
-				printf "No action taken -- quitting.\n"
+				LOGIT "Deleting $3"
+				if /bin/rm "$3"; then
+					LOGIT "Deleted $3"
+					printf "File '%s' deleted.\n" "$3"
+				else
+					LOGIT "Error(s) trying to delete $3"
+				fi
 			fi
+		else
+			ERR "$LINENO" "File '$3' not found."
 		fi
 	else
 		#TODO - The below line needs to test for whether update or self are
@@ -369,21 +352,37 @@ AVAIL=(
 	"snotes - Search your programming notes on-the-fly with this simple tool."
 	"tozero - Simple program to display a countdown for a target date."
 	"ubuntu-syschk - Performs various non-root system health checks on Ubuntu and similar."
-	"vimconfig - Various TFL configuration files for the Vi-IMproved (VIM) modal text editor."
+	"vimconfig - TFL plugins and more for the Vi-IMproved (VIM) modal text editor."
 	"wcdl - Crawl WallpapersCraft for desktop backgrounds. Includes wcdl tools."
 )
+
+if ! [ $UID -eq 0 ]; then
+	ERR "$LINENO" "Logging disabled -- insufficient permissions."
+fi
 
 if [ "$AVAIL_SHOW" == "true" ]; then
 	printf "%s\n" "${AVAIL[@]}"
 	exit 0
-fi
-
-if [ "$SELF" == "true" ]; then
+elif [ "$SELF" == "true" ]; then
 	LOGIT "FILE installit insit /usr/bin/insit 755 0 0"
 	FILE installit insit /usr/bin/insit 755 0 0
 	LOGIT "FILE installit completion /usr/share/bash-completion/completions/insit 644 0 0"
 	FILE installit completion /usr/share/bash-completion/completions/insit 644 0 0
 	exit 0 # Had to do this, since UPDATE is true here; saves possible mistake.
+elif [ "$UNINSTALL" == "true" ]; then
+	if [ -x /usr/bin/gvfs-trash ]; then
+		read -e -n 1 -p "This will send installed files to the trash -- continue? "
+		HASGVFS="true"
+	else
+		read -e -n 1 -p "This will delete installed files -- continue? "
+		HASGVFS="false"
+	fi
+
+	if ! [[ "$REPLY" == [yY] ]]; then
+		LOGIT "Quit at uninstallation prompt"
+		printf "No action taken -- quitting.\n"
+		exit 0
+	fi
 elif [ "$CUSTOM" == "true" ]; then
 	LOGIT "Processing custom FILE '$@'"
 	FILE $@
@@ -896,5 +895,3 @@ while [ "$1" ]; do
 
 	shift
 done
-
-# vim: noexpandtab colorcolumn=84 tabstop=8 noswapfile nobackup

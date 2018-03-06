@@ -162,7 +162,7 @@ Enter 'Yes!' if you're sure you wish to continue:
 
 At which point you just type 'Yes!' exactly as you see it in the above prompt, then press the Enter key, and away you go! Just, fair warning, be absolutely sure to have **backed up your files** before you give the go-ahead.
 
-You'll probably be glad to know that insit also supports helpful logging via /var/log/tfl_insit.log, which by default is not accessible by anyone other than root. Here's an example snipped of what your log will show, if you execute the second example shown above:
+You'll probably be glad to know that insit also supports helpful logging via /var/log/tfl_insit.log. The log file is by default not accessible by anyone other than root. Here's an example of what your insit log file will show, if you execute the second example shown above:
 
 ```
 $ sudo cat /var/log/tfl_insit.log
@@ -175,7 +175,7 @@ $ sudo cat /var/log/tfl_insit.log
 [2018-03-06_22:25:54]: Set /usr/share/bash-completion/completions/apt-undo-install to 644 permissions
 ```
 
-Want a list of all of the programs or other package-type items available with insit? Be sure to update insit to be sure you're seeing the latest list, but as of now:
+Want a list of all of the items available with insit? Be sure to update insit to be sure you're seeing the latest list, but as of now:
 
 ```
 $ insit -A
@@ -233,3 +233,5 @@ ubuntu-syschk - Performs various non-root system health checks on Ubuntu and sim
 vimconfig - TFL plugins and more for the Vi-IMproved (VIM) modal text editor.
 wcdl - Crawl WallpapersCraft for desktop backgrounds. Includes wcdl tools.
 ```
+
+I hope you enjoy insit as much as I enjoyed writing it.

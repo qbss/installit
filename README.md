@@ -32,7 +32,7 @@ Now that you've done that, all that's left is to load up insit to peruse the cat
 
 ```
 $ insit --help
-            INSIT (2018-03-04)
+            INSIT (2018-03-06)
             Written by terminalforlife (terminalforlife@yahoo.com)
 
             Installer for many shell programs from terminalforlife.
@@ -44,7 +44,7 @@ OPTS:       --help|-h|-?            - Displays this help information.
             --version|-v            - Output only the version datestamp.
             --debug|-D              - Enables the built-in bash debugging.
             --quiet|-q              - Runs in quiet mode. Errors still output.
-            --update|-U             - Replace and update existing files.
+            --update|-U             - Replace and/or update existing files.
             --uninstall|-u          - Uninstall files installed here.
             --available|-A          - Output all available programs.
             --branch|-B NAME        - Where NAME is the branch to use.
@@ -61,7 +61,8 @@ NOTE:       Where WHAT is the program(s) to install.
               2: Name of the file, per the URL, to download.
               3: Desired name of the file to be Downloaded.
               4: The permissions (mode), such as 755 or 644.
-              5: The file's owner and group, such as 0 or $USER.
+              5: The file's owner, such as 0 or $USER.
+              6: The file's group, such as 1000.
 
 EXAMPLE:    sudo insit -B dev -U -C miscellaneous mfw /usr/bin/mfw 755 0
             sudo insit -U notify-upgrade lspkg lsbins apt-undo-install
@@ -71,10 +72,6 @@ WARNING:    Using the --update|-U flags will overwrite existing files, so, if an
             executable just so happens to have the same name, take care not to
             replace it by mistake!
 
-            All programs, scripts, and other files from the below SITE will contain
-            the comment header you see within this file, so grepping for the E-Mail
-            address or GitHub URL below would be a good way to check.
-
 FILE:       The log file is stored in: /var/log/tfl_insit.log
 
 SITE:       https://github.com/terminalforlife
@@ -83,33 +80,42 @@ SITE:       https://github.com/terminalforlife
 An example installation of a program already installed:
 
 ```bash
-$ sudo insit medlog
-[L0127] ERROR: File already exists: /usr/bin/medlog
+$ sudo insit apt-undo-install
+[L0189] ERROR: File already exists: /usr/bin/apt-undo-install
+[L0189] ERROR: File already exists: /usr/share/bash-completion/completions/apt-undo-install
 ```
 
 Now to update it, since it's already installed:
 
 ```bash
-$ sudo insit -U medlog
-File '/usr/bin/medlog' downloaded and updated.
-File '/usr/bin/medlog' ownership re-set.
-File '/usr/bin/medlog' mode re-set.
+$ sudo insit -U apt-undo-install
+File '/usr/bin/apt-undo-install' downloaded and updated.
+File '/usr/bin/apt-undo-install' ownership re-set.
+File '/usr/bin/apt-undo-install' mode re-set.
+File '/usr/share/bash-completion/completions/apt-undo-install' downloaded and updated.
+File '/usr/share/bash-completion/completions/apt-undo-install' ownership re-set.
+File '/usr/share/bash-completion/completions/apt-undo-install' mode re-set.
 ```
 
 To install the same program if it weren't already found:
 
 ```bash
-$ sudo insit medlog
-File '/usr/bin/medlog' downloaded.
-File '/usr/bin/medlog' ownership set.
-File '/usr/bin/medlog' mode set.
+$ sudo insit apt-undo-install
+File '/usr/bin/apt-undo-install' downloaded.
+File '/usr/bin/apt-undo-install' ownership set.
+File '/usr/bin/apt-undo-install' mode set.
+File '/usr/share/bash-completion/completions/apt-undo-install' downloaded.
+File '/usr/share/bash-completion/completions/apt-undo-install' ownership set.
+File '/usr/share/bash-completion/completions/apt-undo-install' mode set.
 ```
 
 Uninstalling a program is easy too:
 
 ```bash
-$ sudo insit --uninstall medlog
-File '/usr/bin/medlog' removed.
+$ sudo insit --uninstall apt-undo-install
+This will delete installed files -- continue? y
+File '/usr/bin/apt-undo-install' deleted.
+File '/usr/share/bash-completion/completions/apt-undo-install' deleted.
 ```
 
 What if you want to update the installer itself? Easy:
@@ -124,32 +130,106 @@ File '/usr/share/bash-completion/completions/insit' ownership re-set.
 File '/usr/share/bash-completion/completions/insit' mode re-set.
 ```
 
-You'll also get a warning for certain key installations, such as bashconfig:
+You'll also get a warning for certain key installations, such as vimconfig:
 
 ```bash
-$ sudo insit -U bashconfig
+$ sudo insit -U vimconfig
 WARNING: This will install and replace the following:
 
-  /home/tfl/.profile
-  /home/tfl/.bash_aliases
-  /home/tfl/.bash_functions
-  /home/tfl/.bashrc
-  /home/tfl/ShellPlugins/Bell_Alarm
-  /home/tfl/ShellPlugins/Cleaner_RK_Scan
-  /home/tfl/ShellPlugins/Clear_CD_LS
-  /home/tfl/ShellPlugins/CPU_Intensive_Proc
-  /home/tfl/ShellPlugins/Create_VM
-  /home/tfl/ShellPlugins/Get_Bad_Hosts
-  /home/tfl/ShellPlugins/Git_Status_All
-  /home/tfl/ShellPlugins/List_Signals
-  /home/tfl/ShellPlugins/Load_File_Links2
-  /home/tfl/ShellPlugins/Loop_This
-  /home/tfl/ShellPlugins/NIR_Difference
-  /home/tfl/ShellPlugins/Play_Download_MPSY
-  /home/tfl/ShellPlugins/Shell_Alias_Correc
-  /home/tfl/ShellPlugins/Times_Table
+  /home/tfl/.vimrc
+  /home/tfl/.vim/colors/tfl.vim
+  /home/tfl/.vim/plugin/altnums.vim
+  /home/tfl/.vim/plugin/autoscroll.vim
+  /home/tfl/.vim/plugin/banger.vim
+  /home/tfl/.vim/plugin/comtog.vim
+  /home/tfl/.vim/plugin/datepaste.vim
+  /home/tfl/.vim/plugin/exefile.vim
+  /home/tfl/.vim/plugin/headup.vim
+  /home/tfl/.vim/plugin/listmode.vim
+  /home/tfl/.vim/plugin/moredoc.vim
+  /home/tfl/.vim/plugin/mouseon.vim
+  /home/tfl/.vim/plugin/noarrows.vim
+  /home/tfl/.vim/plugin/sanekeys.vim
+  /home/tfl/.vim/plugin/simplyhard.vim
+  /home/tfl/.vim/plugin/sudosave.vim
+  /home/tfl/.vim/plugin/textwidth.vim
+  /home/tfl/.vim/plugin/tflsnips.vim
+  /home/tfl/.vim/plugin/togtrans.vim
+  /home/tfl/.vim/plugin/virtedit.vim
 
 Enter 'Yes!' if you're sure you wish to continue:
 ```
 
 At which point you just type 'Yes!' exactly as you see it in the above prompt, then press the Enter key, and away you go! Just, fair warning, be absolutely sure to have **backed up your files** before you give the go-ahead.
+
+You'll probably be glad to know that insit also supports helpful logging via /var/log/tfl_insit.log, which by default is not accessible by anyone other than root. Here's an example snipped of what your log will show, if you execute the second example shown above:
+
+```
+$ sudo cat /var/log/tfl_insit.log
+[2018-03-06_22:25:54]: FILE apt-undo-install completion /usr/share/bash-completion/completions/apt-undo-install 644 0 0
+[2018-03-06_22:25:54]: Downloading github.com/terminalforlife/apt-undo-install/master/completion to /usr/share/bash-completion/completions/apt-undo-install
+[2018-03-06_22:25:54]: Downloaded github.com/terminalforlife/apt-undo-install/master/completion to /usr/share/bash-completion/completions/apt-undo-install
+[2018-03-06_22:25:54]: Setting /usr/share/bash-completion/completions/apt-undo-install to 0 UID and 0 GID
+[2018-03-06_22:25:54]: Set /usr/share/bash-completion/completions/apt-undo-install to 0 UID and 0 GID
+[2018-03-06_22:25:54]: Setting /usr/share/bash-completion/completions/apt-undo-install to 644 permissions
+[2018-03-06_22:25:54]: Set /usr/share/bash-completion/completions/apt-undo-install to 644 permissions
+```
+
+Want a list of all of the programs or other package-type items available with insit? Be sure to update insit to be sure you're seeing the latest list, but as of now:
+
+```
+$ insit -A
+apt-undo-install - Undo the last package(s) install executed with apt-get.
+autoscrot - Tool to take full screenshots at user-specified intervals using scrot.
+backmeup - A simple tool to quickly and easily back up your HOME.
+bashconfig - My own bash settings and shell plugins for use by anybody.
+bdl - Easily and quickly download a batch of files using wget.
+binwatch - Output list of executables found in your PATH
+bios-info - Simple tool to show basic BIOS keys and their values.
+bl - Much simpler, quicker version of blkid.
+capnum - Small tool to notify of NumLock and CapsLock status changes.
+catmedia - Concatenate media files originally separated in parts.
+clean-locales - Remove some unnecessary non-English localizations.
+compconf - The terminalforlife configuration file for compton.
+cpufreq - Lightweight Bourne Shell utility to output your CPU frequencies.
+dlfallwalls - Download a collection of Autumn/Fall wallpapers.
+dlfcmags - Download issues of the Full Circle magazine PDFs.
+dlspwalls - Download a collection of steampunk wallpapers.
+dl-tuxradar-podcasts - Small shell program to download the TuxRadar podcasts.
+dunstconfig - The terminalforlife configuration file for dunst.
+dwwdl - Download all of the available DistroWatch Weekly podcasts.
+forex - Easily convert various currency rates straight from the terminal.
+getip - View your internal and/or external IP address.
+getline - Pure Bourne Again Shell way to handle a plain text file.
+get-uuid - Grab and copy your file system's UUID with this simple, easy-to-use GUI.
+ghipc - Check the validity of IP addresses of GitHub servers.
+github-ssh-setup - Simple shell program to create an SSH key pair for GitHub.
+homewatch - Output files in HOME which have been modified today.
+i3config - My own i3-wm settings and shell plugins for use by anybody.
+jotd - Display a Joke of the Day on your terminal.
+kernelchk - Small tool to check for a change in kernel version. Ideal for scripts.
+lsbins - Simple shell program to list and describe the PATH executables.
+lspkg - Quickly and portable-y show, describe, and search installed packages.
+mansaver - Save man pages for each applicable command in PATH.
+medlog - Need help taking and logging when you've had your medication?
+mfw - Notifier for page-one threads on the Newbie Questions Linux Mint forum.
+mif - Shell program to filter films by year and whether seen or not.
+mkpass - Pure Bourne Again Shell approach to complex password generation.
+mplay - Simple script to allow me to quickly load mocp how I like.
+nosp - A workaround for the issue in XFCE wherein Smart Placement refuses to go away.
+notify-upgrade - Simple upgrade notification utility for Debian- and Ubuntu-based systems.
+nxbt - A fork and improvement of the XBT program written by Joe Collins.
+pagewatch - Watch a webpage for signs of change by checkings its md5sum.
+redshifter - Effective and simple tool to manually adjust the gamma via Redshift.
+reviewer - Terminal viewer for Linux Mint's user submitted software reviews.
+ripmydvd - Shell program using ffmpeg and mplayer to rip your DVD.
+roks - This small program will clear out your system of old kernel versions.
+seewttr - Super-simple wrapper-like script to get your weather.
+simplify-ubuntu - Small project to lighten standard Ubuntu 16.04.3 LTS installations.
+simwea - Display various weather statistics on a terminal.
+snotes - Search your programming notes on-the-fly with this simple tool.
+tozero - Simple program to display a countdown for a target date.
+ubuntu-syschk - Performs various non-root system health checks on Ubuntu and similar.
+vimconfig - TFL plugins and more for the Vi-IMproved (VIM) modal text editor.
+wcdl - Crawl WallpapersCraft for desktop backgrounds. Includes wcdl tools.
+```

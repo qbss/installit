@@ -4,6 +4,8 @@ Today is a good day for insit, as it gets plenty of optimizations and overall im
 
 Another good bit of news, is that finally insit will make it known when an update is available; it's up to the user whether he or she wishes to actually perform that update. This check is done very simply by checking the file 'version' stored in the installit repository. This has been something I've wanted to do for ages. May have include the latest CHANGELOG.md update to the update availability notification; worth it?
 
+The caveat to this availability check, is that it won't know whether changes were made until I update that version file, and, until the next day.
+
 * 2018-03-06
 
 Apologies go to whomever may have used vimconfig before it was ready. I made the jump a little too soon, but after several hours today, it's now all sorted, and vimconfig is ready to rock 'n' roll!

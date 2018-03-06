@@ -1,9 +1,9 @@
 #!/bin/bash
 
 #----------------------------------------------------------------------------------
-# Project Name      - insit (Based on the older, Installit)
+# Project Name      - insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Tue  6 Mar 22:26:10 GMT 2018
+# Last Change       - Tue  6 Mar 22:27:55 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -72,10 +72,6 @@ USAGE(){
 		WARNING:    Using the --update|-U flags will overwrite existing files, so, if an
 		            executable just so happens to have the same name, take care not to
 		            replace it by mistake!
-
-		            All programs, scripts, and other files from the below SITE will contain
-		            the comment header you see within this file, so grepping for the E-Mail
-		            address or GitHub URL below would be a good way to check.
 
 		FILE:       The log file is stored in: /var/log/tfl_insit.log
 

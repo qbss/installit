@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Tue  6 Mar 23:26:44 GMT 2018
+# Last Change       - Tue  6 Mar 23:44:29 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -139,23 +139,22 @@ fi
 [ "$DEBUGME" == "true" ] && set -xeu
 
 LOGIT(){
-	if [ "$LOGIT" == "true" ]; then
-		if ! [ -d "${LOGFILE%/*}" ]; then
-			XERR "$LINENO" "System directory '/var/log' not found."
-		else
-			printf -v DATETIME "%(%F_%X)T" "-1"
-			if [ "$VERBOSE" == "true" ]; then
-				printf "[%s]: %s\n" "$DATETIME" "$1" >> "$LOGFILE"
-				printf "[%s]: %s\n" "$DATETIME" "$1"
-			else
-				printf "[%s]: %s\n" "$DATETIME" "$1" >> "$LOGFILE"
-			fi
+	if ! [ -d "${LOGFILE%/*}" ]; then
+		XERR "$LINENO" "System directory '/var/log' not found."
+	else
+		printf -v DATETIME "%(%F_%X)T" -1
+		if [ "$LOGIT" == "true" ]; then
+			printf "[%s]: %s\n" "$DATETIME" "$1" >> "$LOGFILE"
 
 			readarray A < "$LOGFILE"
 			if [ "${#A[@]}" -gt 4000 ]; then
 				/bin/mv "$LOGFILE"{,.old}
 				[ -x /bin/gzip ] && /bin/gzip "${LOGFILE}.old"
 			fi
+		fi
+
+		if [ "$VERBOSE" == "true" ]; then
+			printf "[%s]: %s\n" "$DATETIME" "$1"
 		fi
 	fi
 }
@@ -167,7 +166,7 @@ FILE(){
 			if [ "$HASGVFS" == "true" ]; then
 				LOGIT "Trashing $3"
 				if /usr/bin/gvfs-trash "$3"; then
-					LOGIT "Trashed $3"
+					LOGIT "Successfully trashed $3"
 					printf "File '%s' sent to trash.\n" "$3"
 				else
 					LOGIT "Error(s) trying to trash $3"
@@ -175,7 +174,7 @@ FILE(){
 			else
 				LOGIT "Deleting $3"
 				if /bin/rm "$3"; then
-					LOGIT "Deleted $3"
+					LOGIT "Successfully deleted $3"
 					printf "File '%s' deleted.\n" "$3"
 				else
 					LOGIT "Error(s) trying to delete $3"
@@ -186,9 +185,6 @@ FILE(){
 			return 1
 		fi
 	else
-		#TODO - The below line needs to test for whether update or self are
-		#       NOT true, as well as if the file $3 already exists. This is
-		#       to ensure proper self update and regular program updates.
 		if [ -f "$3" -a ! "$UPDATE" == "true" ]; then
 			LOGIT "File $3 already exists"
 			ERR "$LINENO" "File already exists: $3"
@@ -197,12 +193,12 @@ FILE(){
 			if [ -f "$3" ]; then
 				LOGIT "Downloading $URL/$1/$BRANCH/$2 over $3"
 				if /usr/bin/wget -q $NOWARC "$URL/$1/raw/$BRANCH/$2" -O "$3" &> /dev/null; then
-					LOGIT "Downloaded $URL/$1/$BRANCH/$2 over $3"
+					LOGIT "Successfully downloaded $URL/$1/$BRANCH/$2 over $3"
 					printf "File '%s' downloaded and updated.\n" "$3"
 
 					LOGIT "Re-setting $3 to $5 UID and $6 GID"
 					if /bin/chown $5:$6 "$3" &> /dev/null; then
-						LOGIT "Re-set $3 to $5 UID and $6 GID"
+						LOGIT "Successfully re-set $3 to $5 UID and $6 GID"
 						printf "File '%s' ownership re-set.\n" "$3"
 					else
 						LOGIT "Failed to re-set $3 to $5 UID and $6 GID"
@@ -211,7 +207,7 @@ FILE(){
 
 					LOGIT "Re-setting $3 to $4 permissions"
 					if /bin/chmod "$4" "$3" &> /dev/null; then
-						LOGIT "Re-set $3 to $4 permissions"
+						LOGIT "Successfully re-set $3 to $4 permissions"
 						printf "File '%s' mode re-set.\n" "$3"
 					else
 						LOGIT "Failed to re-set $3 to $4 permissions"
@@ -225,12 +221,12 @@ FILE(){
 			else
 				LOGIT "Downloading $URL/$1/$BRANCH/$2 to $3"
 				if /usr/bin/wget -q $NOWARC "$URL/$1/raw/$BRANCH/$2" -O "$3" &> /dev/null; then
-					LOGIT "Downloaded $URL/$1/$BRANCH/$2 to $3"
-					printf "File '%s' downloaded.\n" "$3"
+					LOGIT "Successfully downloaded $URL/$1/$BRANCH/$2 to $3"
+					printf "File '%s' successfully downloaded.\n" "$3"
 
 					LOGIT "Setting $3 to $6 UID and $5 GID"
 					if /bin/chown $5:$6 "$3" &> /dev/null; then
-						LOGIT "Set $3 to $6 UID and $5 GID"
+						LOGIT "Successfully set $3 to $6 UID and $5 GID"
 						printf "File '%s' ownership set.\n" "$3"
 					else
 						LOGIT "Failed to set $3 to $6 UID and $5 GID"
@@ -239,8 +235,8 @@ FILE(){
 
 					LOGIT "Setting $3 to $4 permissions"
 					if /bin/chmod "$4" "$3" &> /dev/null; then
-						LOGIT "Set $3 to $4 permissions"
-						printf "File '%s' mode set.\n" "$3"
+						LOGIT "Successfully set $3 to $4 permissions"
+						printf "File '%s' mode successfully set.\n" "$3"
 					else
 						LOGIT "Failed to set $3 to $4 permissions"
 						ERR "$LINENO" "Unable to set the mode of '$3' file."
@@ -376,6 +372,8 @@ if ! [ "$NO_VERSION_CHECK" == "true" ]; then
 				Current version:          $_VERSION_
 
 			EOF
+		else
+			LOGIT "No new version of insit detected"
 		fi
 	else
 		LOGIT "Update availability error(s) detected"

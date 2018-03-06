@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Tue  6 Mar 23:44:29 GMT 2018
+# Last Change       - Tue  6 Mar 23:47:11 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -382,9 +382,7 @@ if ! [ "$NO_VERSION_CHECK" == "true" ]; then
 fi
 
 if [ "$SELF" == "true" ]; then
-	LOGIT "FILE installit insit /usr/bin/insit 755 0 0"
 	FILE installit insit /usr/bin/insit 755 0 0
-	LOGIT "FILE installit completion /usr/share/bash-completion/completions/insit 644 0 0"
 	FILE installit completion /usr/share/bash-completion/completions/insit 644 0 0
 	exit 0 # Had to do this, since UPDATE is true here; saves possible mistake.
 elif [ "$UNINSTALL" == "true" ]; then

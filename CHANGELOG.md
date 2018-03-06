@@ -2,7 +2,7 @@
 
 Today is a good day for insit, as it gets plenty of optimizations and overall improvements, from logging to the messages the user will see. I've also published new content, which has been reflected in the latest insit update. If you've yet to update insit, I strongly recommend that you do, as there have been some fairly important changes.
 
-Another good bit of news, is that finally insit will make it known when an update is available; it's up to the user whether he or she wishes to actually perform that update. This check is done very simply by checking the file 'version' stored in the installit repository. This has been something I've wanted to do for ages. May have include the latest CHANGELOG.md update to the update availability notification; worth it?
+Another good bit of news, is that finally insit will make it known when an update is available; it's up to the user whether he or she wishes to actually perform that update. This check is done very simply by checking the file 'version' stored in the installit repository. This has been something I've wanted to do for ages. May include the latest CHANGELOG.md update to the update availability notification the user sees; worth it?
 
 The caveat to this availability check, is that it won't know whether changes were made until I update that version file, and, until the next day.
 

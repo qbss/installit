@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Wed  7 Mar 15:36:43 GMT 2018
+# Last Change       - Wed  7 Mar 21:24:47 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -544,8 +544,9 @@ while [ "$1" ]; do
 			while read -r; do
 				printf "%s\n" "$REPLY"
 			done <<-EOF
-				NOTE: This program is having functionality issues which have yet to be solved. Do
-				      you wish to continue installing jotd, regardless?
+				NOTE: The website this program uses doesn't seem to be maintained anymore, thus
+				      jotd may not function as intended. An update (using a different website) is
+				      in the works, however. Do you wish to continue installing jotd?
 
 			EOF
 

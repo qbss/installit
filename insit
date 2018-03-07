@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Wed  7 Mar 14:57:01 GMT 2018
+# Last Change       - Wed  7 Mar 15:18:32 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -306,16 +306,16 @@ AVAIL=(
 	"clean-locales - Remove some unnecessary non-English localizations."
 	"compconf - The terminalforlife configuration file for compton."
 	"cpufreq - Lightweight Bourne Shell utility to output your CPU frequencies."
+	"dl-tuxradar-podcasts - Small shell program to download the TuxRadar podcasts."
 	"dlfallwalls - Download a collection of Autumn/Fall wallpapers."
 	"dlfcmags - Download issues of the Full Circle magazine PDFs."
 	"dlspwalls - Download a collection of steampunk wallpapers."
-	"dl-tuxradar-podcasts - Small shell program to download the TuxRadar podcasts."
 	"dunstconfig - The terminalforlife configuration file for dunst."
 	"dwwdl - Download all of the available DistroWatch Weekly podcasts."
 	"forex - Easily convert various currency rates straight from the terminal."
+	"get-uuid - Grab and copy your file system's UUID with this simple, easy-to-use GUI."
 	"getip - View your internal and/or external IP address."
 	"getline - Pure Bourne Again Shell way to handle a plain text file."
-	"get-uuid - Grab and copy your file system's UUID with this simple, easy-to-use GUI."
 	"ghipc - Check the validity of IP addresses of GitHub servers."
 	"github-ssh-setup - Simple shell program to create an SSH key pair for GitHub."
 	"homewatch - Output files in HOME which have been modified today."
@@ -416,7 +416,6 @@ while [ "$1" ]; do
 			done <<-EOF
 				WARNING: This will install and replace the following:
 
-				  $HOME/.vimrc
 				  $HOME/.vim/colors/tfl.vim
 				  $HOME/.vim/plugin/altnums.vim
 				  $HOME/.vim/plugin/autoscroll.vim
@@ -436,6 +435,7 @@ while [ "$1" ]; do
 				  $HOME/.vim/plugin/tflsnips.vim
 				  $HOME/.vim/plugin/togtrans.vim
 				  $HOME/.vim/plugin/virtedit.vim
+				  $HOME/.vimrc
 
 			EOF
 
@@ -608,21 +608,21 @@ while [ "$1" ]; do
 			done <<-EOF
 				WARNING: This will install and replace the following:
 
-				  $HOME/.profile
 				  $HOME/.bash_aliases
 				  $HOME/.bash_functions
 				  $HOME/.bashrc
+				  $HOME/.profile
 				  $HOME/ShellPlugins/Bell_Alarm
+				  $HOME/ShellPlugins/CPU_Intensive_Proc
 				  $HOME/ShellPlugins/Cleaner_RK_Scan
 				  $HOME/ShellPlugins/Clear_CD_LS
-				  $HOME/ShellPlugins/CPU_Intensive_Proc
 				  $HOME/ShellPlugins/Create_VM
 				  $HOME/ShellPlugins/Get_Bad_Hosts
 				  $HOME/ShellPlugins/Git_Status_All
+				  $HOME/ShellPlugins/LSPKG_Set
 				  $HOME/ShellPlugins/List_Signals
 				  $HOME/ShellPlugins/Load_File_Links2
 				  $HOME/ShellPlugins/Loop_This
-				  $HOME/ShellPlugins/LSPKG_Set
 				  $HOME/ShellPlugins/NIR_Difference
 				  $HOME/ShellPlugins/Play_Download_MPSYT
 				  $HOME/ShellPlugins/Shell_Alias_Correc
@@ -634,10 +634,10 @@ while [ "$1" ]; do
 			read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
 			[[ "$REPLY" == "Yes!" ]] || { printf "No action taken -- skipping.\n"; shift; continue; }
 
-			FILE bashconfig .profile $HOME/.profile 644 "$SUDO_UID" "$SUDO_GID"
 			FILE bashconfig .bash_aliases $HOME/.bash_aliases 644 "$SUDO_UID" "$SUDO_GID"
 			FILE bashconfig .bash_functions $HOME/.bash_functions 644 "$SUDO_UID" "$SUDO_GID"
 			FILE bashconfig .bashrc $HOME/.bashrc 644 "$SUDO_UID" "$SUDO_GID"
+			FILE bashconfig .profile $HOME/.profile 644 "$SUDO_UID" "$SUDO_GID"
 
 			if ! [ -d "$HOME/ShellPlugins" ]; then
 				LOGIT "Creating $HOME/ShellPlugins directory"
@@ -648,16 +648,16 @@ while [ "$1" ]; do
 			/bin/chown "$SUDO_UID":"$SUDO_GID" "$HOME/ShellPlugins"
 
 			FILE bashconfig ShellPlugins/Bell_Alarm $HOME/ShellPlugins/Bell_Alarm 644 $SUDO_UID "$SUDO_GID"
+			FILE bashconfig ShellPlugins/CPU_Intensive_Procs $HOME/ShellPlugins/CPU_Intensive_Procs 644 $SUDO_UID "$SUDO_GID"
 			FILE bashconfig ShellPlugins/Cleaner_RK_Scan $HOME/ShellPlugins/Cleaner_RK_Scan 644 $SUDO_UID "$SUDO_GID"
 			FILE bashconfig ShellPlugins/Clear_CD_LS $HOME/ShellPlugins/Clear_CD_LS 644 $SUDO_UID "$SUDO_GID"
-			FILE bashconfig ShellPlugins/CPU_Intensive_Procs $HOME/ShellPlugins/CPU_Intensive_Procs 644 $SUDO_UID "$SUDO_GID"
 			FILE bashconfig ShellPlugins/Create_VM $HOME/ShellPlugins/Create_VM 644 $SUDO_UID "$SUDO_GID"
 			FILE bashconfig ShellPlugins/Get_Bad_Hosts $HOME/ShellPlugins/Get_Bad_Hosts 644 $SUDO_UID "$SUDO_GID"
 			FILE bashconfig ShellPlugins/Git_Status_All $HOME/ShellPlugins/Git_Status_All 644 $SUDO_UID "$SUDO_GID"
+			FILE bashconfig ShellPlugins/LSPKG_Set $HOME/ShellPlugins/LSPKG_Set 644 $SUDO_UID "$SUDO_GID"
 			FILE bashconfig ShellPlugins/List_Signals $HOME/ShellPlugins/List_Signals 644 $SUDO_UID "$SUDO_GID"
 			FILE bashconfig ShellPlugins/Load_File_Links2 $HOME/ShellPlugins/Load_File_Links2 644 $SUDO_UID "$SUDO_GID"
 			FILE bashconfig ShellPlugins/Loop_This $HOME/ShellPlugins/Loop_This 644 $SUDO_UID "$SUDO_GID"
-			FILE bashconfig ShellPlugins/LSPKG_Set $HOME/ShellPlugins/LSPKG_Set 644 $SUDO_UID "$SUDO_GID"
 			FILE bashconfig ShellPlugins/NIR_Difference $HOME/ShellPlugins/NIR_Difference 644 $SUDO_UID "$SUDO_GID"
 			FILE bashconfig ShellPlugins/Play_Download_MPSYT $HOME/ShellPlugins/Play_Download_MPSYT 644 $SUDO_UID "$SUDO_GID"
 			FILE bashconfig ShellPlugins/Shell_Alias_Correcting $HOME/ShellPlugins/Shell_Alias_Correcting 644 $SUDO_UID "$SUDO_GID"
@@ -672,9 +672,6 @@ while [ "$1" ]; do
 				WARNING: This will install and replace the following:
 
 				  $HOME/.config/i3/config
-				  $HOME/.i3babove
-				  $HOME/.i3bbelow
-				  $HOME/.libi3bview
 				  $HOME/.i3a/dmesg_overflow
 				  $HOME/.i3a/feh_slides
 				  $HOME/.i3a/hush_the_mic
@@ -696,6 +693,9 @@ while [ "$1" ]; do
 				  $HOME/.i3a/terminal
 				  $HOME/.i3a/track_notify
 				  $HOME/.i3a/use_dmenu
+				  $HOME/.i3babove
+				  $HOME/.i3bbelow
+				  $HOME/.libi3bview
 
 			EOF
 
@@ -703,10 +703,10 @@ while [ "$1" ]; do
 			read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
 			[[ "$REPLY" == "Yes!" ]] || { printf "No action taken -- skipping.\n"; shift; continue; }
 
-			FILE i3config config $HOME/.config/i3/config 644 "$SUDO_UID" "$SUDO_GID"
-			FILE i3config .libi3bview $HOME/.libi3bview 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3babove $HOME/.i3babove 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3bbelow $HOME/.i3bbelow 644 "$SUDO_UID" "$SUDO_GID"
+			FILE i3config .libi3bview $HOME/.libi3bview 644 "$SUDO_UID" "$SUDO_GID"
+			FILE i3config config $HOME/.config/i3/config 644 "$SUDO_UID" "$SUDO_GID"
 
 			if ! [ -d "$HOME/.i3a" ]; then
 				LOGIT "Creating $HOME/.i3a directory"
@@ -715,10 +715,10 @@ while [ "$1" ]; do
 
 			LOGIT "Setting $HOME/.i3a to $SUDO_UID UID and $SUDO_GID GID"
 
-			FILE i3config .i3a/i3bar_trans $HOME/.i3a/i3bar_trans 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3a/dmesg_overflow $HOME/.i3a/dmesg_overflow 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3a/feh_slides $HOME/.i3a/feh_slides 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3a/hush_the_mic $HOME/.i3a/hush_the_mic 644 "$SUDO_UID" "$SUDO_GID"
+			FILE i3config .i3a/i3bar_trans $HOME/.i3a/i3bar_trans 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3a/initialize $HOME/.i3a/initialize 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3a/key_autorepeat $HOME/.i3a/key_autorepeat 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3a/scrot_sel_take $HOME/.i3a/scrot_sel_take 644 "$SUDO_UID" "$SUDO_GID"

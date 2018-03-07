@@ -80,7 +80,7 @@ SITE:       https://github.com/terminalforlife
 
 An example installation of a program already installed:
 
-```bash
+```
 $ sudo insit apt-undo-install
 [L0189] ERROR: File already exists: /usr/bin/apt-undo-install
 [L0189] ERROR: File already exists: /usr/share/bash-completion/completions/apt-undo-install
@@ -88,7 +88,7 @@ $ sudo insit apt-undo-install
 
 Now to update it, since it's already installed:
 
-```bash
+```
 $ sudo insit -U apt-undo-install
 File '/usr/bin/apt-undo-install' downloaded and updated.
 File '/usr/bin/apt-undo-install' ownership re-set.
@@ -100,7 +100,7 @@ File '/usr/share/bash-completion/completions/apt-undo-install' mode re-set.
 
 To install the same program if it weren't already found:
 
-```bash
+```
 $ sudo insit apt-undo-install
 File '/usr/bin/apt-undo-install' downloaded.
 File '/usr/bin/apt-undo-install' ownership set.
@@ -112,7 +112,7 @@ File '/usr/share/bash-completion/completions/apt-undo-install' mode set.
 
 Uninstalling a program is easy too:
 
-```bash
+```
 $ sudo insit --uninstall apt-undo-install
 This will delete installed files -- continue? y
 File '/usr/bin/apt-undo-install' deleted.
@@ -121,7 +121,7 @@ File '/usr/share/bash-completion/completions/apt-undo-install' deleted.
 
 What if you want to update the installer itself? Easy:
 
-```bash
+```
 $ sudo insit -S
 File '/usr/bin/insit' downloaded and updated.
 File '/usr/bin/insit' ownership re-set.
@@ -133,7 +133,7 @@ File '/usr/share/bash-completion/completions/insit' mode re-set.
 
 You'll also get a warning for certain key installations, such as vimconfig:
 
-```bash
+```
 $ sudo insit -U vimconfig
 WARNING: This will install and replace the following:
 

@@ -137,7 +137,6 @@ You'll also get a warning for certain key installations, such as vimconfig:
 $ sudo insit -U vimconfig
 WARNING: This will install and replace the following:
 
-  /home/tfl/.vimrc
   /home/tfl/.vim/colors/tfl.vim
   /home/tfl/.vim/plugin/altnums.vim
   /home/tfl/.vim/plugin/autoscroll.vim
@@ -157,6 +156,7 @@ WARNING: This will install and replace the following:
   /home/tfl/.vim/plugin/tflsnips.vim
   /home/tfl/.vim/plugin/togtrans.vim
   /home/tfl/.vim/plugin/virtedit.vim
+  /home/tfl/.vimrc
 
 Enter 'Yes!' if you're sure you wish to continue:
 ```
@@ -202,16 +202,16 @@ catmedia - Concatenate media files originally separated in parts.
 clean-locales - Remove some unnecessary non-English localizations.
 compconf - The terminalforlife configuration file for compton.
 cpufreq - Lightweight Bourne Shell utility to output your CPU frequencies.
+dl-tuxradar-podcasts - Small shell program to download the TuxRadar podcasts.
 dlfallwalls - Download a collection of Autumn/Fall wallpapers.
 dlfcmags - Download issues of the Full Circle magazine PDFs.
 dlspwalls - Download a collection of steampunk wallpapers.
-dl-tuxradar-podcasts - Small shell program to download the TuxRadar podcasts.
 dunstconfig - The terminalforlife configuration file for dunst.
 dwwdl - Download all of the available DistroWatch Weekly podcasts.
 forex - Easily convert various currency rates straight from the terminal.
+get-uuid - Grab and copy your file system's UUID with this simple, easy-to-use GUI.
 getip - View your internal and/or external IP address.
 getline - Pure Bourne Again Shell way to handle a plain text file.
-get-uuid - Grab and copy your file system's UUID with this simple, easy-to-use GUI.
 ghipc - Check the validity of IP addresses of GitHub servers.
 github-ssh-setup - Simple shell program to create an SSH key pair for GitHub.
 homewatch - Output files in HOME which have been modified today.

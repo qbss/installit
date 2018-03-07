@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Wed  7 Mar 22:02:19 GMT 2018
+# Last Change       - Wed  7 Mar 22:37:03 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -580,7 +580,8 @@ while [ "$1" ]; do
 		forex)
 			FILE miscellaneous forex /usr/bin/forex 755 0 0 ;;
 		autoscrot)
-			FILE autoscrot autoscrot /usr/bin/autoscrot 755 0 0 ;;
+			FILE autoscrot autoscrot /usr/bin/autoscrot 755 0 0
+			FILE autoscrot completion /usr/share/bash-completion/completions/autoscrot 644 0 0 ;;
 		apt-undo-install)
 			FILE apt-undo-install apt-undo-install /usr/bin/apt-undo-install 755 0 0
 			FILE apt-undo-install completion /usr/share/bash-completion/completions/apt-undo-install 644 0 0 ;;

@@ -1,9 +1,9 @@
 #!/bin/bash
 
 #----------------------------------------------------------------------------------
-# Project Name      - insit
+# Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Wed  7 Mar 21:53:01 GMT 2018
+# Last Change       - Wed  7 Mar 22:02:19 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -357,7 +357,7 @@ if [ "$AVAIL_SHOW" == "true" ]; then
 	exit 0
 fi
 
-if ! [ $UID -eq 0 ]; then
+if [ ! $UID -eq 0 -a "$LOGIT" == "true" ]; then
 	ERR "$LINENO" "Logging disabled -- insufficient permissions."
 fi
 

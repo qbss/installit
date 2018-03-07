@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Wed  7 Mar 21:29:31 GMT 2018
+# Last Change       - Wed  7 Mar 21:53:01 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -539,22 +539,22 @@ while [ "$1" ]; do
 
 			[ -x /usr/bin/compton ] || APT_INSTALL compton ;;
 		jotd)
-			LOGIT "Displaying jotd NOTE"
-			while read -r; do
-				printf "%s\n" "$REPLY"
-			done <<-EOF
-				NOTE: The website this program uses doesn't seem to be maintained anymore, thus
-				      jotd may not function as intended. An update (using a different website) is
-				      in the works, however. Do you wish to continue installing jotd?
-
-			EOF
-
-			LOGIT "Prompting user to continue jotd installation or not"
-			read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
-			if ! [[ "$REPLY" == "Yes!" ]]; then
-				printf "No action taken -- skipping.\n"
-				shift; continue
-			fi
+#			LOGIT "Displaying jotd NOTE"
+#			while read -r; do
+#				printf "%s\n" "$REPLY"
+#			done <<-EOF
+#				NOTE: The website this program uses doesn't seem to be maintained anymore, thus
+#				      jotd may not function as intended. An update (using a different website) is
+#				      in the works, however. Do you wish to continue installing jotd?
+#
+#			EOF
+#
+#			LOGIT "Prompting user to continue jotd installation or not"
+#			read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
+#			if ! [[ "$REPLY" == "Yes!" ]]; then
+#				printf "No action taken -- skipping.\n"
+#				shift; continue
+#			fi
 
 			FILE miscellaneous jotd /usr/bin/jotd 755 0 0 ;;
 		bios-info)

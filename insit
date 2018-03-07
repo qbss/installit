@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Wed  7 Mar 15:18:32 GMT 2018
+# Last Change       - Wed  7 Mar 15:36:43 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -11,6 +11,11 @@
 _VERSION_="2018-03-07"
 
 #TODO - Incorporate an 'undo' update action, in-case an update breaks something.
+
+#TODO - Could insit also include other people's programs/packages? This could be an
+#       amazing way to not only get my stuff out there, but also other peoples'. It
+#       Could help us all! If you're reading this and think this is a good idea, -
+#       let me know!
 
 XERR(){ printf "[L%0.4d] ERROR: %s\n" "$1" "$2" 1>&2; exit 1; }
 ERR(){ printf "[L%0.4d] ERROR: %s\n" "$1" "$2" 1>&2; }

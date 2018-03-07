@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Wed  7 Mar 21:24:47 GMT 2018
+# Last Change       - Wed  7 Mar 21:29:31 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -141,7 +141,7 @@ if ! [ "$AVAIL_SHOW" == "true" -o "$IGNORE_ROOT" == "true" ]; then
 fi
 
 [ "$BEQUIET" == "true" ] && exec 1> /dev/null
-[ "$DEBUGME" == "true" ] && set -xeu
+[ "$DEBUGME" == "true" ] && set -x
 
 LOGIT(){
 	if ! [ -d "${LOGFILE%/*}" ]; then
@@ -158,9 +158,7 @@ LOGIT(){
 			fi
 		fi
 
-		if [ "$VERBOSE" == "true" ]; then
-			printf "[%s]: %s\n" "$DATETIME" "$1"
-		fi
+		[ "$VERBOSE" == "true" ] && printf "[%s]: %s\n" "$DATETIME" "$1"
 	fi
 }
 
@@ -289,8 +287,9 @@ APT_INSTALL(){
 		exit 1
 	else
 		LOGIT "Telling APT to install $@"
-		if ! /usr/bin/apt-get --quiet --show-progress -o Dpkg::Progress=true\
-			-o Dpkg::Progress-Fancy=true install $@; then
+		if ! /usr/bin/apt-get --quiet --show-progress\
+			-o Dpkg::Progress=true -o Dpkg::Progress-Fancy=true\
+			install $@; then
 			LOGIT "APT failed to install $@"
 			return 1
 		fi
@@ -365,7 +364,7 @@ fi
 if ! [ "$NO_VERSION_CHECK" == "true" ]; then
 	LOGIT "Checking version for update availability"
 	VERSION_URL="$DOM/terminalforlife/installit/raw/dev/version"
-	LATEST=`/usr/bin/wget -q "$VERSION_URL" -O -`
+	LATEST=`/usr/bin/wget "$NOWARC" -q "$VERSION_URL" -O -`
 	if [[ "${LATEST//-}" =~ ^[0-9]{8}$ ]]; then
 		if [ ${LATEST//-} -gt ${_VERSION_//-} ]; then
 			LOGIT "A newer version of insit detected"

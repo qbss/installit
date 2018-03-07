@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Wed  7 Mar 00:10:15 GMT 2018
+# Last Change       - Wed  7 Mar 14:57:01 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -441,7 +441,10 @@ while [ "$1" ]; do
 
 			LOGIT "Prompting user to continue or not"
 			read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
-			[[ "$REPLY" == "Yes!" ]] || { printf "No action taken -- skipping.\n"; shift; continue; }
+			if ! [[ "$REPLY" == "Yes!" ]]; then
+				printf "No action taken -- skipping.\n"
+				shift; continue
+			fi
 
 			if ! [ -d $HOME/.vim/colors ]; then
 				LOGIT "Creating $HOME/.vim/colors directory"
@@ -532,6 +535,22 @@ while [ "$1" ]; do
 
 			[ -x /usr/bin/compton ] || APT_INSTALL compton ;;
 		jotd)
+			LOGIT "Displaying jotd NOTE"
+			while read -r; do
+				printf "%s\n" "$REPLY"
+			done <<-EOF
+				NOTE: This program is having functionality issues which have yet to be solved. Do
+				      you wish to continue installing jotd, regardless?
+
+			EOF
+
+			LOGIT "Prompting user to continue jotd installation or not"
+			read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
+			if ! [[ "$REPLY" == "Yes!" ]]; then
+				printf "No action taken -- skipping.\n"
+				shift; continue
+			fi
+
 			FILE miscellaneous jotd /usr/bin/jotd 755 0 0 ;;
 		bios-info)
 			FILE miscellaneous bios-info /usr/bin/bios-info 755 0 0 ;;

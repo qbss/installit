@@ -3,12 +3,12 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Wed  7 Mar 22:37:03 GMT 2018
+# Last Change       - Thu  8 Mar 06:06:16 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
 
-_VERSION_="2018-03-07"
+_VERSION_="2018-03-08"
 
 #TODO - Incorporate an 'undo' update action, in-case an update breaks something.
 
@@ -36,9 +36,9 @@ USAGE(){
 		OPTS:       --help|-h|-?            - Displays this help information.
 		            --verbose|-V            - Also display the log output.
 		            --version|-v            - Output only the version datestamp.
-		            --no-check              - Do not check for version updates.
-		            --debug|-D              - Enables the built-in bash debugging.
 		            --quiet|-q              - Runs in quiet mode. Errors still output.
+		            --debug|-D              - Enables the built-in bash debugging.
+		            --no-check              - Do not check for version updates.
 		            --update|-U             - Replace and/or update existing files.
 		            --uninstall|-u          - Uninstall files installed here.
 		            --available|-A          - Output all available programs.
@@ -87,10 +87,10 @@ while [ "$1" ]; do
 		--version|-v)
 			printf "%s\n" "$_VERSION_"
 			exit 0 ;;
-		--no-check)
-			NO_VERSION_CHECK="true" ;;
 		--debug|-D)
 			DEBUGME="true" ;;
+		--no-check)
+			NO_VERSION_CHECK="true" ;;
 		--quiet|-q)
 			BEQUIET="true" ;;
 		--update|-U)

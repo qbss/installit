@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Thu  8 Mar 08:58:00 GMT 2018
+# Last Change       - Thu  8 Mar 10:08:55 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -361,7 +361,7 @@ if [ ! $UID -eq 0 -a "$LOGIT" == "true" ]; then
 	ERR "$LINENO" "Logging disabled -- insufficient permissions."
 fi
 
-if ! [ "$NO_VERSION_CHECK" == "true" ]; then
+if ! [ "$NO_VERSION_CHECK" == "true"  -o "$SELF" == "true" ]; then
 	LOGIT "Checking version for update availability"
 	VERSION_URL="$DOM/terminalforlife/installit/raw/dev/version"
 	LATEST=`/usr/bin/wget "$NOWARC" -q "$VERSION_URL" -O -`

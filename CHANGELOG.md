@@ -1,3 +1,7 @@
+* 2018-03-08
+
+One thing which I personally found irritating since the new update notification feature in insit, was being told there was a new version, _while_ updating to said version! This is now thankfully resolved.
+
 * 2018-03-06
 
 Today is a good day for insit, as it gets plenty of optimizations and overall improvements, from logging to the messages the user will see. I've also published new content, which has been reflected in the latest insit update. If you've yet to update insit, I strongly recommend that you do, as there have been some fairly important changes.

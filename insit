@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Thu  8 Mar 06:06:16 GMT 2018
+# Last Change       - Thu  8 Mar 08:58:00 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -437,6 +437,7 @@ while [ "$1" ]; do
 				  $HOME/.vim/plugin/sudosave.vim
 				  $HOME/.vim/plugin/textwidth.vim
 				  $HOME/.vim/plugin/tflsnips.vim
+				  $HOME/.vim/plugin/tflstatus.vim
 				  $HOME/.vim/plugin/togtrans.vim
 				  $HOME/.vim/plugin/virtedit.vim
 				  $HOME/.vimrc
@@ -479,6 +480,7 @@ while [ "$1" ]; do
 			FILE vimconfig plugin/sudosave.vim $HOME/.vim/plugin/sudosave.vim 600 $SUDO_UID $SUDO_GID
 			FILE vimconfig plugin/textwidth.vim $HOME/.vim/plugin/textwidth.vim 600 $SUDO_UID $SUDO_GID
 			FILE vimconfig plugin/tflsnips.vim $HOME/.vim/plugin/tflsnips.vim 600 $SUDO_UID $SUDO_GID
+			FILE vimconfig plugin/tflstatus.vim $HOME/.vim/plugin/tflstatus.vim 600 $SUDO_UID $SUDO_GID
 			FILE vimconfig plugin/togtrans.vim $HOME/.vim/plugin/togtrans.vim 600 $SUDO_UID $SUDO_GID
 			FILE vimconfig plugin/virtedit.vim $HOME/.vim/plugin/virtedit.vim 600 $SUDO_UID $SUDO_GID
 

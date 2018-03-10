@@ -3,12 +3,12 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Thu  8 Mar 10:08:55 GMT 2018
+# Last Change       - Sat 10 Mar 03:52:23 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
 
-_VERSION_="2018-03-08"
+_VERSION_="2018-03-10"
 
 #TODO - Incorporate an 'undo' update action, in-case an update breaks something.
 
@@ -317,6 +317,7 @@ AVAIL=(
 	"dunstconfig - The terminalforlife configuration file for dunst."
 	"dwwdl - Download all of the available DistroWatch Weekly podcasts."
 	"forex - Easily convert various currency rates straight from the terminal."
+	"freelfm - Download last.fm's free music into the current working directory."
 	"get-uuid - Grab and copy your file system's UUID with this simple, easy-to-use GUI."
 	"getip - View your internal and/or external IP address."
 	"getline - Pure Bourne Again Shell way to handle a plain text file."
@@ -413,6 +414,8 @@ fi
 
 while [ "$1" ]; do
 	case "$1" in
+		freelfm)
+			FILE freelfm freelfm /usr/bin/freelfm 755 0 0 ;;
 		vimconfig)
 			LOGIT "Displaying vimconfig WARNING"
 			while read -r; do

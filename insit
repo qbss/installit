@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sun 11 Mar 09:07:06 GMT 2018
+# Last Change       - Sun 11 Mar 09:21:10 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -15,10 +15,6 @@ _VERSION_="2018-03-11"
 #       amazing way to not only get my stuff out there, but also other peoples'. It
 #       Could help us all! If you're reading this and think this is a good idea, -
 #       let me know!
-#TODO - On Linux Lite 3.8, permission denied errors were observed on line 152.
-#TODO - Line 154 errors for missing log file showed up.
-#TODO - Installing insit on Linux Lite 3.8 seemed to install the 2018-03-08
-#       version. This might be why there were errors, per the above two TODOs.
 
 XERR(){ printf "[L%0.4d] ERROR: %s\n" "$1" "$2" 1>&2; exit 1; }
 ERR(){ printf "[L%0.4d] ERROR: %s\n" "$1" "$2" 1>&2; }
@@ -147,21 +143,23 @@ fi
 [ "$DEBUGME" == "true" ] && set -x
 
 LOGIT(){
-	if ! [ -d "${LOGFILE%/*}" ]; then
-		XERR "$LINENO" "System directory '/var/log' not found."
-	else
-		printf -v DATETIME "%(%F_%X)T" -1
-		if [ "$LOGIT" == "true" ]; then
-			printf "[%s]: %s\n" "$DATETIME" "$1" >> "$LOGFILE"
+	if [ $UID -eq 0 ]; then
+		if ! [ -d "${LOGFILE%/*}" ]; then
+			XERR "$LINENO" "System directory '/var/log' not found."
+		else
+			printf -v DATETIME "%(%F_%X)T" -1
+			if [ "$LOGIT" == "true" ]; then
+				printf "[%s]: %s\n" "$DATETIME" "$1" >> "$LOGFILE"
 
-			readarray A < "$LOGFILE"
-			if [ "${#A[@]}" -gt 4000 ]; then
-				/bin/mv "$LOGFILE"{,.old}
-				[ -x /bin/gzip ] && /bin/gzip "${LOGFILE}.old"
+				readarray A < "$LOGFILE"
+				if [ "${#A[@]}" -gt 4000 ]; then
+					/bin/mv "$LOGFILE"{,.old}
+					[ -x /bin/gzip ] && /bin/gzip "${LOGFILE}.old"
+				fi
 			fi
-		fi
 
-		[ "$VERBOSE" == "true" ] && printf "[%s]: %s\n" "$DATETIME" "$1"
+			[ "$VERBOSE" == "true" ] && printf "[%s]: %s\n" "$DATETIME" "$1"
+		fi
 	fi
 }
 

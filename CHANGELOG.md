@@ -2,6 +2,8 @@
 
 Apologies to anyone who got confused by insit insisting there's an update, no matter how many times you updated! I may or may not have accidentally forgotten to point the update check to the dev branch. Fixed now.
 
+Using --ignore-root|-I but still having --log|-L enabled caused a lot of permission denied errors, as LOGIT() was still being called and attempted processing of the logfile. This has been fixed.
+
 * 2018-03-08
 
 One thing which I personally found irritating since the new update notification feature in insit, was being told there was a new version, _while_ updating to said version! This is now thankfully resolved.

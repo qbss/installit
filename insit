@@ -3,12 +3,12 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sun 11 Mar 09:21:10 GMT 2018
+# Last Change       - Wed 14 Mar 21:55:37 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
 
-_VERSION_="2018-03-11"
+_VERSION_="2018-03-14"
 
 #TODO - Incorporate an 'undo' update action, in-case an update breaks something.
 #TODO - Could insit also include other people's programs/packages? This could be an
@@ -545,23 +545,6 @@ while [ "$1" ]; do
 
 			[ -x /usr/bin/compton ] || APT_INSTALL compton ;;
 		jotd)
-#			LOGIT "Displaying jotd NOTE"
-#			while read -r; do
-#				printf "%s\n" "$REPLY"
-#			done <<-EOF
-#				NOTE: The website this program uses doesn't seem to be maintained anymore, thus
-#				      jotd may not function as intended. An update (using a different website) is
-#				      in the works, however. Do you wish to continue installing jotd?
-#
-#			EOF
-#
-#			LOGIT "Prompting user to continue jotd installation or not"
-#			read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
-#			if ! [[ "$REPLY" == "Yes!" ]]; then
-#				printf "No action taken -- skipping.\n"
-#				shift; continue
-#			fi
-
 			FILE miscellaneous jotd /usr/bin/jotd 755 0 0 ;;
 		bios-info)
 			FILE miscellaneous bios-info /usr/bin/bios-info 755 0 0 ;;
@@ -623,6 +606,7 @@ while [ "$1" ]; do
 				  $HOME/.bash_aliases
 				  $HOME/.bash_functions
 				  $HOME/.bashrc
+				  $HOME/.inputrc
 				  $HOME/.profile
 				  $HOME/ShellPlugins/Bell_Alarm
 				  $HOME/ShellPlugins/CPU_Intensive_Proc
@@ -646,10 +630,11 @@ while [ "$1" ]; do
 			read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
 			[[ "$REPLY" == "Yes!" ]] || { printf "No action taken -- skipping.\n"; shift; continue; }
 
-			FILE bashconfig .bash_aliases $HOME/.bash_aliases 644 "$SUDO_UID" "$SUDO_GID"
-			FILE bashconfig .bash_functions $HOME/.bash_functions 644 "$SUDO_UID" "$SUDO_GID"
-			FILE bashconfig .bashrc $HOME/.bashrc 644 "$SUDO_UID" "$SUDO_GID"
-			FILE bashconfig .profile $HOME/.profile 644 "$SUDO_UID" "$SUDO_GID"
+			FILE bashconfig .bash_aliases $HOME/.bash_aliases 600 "$SUDO_UID" "$SUDO_GID"
+			FILE bashconfig .bash_functions $HOME/.bash_functions 600 "$SUDO_UID" "$SUDO_GID"
+			FILE bashconfig .bashrc $HOME/.bashrc 600 "$SUDO_UID" "$SUDO_GID"
+			FILE bashconfig .profile $HOME/.profile 600 "$SUDO_UID" "$SUDO_GID"
+			FILE bashconfig .inputrc $HOME/.inputrc 600 "$SUDO_UID" "$SUDO_GID"
 
 			if ! [ -d "$HOME/ShellPlugins" ]; then
 				LOGIT "Creating $HOME/ShellPlugins directory"
@@ -659,21 +644,21 @@ while [ "$1" ]; do
 			LOGIT "Setting $HOME/ShellPlugins to $SUDO_UID UID and $SUDO_GID GID"
 			/bin/chown "$SUDO_UID":"$SUDO_GID" "$HOME/ShellPlugins"
 
-			FILE bashconfig ShellPlugins/Bell_Alarm $HOME/ShellPlugins/Bell_Alarm 644 $SUDO_UID "$SUDO_GID"
-			FILE bashconfig ShellPlugins/CPU_Intensive_Procs $HOME/ShellPlugins/CPU_Intensive_Procs 644 $SUDO_UID "$SUDO_GID"
-			FILE bashconfig ShellPlugins/Cleaner_RK_Scan $HOME/ShellPlugins/Cleaner_RK_Scan 644 $SUDO_UID "$SUDO_GID"
-			FILE bashconfig ShellPlugins/Clear_CD_LS $HOME/ShellPlugins/Clear_CD_LS 644 $SUDO_UID "$SUDO_GID"
-			FILE bashconfig ShellPlugins/Create_VM $HOME/ShellPlugins/Create_VM 644 $SUDO_UID "$SUDO_GID"
-			FILE bashconfig ShellPlugins/Get_Bad_Hosts $HOME/ShellPlugins/Get_Bad_Hosts 644 $SUDO_UID "$SUDO_GID"
-			FILE bashconfig ShellPlugins/Git_Status_All $HOME/ShellPlugins/Git_Status_All 644 $SUDO_UID "$SUDO_GID"
-			FILE bashconfig ShellPlugins/LSPKG_Set $HOME/ShellPlugins/LSPKG_Set 644 $SUDO_UID "$SUDO_GID"
-			FILE bashconfig ShellPlugins/List_Signals $HOME/ShellPlugins/List_Signals 644 $SUDO_UID "$SUDO_GID"
-			FILE bashconfig ShellPlugins/Load_File_Links2 $HOME/ShellPlugins/Load_File_Links2 644 $SUDO_UID "$SUDO_GID"
-			FILE bashconfig ShellPlugins/Loop_This $HOME/ShellPlugins/Loop_This 644 $SUDO_UID "$SUDO_GID"
-			FILE bashconfig ShellPlugins/NIR_Difference $HOME/ShellPlugins/NIR_Difference 644 $SUDO_UID "$SUDO_GID"
-			FILE bashconfig ShellPlugins/Play_Download_MPSYT $HOME/ShellPlugins/Play_Download_MPSYT 644 $SUDO_UID "$SUDO_GID"
-			FILE bashconfig ShellPlugins/Shell_Alias_Correcting $HOME/ShellPlugins/Shell_Alias_Correcting 644 $SUDO_UID "$SUDO_GID"
-			FILE bashconfig ShellPlugins/Times_Table $HOME/ShellPlugins/Times_Table 644 $SUDO_UID "$SUDO_GID"
+			FILE bashconfig ShellPlugins/Bell_Alarm $HOME/ShellPlugins/Bell_Alarm 600 $SUDO_UID "$SUDO_GID"
+			FILE bashconfig ShellPlugins/CPU_Intensive_Procs $HOME/ShellPlugins/CPU_Intensive_Procs 600 $SUDO_UID "$SUDO_GID"
+			FILE bashconfig ShellPlugins/Cleaner_RK_Scan $HOME/ShellPlugins/Cleaner_RK_Scan 600 $SUDO_UID "$SUDO_GID"
+			FILE bashconfig ShellPlugins/Clear_CD_LS $HOME/ShellPlugins/Clear_CD_LS 600 $SUDO_UID "$SUDO_GID"
+			FILE bashconfig ShellPlugins/Create_VM $HOME/ShellPlugins/Create_VM 600 $SUDO_UID "$SUDO_GID"
+			FILE bashconfig ShellPlugins/Get_Bad_Hosts $HOME/ShellPlugins/Get_Bad_Hosts 600 $SUDO_UID "$SUDO_GID"
+			FILE bashconfig ShellPlugins/Git_Status_All $HOME/ShellPlugins/Git_Status_All 600 $SUDO_UID "$SUDO_GID"
+			FILE bashconfig ShellPlugins/LSPKG_Set $HOME/ShellPlugins/LSPKG_Set 600 $SUDO_UID "$SUDO_GID"
+			FILE bashconfig ShellPlugins/List_Signals $HOME/ShellPlugins/List_Signals 600 $SUDO_UID "$SUDO_GID"
+			FILE bashconfig ShellPlugins/Load_File_Links2 $HOME/ShellPlugins/Load_File_Links2 600 $SUDO_UID "$SUDO_GID"
+			FILE bashconfig ShellPlugins/Loop_This $HOME/ShellPlugins/Loop_This 600 $SUDO_UID "$SUDO_GID"
+			FILE bashconfig ShellPlugins/NIR_Difference $HOME/ShellPlugins/NIR_Difference 600 $SUDO_UID "$SUDO_GID"
+			FILE bashconfig ShellPlugins/Play_Download_MPSYT $HOME/ShellPlugins/Play_Download_MPSYT 600 $SUDO_UID "$SUDO_GID"
+			FILE bashconfig ShellPlugins/Shell_Alias_Correcting $HOME/ShellPlugins/Shell_Alias_Correcting 600 $SUDO_UID "$SUDO_GID"
+			FILE bashconfig ShellPlugins/Times_Table $HOME/ShellPlugins/Times_Table 600 $SUDO_UID "$SUDO_GID"
 
 			APT_INSTALL fonts-symbola ;;
 		i3config)

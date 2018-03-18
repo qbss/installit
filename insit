@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sun 18 Mar 14:39:02 GMT 2018
+# Last Change       - Sun 18 Mar 14:53:59 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -564,6 +564,7 @@ while [ "$1" ]; do
 			FILE simplify-ubuntu simplify-ubuntu /usr/bin/simplify-ubuntu 755 0 0
 			FILE simplify-ubuntu completion /usr/share/bash-completion/completions/simplify-ubuntu 644 0 0
 			FILE miscellaneous clean-locales /usr/bin/clean-locales 755 0 0
+			FILE lspkg lspkg-set /usr/bin/lspkg-set 755 0 0
 			FILE lspkg lspkg /usr/bin/lspkg 755 0 0
 			FILE lspkg completion /usr/share/bash-completion/completions/lspkg 644 0 0 ;;
 		forex)
@@ -752,6 +753,7 @@ while [ "$1" ]; do
 			FILE mansaver mansaver /usr/bin/mansaver 755 0 0 ;;
 		lspkg)
 			FILE lspkg lspkg /usr/bin/lspkg 755 0 0
+			FILE lspkg lspkg-set /usr/bin/lspkg-set 755 0 0
 			FILE lspkg completion /usr/share/bash-completion/completions/lspkg 644 0 0 ;;
 		lsbins)
 			FILE miscellaneous lsbins /usr/bin/lsbins 755 0 0 ;;

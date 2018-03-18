@@ -3,12 +3,12 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Wed 14 Mar 21:55:37 GMT 2018
+# Last Change       - Sun 18 Mar 14:39:02 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
 
-_VERSION_="2018-03-14"
+_VERSION_="2018-03-18"
 
 #TODO - Incorporate an 'undo' update action, in-case an update breaks something.
 #TODO - Could insit also include other people's programs/packages? This could be an
@@ -345,7 +345,7 @@ AVAIL=(
 	"ripmydvd - Shell program using ffmpeg and mplayer to rip your DVD."
 	"roks - This small program will clear out your system of old kernel versions."
 	"seewttr - Super-simple wrapper-like script to get your weather."
-	"simplify-ubuntu - Small project to lighten standard Ubuntu 16.04.3 LTS installations."
+	"simplify-ubuntu - Small project to lighten standard Ubuntu 16.04.* LTS installations."
 	"simwea - Display various weather statistics on a terminal."
 	"snotes - Search your programming notes on-the-fly with this simple tool."
 	"tozero - Simple program to display a countdown for a target date."

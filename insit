@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sat 24 Mar 00:57:45 GMT 2018
+# Last Change       - Sat 24 Mar 00:58:55 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -418,7 +418,7 @@ while [ "$1" ]; do
 	case "$1" in
 		freelfm)
 			FILE freelfm freelfm /usr/bin/freelfm 755 0 0 ;;
-		freelfm)
+		barred)
 			FILE miscellaneous barred /usr/bin/barred 755 0 0 ;;
 		vimconfig)
 			LOGIT "Displaying vimconfig WARNING"

@@ -3,12 +3,12 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sun 18 Mar 14:53:59 GMT 2018
+# Last Change       - Sat 24 Mar 00:57:45 GMT 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
 
-_VERSION_="2018-03-18"
+_VERSION_="2018-03-24"
 
 #TODO - Incorporate an 'undo' update action, in-case an update breaks something.
 #TODO - Could insit also include other people's programs/packages? This could be an
@@ -301,6 +301,7 @@ AVAIL=(
 	"apt-undo-install - Undo the last package(s) install executed with apt-get."
 	"autoscrot - Tool to take full screenshots at user-specified intervals using scrot."
 	"backmeup - A simple tool to quickly and easily back up your HOME."
+	"barred - A rudimentary, scriptable, and very small progress bar."
 	"bashconfig - My own bash settings and shell plugins for use by anybody."
 	"bdl - Easily and quickly download a batch of files using wget."
 	"binwatch - Output list of executables found in your PATH"
@@ -417,6 +418,8 @@ while [ "$1" ]; do
 	case "$1" in
 		freelfm)
 			FILE freelfm freelfm /usr/bin/freelfm 755 0 0 ;;
+		freelfm)
+			FILE miscellaneous barred /usr/bin/barred 755 0 0 ;;
 		vimconfig)
 			LOGIT "Displaying vimconfig WARNING"
 			while read -r; do

@@ -1,3 +1,13 @@
+* 2018-03-25
+
+After some time focusing on growing the LearnLinux YouTube channel and taking part in various online Linux communities, I found myself slowing down on the code front, which I suppose is to be expected; I'm only human!
+
+However, today I decided to work on filesitter, an old program I wrote a while back. I sometimes found myself in the situation in which I awaited the download or transfer of large files and wanted to go out or to bed, but had forgotten to accommodate this prior to running the command(s). I decided to programmatically watch the file. Of course, in retrospect, I'm sure I could've entered the command anyway and it would've executed upon completion of the previous command(s), but who cares about these details!?
+
+In any case, filesitter can wind up being pretty useful tool, and now that it's been fixed up and updated, I felt it was worth adding to insit.
+
+I've also worked on mif (Movie Index Filter) quite a bit, so expect updates there, but no related changes were made to insit.
+
 * 2018-03-11
 
 Apologies to anyone who got confused by insit insisting there's an update, no matter how many times you updated! I may or may not have accidentally forgotten to point the update check to the dev branch. Fixed now.

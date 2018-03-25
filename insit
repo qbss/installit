@@ -3,12 +3,12 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sat 24 Mar 00:58:55 GMT 2018
+# Last Change       - Sun 25 Mar 12:36:17 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
 
-_VERSION_="2018-03-24"
+_VERSION_="2018-03-25"
 
 #TODO - Incorporate an 'undo' update action, in-case an update breaks something.
 #TODO - Could insit also include other people's programs/packages? This could be an
@@ -318,6 +318,7 @@ AVAIL=(
 	"dlspwalls - Download a collection of steampunk wallpapers."
 	"dunstconfig - The terminalforlife configuration file for dunst."
 	"dwwdl - Download all of the available DistroWatch Weekly podcasts."
+	"filesitter - Watch for and act upon the completion of file size changes."
 	"forex - Easily convert various currency rates straight from the terminal."
 	"freelfm - Download last.fm's free music into the current working directory."
 	"get-uuid - Grab and copy your file system's UUID with this simple, easy-to-use GUI."
@@ -420,6 +421,8 @@ while [ "$1" ]; do
 			FILE freelfm freelfm /usr/bin/freelfm 755 0 0 ;;
 		barred)
 			FILE miscellaneous barred /usr/bin/barred 755 0 0 ;;
+		barred)
+			FILE miscellaneous filesitter /usr/bin/filesitter 755 0 0 ;;
 		vimconfig)
 			LOGIT "Displaying vimconfig WARNING"
 			while read -r; do

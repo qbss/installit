@@ -28,11 +28,11 @@ While that command is ordinarily for updating a pre-existing installation of ins
 
 ## EXAMPLE
 
-Now that you've done that, all that's left is to load up insit to peruse the catalogue of my work at your own leisure. Here is its `--help` output, as of 4th March, 2018:
+Now that you've done that, all that's left is to load up insit to peruse the catalogue of my work at your own leisure. Here is its `--help` output, as of 26th March, 2018:
 
 ```
 $ insit --help
-            INSIT (2018-03-06)
+            INSIT (2018-03-26)
             Written by terminalforlife (terminalforlife@yahoo.com)
 
             Installer for many shell programs from terminalforlife.
@@ -42,9 +42,10 @@ SYNTAX:     insit [OPTS] WHAT1 WHAT2 WHAT3 . . .
 OPTS:       --help|-h|-?            - Displays this help information.
             --verbose|-V            - Also display the log output.
             --version|-v            - Output only the version datestamp.
-            --no-check              - Do not check for version updates.
-            --debug|-D              - Enables the built-in bash debugging.
+            --changelog             - Fetch and view the insit changelog.
             --quiet|-q              - Runs in quiet mode. Errors still output.
+            --debug|-D              - Enables the built-in bash debugging.
+            --no-check              - Do not check for version updates.
             --update|-U             - Replace and/or update existing files.
             --uninstall|-u          - Uninstall files installed here.
             --available|-A          - Output all available programs.

@@ -3,12 +3,12 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sun 25 Mar 12:37:49 BST 2018
+# Last Change       - Mon 26 Mar 20:51:12 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
 
-_VERSION_="2018-03-25"
+_VERSION_="2018-03-26"
 
 #TODO - Incorporate an 'undo' update action, in-case an update breaks something.
 #TODO - Could insit also include other people's programs/packages? This could be an
@@ -35,6 +35,7 @@ USAGE(){
 		OPTS:       --help|-h|-?            - Displays this help information.
 		            --verbose|-V            - Also display the log output.
 		            --version|-v            - Output only the version datestamp.
+		            --changelog             - Fetch and view the insit changelog.
 		            --quiet|-q              - Runs in quiet mode. Errors still output.
 		            --debug|-D              - Enables the built-in bash debugging.
 		            --no-check              - Do not check for version updates.
@@ -86,6 +87,8 @@ while [ "$1" ]; do
 		--version|-v)
 			printf "%s\n" "$_VERSION_"
 			exit 0 ;;
+		--changelog)
+			CLOG="true" ;;
 		--debug|-D)
 			DEBUGME="true" ;;
 		--no-check)
@@ -105,7 +108,7 @@ while [ "$1" ]; do
 			UPDATE="true"
 			SELF="true" ;;
 		--ignore-root|-I)
-			IGNORE_ROOT="true" ;;
+			NOROOT="true" ;;
 		--custom|-C)
 			CUSTOM="true" ;;
 		--log|-L)
@@ -133,7 +136,7 @@ for DEP in /usr/bin/wget /bin/{mv,rm,chmod,chown,mkdir}; {
 read -a WGET_VER_LINE <<< "$(/usr/bin/wget --version)"
 [ 0${WGET_VER_LINE[2]//[!0-9]} -ge 01192 ] && NOWARC="--no-warc-compression"
 
-if ! [ "$AVAIL_SHOW" == "true" -o "$IGNORE_ROOT" == "true" ]; then
+if ! [ "$CLOG" == "true" -o "$AVAIL_SHOW" == "true" -o "$NOROOT" == "true" ]; then
 	if ! [ $UID -eq 0 ]; then
 		XERR "$LINENO" "Unable to continue -- do you have root access?"
 	fi
@@ -141,6 +144,16 @@ fi
 
 [ "$BEQUIET" == "true" ] && exec 1> /dev/null
 [ "$DEBUGME" == "true" ] && set -x
+
+if [ "$CLOG" == "true" ]; then
+	CLOG_URL="$DOM/terminalforlife/installit/raw/master/CHANGELOG.md"
+	CLOG_FILE=`/usr/bin/wget "$NOWARC" -q "$CLOG_URL" -O -`
+	if [ -x /usr/bin/less ]; then
+		/usr/bin/less "$CLOG_FILE"
+	else
+		printf "%s\n" "$CLOG_FILE"
+	fi
+fi
 
 LOGIT(){
 	if [ $UID -eq 0 ]; then

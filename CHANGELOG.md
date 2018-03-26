@@ -1,3 +1,7 @@
+* 2018-03-26
+
+With this changelog growing in size, and surely will continue to do so, I decided it was about time users had easier access to it, via the terminal itself, instead of loading up your browser and going over to GitHub. Unfortunately, the changelog will (at least for now) display in raw form, meaning you'll see Markdown syntax.
+
 * 2018-03-25
 
 After some time focusing on growing the LearnLinux YouTube channel and taking part in various online Linux communities, I found myself slowing down on the code front, which I suppose is to be expected; I'm only human!

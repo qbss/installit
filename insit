@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Mon 26 Mar 20:53:03 BST 2018
+# Last Change       - Mon 26 Mar 20:54:38 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -149,7 +149,7 @@ if [ "$CLOG" == "true" ]; then
 	CLOG_URL="$DOM/terminalforlife/installit/raw/master/CHANGELOG.md"
 	CLOG_FILE=`/usr/bin/wget "$NOWARC" -q "$CLOG_URL" -O -`
 	if [ -x /usr/bin/less ]; then
-		/usr/bin/less "$CLOG_FILE"
+		/usr/bin/less <<< "$CLOG_FILE"
 	else
 		printf "%s\n" "$CLOG_FILE"
 	fi

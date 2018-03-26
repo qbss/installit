@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Mon 26 Mar 20:51:12 BST 2018
+# Last Change       - Mon 26 Mar 20:53:03 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -153,6 +153,8 @@ if [ "$CLOG" == "true" ]; then
 	else
 		printf "%s\n" "$CLOG_FILE"
 	fi
+
+	exit 0
 fi
 
 LOGIT(){

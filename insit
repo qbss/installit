@@ -3,12 +3,12 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Mon 26 Mar 20:54:38 BST 2018
+# Last Change       - Wed 28 Mar 18:11:04 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
 
-_VERSION_="2018-03-26"
+_VERSION_="2018-03-28"
 
 #TODO - Incorporate an 'undo' update action, in-case an update breaks something.
 #TODO - Could insit also include other people's programs/packages? This could be an
@@ -124,17 +124,19 @@ done
 
 declare -i DEPCOUNT=0
 for DEP in /usr/bin/wget /bin/{mv,rm,chmod,chown,mkdir}; {
-	[ -x "$DEP" ] || {
+	if ! [ -x "$DEP" ]; then
 		ERR "$LINENO" "Dependency '$DEP' not met."
 		DEPCOUNT+=1
-	}
+	fi
 }
 
 [ $DEPCOUNT -eq 0 ] || exit 1
 
-# Newer versions of wget by default request unwanted server-side compression.
 read -a WGET_VER_LINE <<< "$(/usr/bin/wget --version)"
-[ 0${WGET_VER_LINE[2]//[!0-9]} -ge 01192 ] && NOWARC="--no-warc-compression"
+WGET_VERSION=0${WGET_VER_LINE[2]//[!0-9]}
+if [ $WGET_VERSION -ge 01192 -a $WGET_VERSION -lt 01194 ]; then
+	NOWARC="--no-warc-compression"
+fi
 
 if ! [ "$CLOG" == "true" -o "$AVAIL_SHOW" == "true" -o "$NOROOT" == "true" ]; then
 	if ! [ $UID -eq 0 ]; then

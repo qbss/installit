@@ -4,6 +4,8 @@ At last, insit now supports wget v1.19.4, which is used in Ubuntu 18.04 and does
 
 As previously assured, I _will_ be supporting Ubuntu 18.04, and I will personally be updating my system to it when I get back from holiday a few days after the 26th of April release date -- sorry for the delay; it can't be helped, unfortunately.
 
+If anyone is interested in helping me out, you could try out insit and my other programs and/or configurations over on Ubuntu 18.04 (any type; the more varied, the better!) then let me know of any bugs via GitHub issue reports, which I'll get to when I get back to England.
+
 * 2018-03-26
 
 With this changelog growing in size, and surely will continue to do so, I decided it was about time users had easier access to it, via the terminal itself, instead of loading up your browser and going over to GitHub. Unfortunately, the changelog will (at least for now) display in raw form, meaning you'll see Markdown syntax.

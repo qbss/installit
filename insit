@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Wed 28 Mar 19:27:46 BST 2018
+# Last Change       - Wed 28 Mar 21:55:08 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -348,6 +348,7 @@ AVAIL=(
 	"i3config - My own i3-wm settings and shell plugins for use by anybody."
 	"jotd - Display a Joke of the Day on your terminal."
 	"kernelchk - Small tool to check for a change in kernel version. Ideal for scripts."
+	"gtk-greeter-sets - The TFL settings for the GTK LightDM greeter."
 	"lsbins - Simple shell program to list and describe the PATH executables."
 	"lspkg - Quickly and portable-y show, describe, and search installed packages."
 	"mansaver - Save man pages for each applicable command in PATH."
@@ -435,6 +436,46 @@ fi
 
 while [ "$1" ]; do
 	case "$1" in
+		tfl-look-001)
+			LINK1="https://codeload.github.com/numixproject/numix-gtk-theme/zip/master"
+			LINK2="https://codeload.github.com/madmaxms/iconpack-delft/zip/master"
+			LINK3="https://wallpaperscraft.com/image/minimalism_texture_black_55242_1920x1080.jpg"
+
+			LOGIT "Displaying tfl-look-001 WARNING"
+			while read -r; do
+				printf "%s\n" "$REPLY"
+			done <<-EOF
+
+				This installation will download and install the delft-red icon theme, a simple dark
+				wallpaper, and the numix-dark GTK plus colors theme from:
+
+				  $LINK1
+				  $LINK2
+				  $LINK3
+
+				You'll need '/usr/bin/wget' and '/usr/bin/unzip' to get and handle the archives.
+
+			EOF
+
+			LOGIT "Prompting user to continue or not"
+			read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
+			if ! [[ "$REPLY" == "Yes!" ]]; then
+				printf "No action taken -- skipping.\n"
+				shift; continue
+			fi
+
+			#TODO - Finish this.
+			if [ -x /usr/bin/wget -a -x /usr/bin/unzip ]; then
+				/usr/bin/wget "$LINK1" -O /tmp/numix-gtk-theme.zip
+			else
+				ERR "$LINENO" "Dependency '/usr/bin/wget' and/or '/usr/bin/unzip' not met."
+			fi
+		gtk-greeter-sets)
+			if [ -d /etc/lightdm ]; then
+				FILE miscellaneous lightdm-gtk-greeter.conf /etc/lightdm/lightdm-gtk-greeter.conf 644 0 0
+			else
+				ERR "$LINENO" "Missing '/etc/lightdm' directory."
+			fi ;;
 		freelfm)
 			FILE freelfm freelfm /usr/bin/freelfm 755 0 0 ;;
 		barred)

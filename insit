@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Wed 28 Mar 18:11:04 BST 2018
+# Last Change       - Wed 28 Mar 19:27:46 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -15,6 +15,7 @@ _VERSION_="2018-03-28"
 #       amazing way to not only get my stuff out there, but also other peoples'. It
 #       Could help us all! If you're reading this and think this is a good idea, -
 #       let me know!
+#TODO - When using -I and installing something like bashconfig, don't bother APT.
 
 XERR(){ printf "[L%0.4d] ERROR: %s\n" "$1" "$2" 1>&2; exit 1; }
 ERR(){ printf "[L%0.4d] ERROR: %s\n" "$1" "$2" 1>&2; }
@@ -639,7 +640,6 @@ while [ "$1" ]; do
 				  $HOME/ShellPlugins/Create_VM
 				  $HOME/ShellPlugins/Get_Bad_Hosts
 				  $HOME/ShellPlugins/Git_Status_All
-				  $HOME/ShellPlugins/LSPKG_Set
 				  $HOME/ShellPlugins/List_Signals
 				  $HOME/ShellPlugins/Load_File_Links2
 				  $HOME/ShellPlugins/Loop_This
@@ -675,7 +675,6 @@ while [ "$1" ]; do
 			FILE bashconfig ShellPlugins/Create_VM $HOME/ShellPlugins/Create_VM 600 $SUDO_UID "$SUDO_GID"
 			FILE bashconfig ShellPlugins/Get_Bad_Hosts $HOME/ShellPlugins/Get_Bad_Hosts 600 $SUDO_UID "$SUDO_GID"
 			FILE bashconfig ShellPlugins/Git_Status_All $HOME/ShellPlugins/Git_Status_All 600 $SUDO_UID "$SUDO_GID"
-			FILE bashconfig ShellPlugins/LSPKG_Set $HOME/ShellPlugins/LSPKG_Set 600 $SUDO_UID "$SUDO_GID"
 			FILE bashconfig ShellPlugins/List_Signals $HOME/ShellPlugins/List_Signals 600 $SUDO_UID "$SUDO_GID"
 			FILE bashconfig ShellPlugins/Load_File_Links2 $HOME/ShellPlugins/Load_File_Links2 600 $SUDO_UID "$SUDO_GID"
 			FILE bashconfig ShellPlugins/Loop_This $HOME/ShellPlugins/Loop_This 600 $SUDO_UID "$SUDO_GID"

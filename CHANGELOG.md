@@ -1,3 +1,9 @@
+* 2018-03-28
+
+At last, insit now supports wget v1.19.4, which is used in Ubuntu 18.04 and doesn't have the --no-warc-compression flag, for some reason. Luckily, this version of wget doesn't ask for server-side compression, at least by default, so it's all good. Gradually working to ensure my programs and configurations, especially insit (my priority at the moment) work correctly in Ubuntu 18.04.
+
+As previously assured, I _will_ be supporting Ubuntu 18.04, and I will personally be updating my system to it when I get back from holiday a few days after the 26th of April release date -- sorry for the delay; it can't be helped, unfortunately.
+
 * 2018-03-26
 
 With this changelog growing in size, and surely will continue to do so, I decided it was about time users had easier access to it, via the terminal itself, instead of loading up your browser and going over to GitHub. Unfortunately, the changelog will (at least for now) display in raw form, meaning you'll see Markdown syntax.

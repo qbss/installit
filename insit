@@ -3,12 +3,12 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Wed 28 Mar 21:55:08 BST 2018
+# Last Change       - Thu 29 Mar 23:28:53 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
 
-_VERSION_="2018-03-28"
+_VERSION_="2018-03-29"
 
 #TODO - Incorporate an 'undo' update action, in-case an update breaks something.
 #TODO - Could insit also include other people's programs/packages? This could be an
@@ -344,11 +344,11 @@ AVAIL=(
 	"getline - Pure Bourne Again Shell way to handle a plain text file."
 	"ghipc - Check the validity of IP addresses of GitHub servers."
 	"github-ssh-setup - Simple shell program to create an SSH key pair for GitHub."
+	"gtk-greeter-sets - The TFL settings for the GTK LightDM greeter."
 	"homewatch - Output files in HOME which have been modified today."
 	"i3config - My own i3-wm settings and shell plugins for use by anybody."
 	"jotd - Display a Joke of the Day on your terminal."
 	"kernelchk - Small tool to check for a change in kernel version. Ideal for scripts."
-	"gtk-greeter-sets - The TFL settings for the GTK LightDM greeter."
 	"lsbins - Simple shell program to list and describe the PATH executables."
 	"lspkg - Quickly and portable-y show, describe, and search installed packages."
 	"mansaver - Save man pages for each applicable command in PATH."
@@ -436,41 +436,78 @@ fi
 
 while [ "$1" ]; do
 	case "$1" in
-		tfl-look-001)
-			LINK1="https://codeload.github.com/numixproject/numix-gtk-theme/zip/master"
-			LINK2="https://codeload.github.com/madmaxms/iconpack-delft/zip/master"
-			LINK3="https://wallpaperscraft.com/image/minimalism_texture_black_55242_1920x1080.jpg"
+		#tfl-look-001)
+		#	LINK1="https://codeload.github.com/numixproject/numix-gtk-theme/zip/master"
+		#	LINK2="https://codeload.github.com/madmaxms/iconpack-delft/zip/master"
+		#	LINK3="https://wallpaperscraft.com/image/minimalism_texture_black_55242_1920x1080.jpg"
 
+		#	LOGIT "Displaying tfl-look-001 WARNING"
+		#	while read -r; do
+		#		printf "%s\n" "$REPLY"
+		#	done <<-EOF
+
+		#		This installation will download and install the delft-red icon theme, a simple dark
+		#		wallpaper, and the numix-dark GTK plus colors theme from:
+
+		#		  $LINK1
+		#		  $LINK2
+		#		  $LINK3
+
+		#		You'll need '/usr/bin/wget' and '/usr/bin/unzip' to get and handle the archives.
+
+		#	EOF
+
+		#	LOGIT "Prompting user to continue or not"
+		#	read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
+		#	if ! [[ "$REPLY" == "Yes!" ]]; then
+		#		printf "No action taken -- skipping.\n"
+		#		shift; continue
+		#	fi
+
+		#	#TODO - Finish this.
+		#	if [ -x /usr/bin/wget -a -x /usr/bin/unzip ]; then
+		#		LOGIT "Downloading: $LINK1"
+		#		if /usr/bin/wget "$LINK1" -O /tmp/numix-gtk-theme.zip; then
+		#			LOGIT "Downloaded: $LINK1"
+		#		else
+		#			LOGIT "Download failed: $LINK1"
+		#		fi
+
+		#		LOGIT "Downloading: $LINK2"
+		#		if /usr/bin/wget "$LINK2" -O /tmp/numix-gtk-theme.zip; then
+		#			LOGIT "Downloaded: $LINK1"
+		#		else
+		#			LOGIT "Download failed: $LINK1"
+		#		fi
+
+		#		LOGIT "Downloading: $LINK3"
+		#		if /usr/bin/wget "$LINK3" -O /tmp/numix-gtk-theme.zip; then
+		#			LOGIT "Downloaded: $LINK1"
+		#		else
+		#			LOGIT "Download failed: $LINK1"
+		#		fi
+		#	else
+		#		ERR "$LINENO" "Dependency '/usr/bin/wget' and/or '/usr/bin/unzip' not met."
+		#	fi
+		gtk-greeter-sets)
 			LOGIT "Displaying tfl-look-001 WARNING"
 			while read -r; do
 				printf "%s\n" "$REPLY"
 			done <<-EOF
 
-				This installation will download and install the delft-red icon theme, a simple dark
-				wallpaper, and the numix-dark GTK plus colors theme from:
+				WARNING: This will install and replace the following:
 
-				  $LINK1
-				  $LINK2
-				  $LINK3
-
-				You'll need '/usr/bin/wget' and '/usr/bin/unzip' to get and handle the archives.
+				  /etc/lightdm/lightdm-gtk-greeter.conf
 
 			EOF
 
-			LOGIT "Prompting user to continue or not"
+			LOGIT "Displaying gtk-greeter-sets WARNING"
 			read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
 			if ! [[ "$REPLY" == "Yes!" ]]; then
 				printf "No action taken -- skipping.\n"
 				shift; continue
 			fi
 
-			#TODO - Finish this.
-			if [ -x /usr/bin/wget -a -x /usr/bin/unzip ]; then
-				/usr/bin/wget "$LINK1" -O /tmp/numix-gtk-theme.zip
-			else
-				ERR "$LINENO" "Dependency '/usr/bin/wget' and/or '/usr/bin/unzip' not met."
-			fi
-		gtk-greeter-sets)
 			if [ -d /etc/lightdm ]; then
 				FILE miscellaneous lightdm-gtk-greeter.conf /etc/lightdm/lightdm-gtk-greeter.conf 644 0 0
 			else

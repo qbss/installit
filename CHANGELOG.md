@@ -1,3 +1,11 @@
+* 2018-04-04
+
+Today, I address an issue which occurred when the --update|-U flag was used; if no item (example: apt-undo-install) were selected, nothing would typically be displayed, whereas this is ordinarily an error.
+
+The `term_font_size_py file` has been removed from the i3config repository, due to it being sort of unnecessary, without any worthwhile performance increase, due to the way in which the configuration file is probed for modifications. This change has been reflected here on insit, via the i3config item. If you'd like to remove what you already have, after updating insit, you can remove the file manually at: `$HOME/.i3a/term_font_size_py`
+
+Be sure to update your `$HOME/.config/i3/config` file if you're still pointing a shortcut to the now-removed plugin.
+
 * 2018-03-28
 
 At last, insit now supports wget v1.19.4, which is used in Ubuntu 18.04 and doesn't have the `--no-warc-compression` flag, for some reason. Luckily, this version of wget doesn't ask for server-side compression, at least by default, so it's all good. Gradually working to ensure my programs and configurations, especially insit (my priority at the moment) work correctly in Ubuntu 18.04.

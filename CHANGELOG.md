@@ -6,7 +6,9 @@ The `term_font_size_py file` has been removed from the i3config repository, due 
 
 Be sure to update your `$HOME/.config/i3/config` file if you're still pointing a shortcut to the now-removed plugin.
 
-This update caused a new issue to arise, by which using just `--self|-S` showed the new XERR message, which is of course not good; this has also been fixed. My apologies for any inconnvenienced caused by this.
+This update initially caused a new issue to arise, by which using just `--self|-S` showed the new XERR message, which is of course not good; this has also been fixed. My apologies for any inconnvenienced caused by this.
+
+Various `XERR()` messages and a `LOGIT()` message has also been added.
 
 * 2018-03-28
 

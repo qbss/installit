@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Wed  4 Apr 08:35:32 BST 2018
+# Last Change       - Wed  4 Apr 08:39:02 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -280,6 +280,11 @@ FILE(){
 }
 
 APT_INSTALL(){
+	if [ "$NOROOT" == "true" ]; then
+		LOGIT "Skipping APT install for packages: $@"
+		return 0
+	fi
+
 	if [ -f "$OSFILE" -a -r "$OSFILE" ]; then
 		LOGIT "Checking distribution base"
 		while IFS="=" read -a X; do

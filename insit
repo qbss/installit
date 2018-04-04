@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Wed  4 Apr 07:37:02 BST 2018
+# Last Change       - Wed  4 Apr 07:38:38 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -123,6 +123,10 @@ while [ "$1" ]; do
 
 	shift
 done
+
+if [ "$UPDATE" == "true" -a $# -eq 0 ]; then
+	XERR "$LINENO" "No items were selected for update."
+fi
 
 declare -i DEPCOUNT=0
 for DEP in /usr/bin/wget /bin/{mv,rm,chmod,chown,mkdir}; {

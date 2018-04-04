@@ -3,12 +3,12 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Thu 29 Mar 23:28:53 BST 2018
+# Last Change       - Wed  4 Apr 07:35:55 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
 
-_VERSION_="2018-03-29"
+_VERSION_="2018-04-04"
 
 #TODO - Incorporate an 'undo' update action, in-case an update breaks something.
 #TODO - Could insit also include other people's programs/packages? This could be an
@@ -787,7 +787,6 @@ while [ "$1" ]; do
 				  $HOME/.i3a/source_mute
 				  $HOME/.i3a/source_raise
 				  $HOME/.i3a/term_font_size
-				  $HOME/.i3a/term_font_size_py
 				  $HOME/.i3a/terminal
 				  $HOME/.i3a/track_notify
 				  $HOME/.i3a/use_dmenu
@@ -829,7 +828,6 @@ while [ "$1" ]; do
 			FILE i3config .i3a/source_mute $HOME/.i3a/source_mute 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3a/source_raise $HOME/.i3a/source_raise 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3a/term_font_size $HOME/.i3a/term_font_size 644 "$SUDO_UID" "$SUDO_GID"
-			FILE i3config .i3a/term_font_size_py $HOME/.i3a/term_font_size_py 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3a/terminal $HOME/.i3a/terminal 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3a/track_notify $HOME/.i3a/track_notify 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3a/use_dmenu $HOME/.i3a/use_dmenu 644 "$SUDO_UID" "$SUDO_GID"

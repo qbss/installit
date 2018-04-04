@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Wed  4 Apr 08:28:46 BST 2018
+# Last Change       - Wed  4 Apr 08:35:32 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -22,6 +22,8 @@ XERR(){ printf "[L%0.4d] ERROR: %s\n" "$1" "$2" 1>&2; exit 1; }
 ERR(){ printf "[L%0.4d] ERROR: %s\n" "$1" "$2" 1>&2; }
 
 DOM="https://github.com"
+URL="$DOM/terminalforlife"
+LOGFILE="/var/log/tfl_insit.log"
 
 USAGE(){
 	while read -r; do
@@ -61,6 +63,8 @@ USAGE(){
 		              5: The file's owner, such as 0 or \$USER.
 		              6: The file's group, such as 1000.
 
+		            By default, insit will always work with the master branch.
+
 		EXAMPLE:    sudo insit -B dev -U -C miscellaneous mfw /usr/bin/mfw 755 0
 		            sudo insit -U notify-upgrade lspkg lsbins apt-undo-install
 		            sudo insit -q --log --uninstall bl medlog wcdl clean-locales
@@ -69,16 +73,18 @@ USAGE(){
 		            executable just so happens to have the same name, take care not to
 		            replace it by mistake!
 
-		FILE:       The log file is stored in: /var/log/tfl_insit.log
+		FILE:       The log file is stored in: $LOGFILE
 
-		SITE:       $DOM/terminalforlife
+		SITE:       $URL
 	EOF
 }
 
 OSFILE="/etc/os-release"
-LOGFILE="/var/log/tfl_insit.log"
-URL="$DOM/terminalforlife"
 BRANCH="master"
+
+if [ $# -eq 0 ]; then
+	XERR "$LINENO" "Arguments are required. See: insit --help"
+fi
 
 while [ "$1" ]; do
 	case "$1" in
@@ -120,7 +126,6 @@ while [ "$1" ]; do
 		*)
 			break ;;
 	esac
-
 	shift
 done
 

@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Wed  4 Apr 07:35:55 BST 2018
+# Last Change       - Wed  4 Apr 07:37:02 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -16,6 +16,7 @@ _VERSION_="2018-04-04"
 #       Could help us all! If you're reading this and think this is a good idea, -
 #       let me know!
 #TODO - When using -I and installing something like bashconfig, don't bother APT.
+#TODO - If file is removed (FILE), how is a user with updated insit to remove it?
 
 XERR(){ printf "[L%0.4d] ERROR: %s\n" "$1" "$2" 1>&2; exit 1; }
 ERR(){ printf "[L%0.4d] ERROR: %s\n" "$1" "$2" 1>&2; }

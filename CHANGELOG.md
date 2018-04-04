@@ -1,10 +1,12 @@
 * 2018-04-04
 
-Today, I address an issue which occurred when the --update|-U flag was used; if no item (example: apt-undo-install) were selected, nothing would typically be displayed, whereas this is ordinarily an error.
+Today, I address an issue which occurred when the `--update|-U` flag was used; if no item (example: apt-undo-install) were selected, nothing would typically be displayed, whereas this is ordinarily an error.
 
 The `term_font_size_py file` has been removed from the i3config repository, due to it being sort of unnecessary, without any worthwhile performance increase, due to the way in which the configuration file is probed for modifications. This change has been reflected here on insit, via the i3config item. If you'd like to remove what you already have, after updating insit, you can remove the file manually at: `$HOME/.i3a/term_font_size_py`
 
 Be sure to update your `$HOME/.config/i3/config` file if you're still pointing a shortcut to the now-removed plugin.
+
+This update caused a new issue to arise, by which using just `--self|-S` showed the new XERR message, which is of course not good; this has also been fixed. My apologies for any inconnvenienced caused by this.
 
 * 2018-03-28
 

@@ -3,18 +3,14 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Thu  5 Apr 23:28:02 BST 2018
+# Last Change       - Fri  6 Apr 00:11:39 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
 
-_VERSION_="2018-04-05"
+_VERSION_="2018-04-06"
 
 #TODO - Incorporate an 'undo' update action, in-case an update breaks something.
-#TODO - Could insit also include other people's programs/packages? This could be an
-#       amazing way to not only get my stuff out there, but also other peoples'. It
-#       Could help us all! If you're reading this and think this is a good idea, -
-#       let me know!
 #TODO - If file is removed (FILE), how is a user with updated insit to remove it?
 
 XERR(){ printf "[L%0.4d] ERROR: %s\n" "$1" "$2" 1>&2; exit 1; }
@@ -49,6 +45,7 @@ USAGE(){
 		            --branch|-B NAME        - Where NAME is the branch to use.
 		            --self-update|-S        - Update insit to the latest stable version.
 		            --ignore-root|-I        - Disregard whether you have root access.
+		            --source|-s NAME        - Use NAME instead of terminalforlife.
 		            --custom|-C             - Execute your own FILE function line.
 		            --log|-L                - Log and time-stamp actions to take.
 
@@ -68,6 +65,7 @@ USAGE(){
 		EXAMPLE:    sudo insit -B dev -U -C miscellaneous mfw /usr/bin/mfw 755 0
 		            sudo insit -U notify-upgrade lspkg lsbins apt-undo-install
 		            sudo insit -q --log --uninstall bl medlog wcdl clean-locales
+		            sudo insit -s aktsbot -C dotfiles bashrc ~/.bashrc 600 1000 1000
 
 		WARNING:    Using the --update|-U flags will overwrite existing files, so, if an
 		            executable just so happens to have the same name, take care not to
@@ -120,6 +118,15 @@ while [ "$1" ]; do
 			SELF="true" ;;
 		--ignore-root|-I)
 			NOROOT="true" ;;
+		--source|-s)
+			shift
+			if ! [ "$1" ]; then
+				XERR "$LINENO" "A GitHub username is required."
+			elif [[ "$1" =~ terminalforlife ]]; then
+				XERR "$LINENO" "Erm, ..."
+			else
+				URL="$DOM/$1"
+			fi ;;
 		--custom|-C)
 			CUSTOM="true" ;;
 		--log|-L)
@@ -127,7 +134,11 @@ while [ "$1" ]; do
 		-*)
 			XERR "$LINENO" "Incorrect argument(s) specified." ;;
 		*)
-			break ;;
+			if [ ! "${URL#*/}" == "terminalforlife" -a ! "$CUSTOM" == "true" ]; then
+				XERR "$LINENO" "Can only choose a source with '--custom|-C' OPT."
+			else
+				break
+			fi ;;
 	esac
 	shift
 done

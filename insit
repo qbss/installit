@@ -3,19 +3,18 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Wed  4 Apr 08:39:02 BST 2018
+# Last Change       - Thu  5 Apr 22:57:23 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
 
-_VERSION_="2018-04-04"
+_VERSION_="2018-04-05"
 
 #TODO - Incorporate an 'undo' update action, in-case an update breaks something.
 #TODO - Could insit also include other people's programs/packages? This could be an
 #       amazing way to not only get my stuff out there, but also other peoples'. It
 #       Could help us all! If you're reading this and think this is a good idea, -
 #       let me know!
-#TODO - When using -I and installing something like bashconfig, don't bother APT.
 #TODO - If file is removed (FILE), how is a user with updated insit to remove it?
 
 XERR(){ printf "[L%0.4d] ERROR: %s\n" "$1" "$2" 1>&2; exit 1; }
@@ -786,11 +785,13 @@ while [ "$1" ]; do
 
 				  $HOME/.config/i3/config
 				  $HOME/.i3a/dmesg_overflow
+				  $HOME/.i3a/drop_terminal
 				  $HOME/.i3a/feh_slides
 				  $HOME/.i3a/hush_the_mic
 				  $HOME/.i3a/i3bar_trans
 				  $HOME/.i3a/initialize
 				  $HOME/.i3a/key_autorepeat
+				  $HOME/.i3a/leave_session
 				  $HOME/.i3a/partmount
 				  $HOME/.i3a/scrot_sel_take
 				  $HOME/.i3a/scrot_take
@@ -828,11 +829,13 @@ while [ "$1" ]; do
 			LOGIT "Setting $HOME/.i3a to $SUDO_UID UID and $SUDO_GID GID"
 
 			FILE i3config .i3a/dmesg_overflow $HOME/.i3a/dmesg_overflow 644 "$SUDO_UID" "$SUDO_GID"
+			FILE i3config .i3a/drop_terminal $HOME/.i3a/drop_terminal 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3a/feh_slides $HOME/.i3a/feh_slides 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3a/hush_the_mic $HOME/.i3a/hush_the_mic 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3a/i3bar_trans $HOME/.i3a/i3bar_trans 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3a/initialize $HOME/.i3a/initialize 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3a/key_autorepeat $HOME/.i3a/key_autorepeat 644 "$SUDO_UID" "$SUDO_GID"
+			FILE i3config .i3a/leave_session $HOME/.i3a/leave_session 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3a/scrot_sel_take $HOME/.i3a/scrot_sel_take 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3a/scrot_take $HOME/.i3a/scrot_take 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3a/scrot_win_take $HOME/.i3a/scrot_win_take 644 "$SUDO_UID" "$SUDO_GID"

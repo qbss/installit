@@ -1,3 +1,15 @@
+* 2018-04-06
+
+A very exciting feature I'm proud to announce, is the ability to now install insit and use it not only to download and install TFL content, but now stuff from other GitHub users! This should make insit incredibly useful if you also like to fetch content from other people who are on GitHub.
+
+Here is an example usage of this new feature:
+
+```bash
+sudo insit -s aktsbot -C dotfiles bashrc ~/.bashrc 600 1000 1000
+```
+
+You should also be able to select the branch, using, for example `-B dev` but this particular usage is possibly yet to be ironed out.
+
 * 2018-04-05
 
 You can now check for the availability of an insit update, without actually doing anything; this could be useful for scripts, or if you simply want to check, on-the-fly.

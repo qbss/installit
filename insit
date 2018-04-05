@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Thu  5 Apr 22:57:23 BST 2018
+# Last Change       - Thu  5 Apr 23:26:08 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -41,7 +41,8 @@ USAGE(){
 		            --changelog             - Fetch and view the insit changelog.
 		            --quiet|-q              - Runs in quiet mode. Errors still output.
 		            --debug|-D              - Enables the built-in bash debugging.
-		            --no-check              - Do not check for version updates.
+		            --no-check|-N           - Do not check for version updates.
+		            --just-check|-J         - Just check for version updates.
 		            --update|-U             - Replace and/or update existing files.
 		            --uninstall|-u          - Uninstall files installed here.
 		            --available|-A          - Output all available programs.
@@ -87,6 +88,9 @@ fi
 
 while [ "$1" ]; do
 	case "$1" in
+		--just-check|-J)
+			JUST_CHECK="true"
+			shift; break ;;
 		--help|-h|-\?)
 			USAGE; exit 0 ;;
 		--verbose|-V)
@@ -98,7 +102,7 @@ while [ "$1" ]; do
 			CLOG="true" ;;
 		--debug|-D)
 			DEBUGME="true" ;;
-		--no-check)
+		--no-check|-N)
 			NO_VERSION_CHECK="true" ;;
 		--quiet|-q)
 			BEQUIET="true" ;;
@@ -144,25 +148,31 @@ if [ $WGET_VERSION -ge 01192 -a $WGET_VERSION -lt 01194 ]; then
 	NOWARC="--no-warc-compression"
 fi
 
-if ! [ "$CLOG" == "true" -o "$AVAIL_SHOW" == "true" -o "$NOROOT" == "true" ]; then
-	if ! [ $UID -eq 0 ]; then
-		XERR "$LINENO" "Unable to continue -- do you have root access?"
+if ! [ "$JUST_CHECK" == "true" ]; then
+	if ! [ "$CLOG" == "true" -o "$AVAIL_SHOW" == "true" -o "$NOROOT" == "true" ]; then
+		if ! [ $UID -eq 0 ]; then
+			XERR "$LINENO" "Unable to continue -- do you have root access?"
+		fi
 	fi
+elif [ "$JUST_CHECK" == "true" -a $# -gt 0 ]; then
+	XERR "$LINENO" "OPT '--just-check|-J' can only be used on its own."
 fi
 
 [ "$BEQUIET" == "true" ] && exec 1> /dev/null
 [ "$DEBUGME" == "true" ] && set -x
 
-if [ "$CLOG" == "true" ]; then
-	CLOG_URL="$DOM/terminalforlife/installit/raw/master/CHANGELOG.md"
-	CLOG_FILE=`/usr/bin/wget "$NOWARC" -q "$CLOG_URL" -O -`
-	if [ -x /usr/bin/less ]; then
-		/usr/bin/less <<< "$CLOG_FILE"
-	else
-		printf "%s\n" "$CLOG_FILE"
-	fi
+if ! [ "$JUST_CHECK" == "true" ]; then
+	if [ "$CLOG" == "true" ]; then
+		CLOG_URL="$DOM/terminalforlife/installit/raw/master/CHANGELOG.md"
+		CLOG_FILE=`/usr/bin/wget "$NOWARC" -q "$CLOG_URL" -O -`
+		if [ -x /usr/bin/less ]; then
+			/usr/bin/less <<< "$CLOG_FILE"
+		else
+			printf "%s\n" "$CLOG_FILE"
+		fi
 
-	exit 0
+		exit 0
+	fi
 fi
 
 LOGIT(){
@@ -186,240 +196,245 @@ LOGIT(){
 	fi
 }
 
-FILE(){
-	LOGIT "FILE $1 $2 $3 $4 $5 $6"
-	if [ "$UNINSTALL" == "true" ]; then
-		if [ -f "$3" ]; then
-			if [ "$HASGVFS" == "true" ]; then
-				LOGIT "Trashing $3"
-				if /usr/bin/gvfs-trash "$3"; then
-					LOGIT "Successfully trashed $3"
-					printf "File '%s' sent to trash.\n" "$3"
-				else
-					LOGIT "Error(s) trying to trash $3"
-				fi
-			else
-				LOGIT "Deleting $3"
-				if /bin/rm "$3"; then
-					LOGIT "Successfully deleted $3"
-					printf "File '%s' deleted.\n" "$3"
-				else
-					LOGIT "Error(s) trying to delete $3"
-				fi
-			fi
-		else
-			ERR "$LINENO" "File '$3' not found."
-			return 1
-		fi
-	else
-		if [ -f "$3" -a ! "$UPDATE" == "true" ]; then
-			LOGIT "File $3 already exists"
-			ERR "$LINENO" "File already exists: $3"
-			return 1
-		else
+if ! [ "$JUST_CHECK" == "true" ]; then
+	FILE(){
+		LOGIT "FILE $1 $2 $3 $4 $5 $6"
+		if [ "$UNINSTALL" == "true" ]; then
 			if [ -f "$3" ]; then
-				LOGIT "Downloading $URL/$1/$BRANCH/$2 over $3"
-				if /usr/bin/wget -q $NOWARC "$URL/$1/raw/$BRANCH/$2" -O "$3" &> /dev/null; then
-					LOGIT "Successfully downloaded $URL/$1/$BRANCH/$2 over $3"
-					printf "File '%s' downloaded and updated.\n" "$3"
-
-					LOGIT "Re-setting $3 to $5 UID and $6 GID"
-					if /bin/chown $5:$6 "$3" &> /dev/null; then
-						LOGIT "Successfully re-set $3 to $5 UID and $6 GID"
-						printf "File '%s' ownership re-set.\n" "$3"
+				if [ "$HASGVFS" == "true" ]; then
+					LOGIT "Trashing $3"
+					if /usr/bin/gvfs-trash "$3"; then
+						LOGIT "Successfully trashed $3"
+						printf "File '%s' sent to trash.\n" "$3"
 					else
-						LOGIT "Failed to re-set $3 to $5 UID and $6 GID"
-						ERR "$LINENO" "Unable to re-set the ownership of '$3' file."
-					fi
-
-					LOGIT "Re-setting $3 to $4 permissions"
-					if /bin/chmod "$4" "$3" &> /dev/null; then
-						LOGIT "Successfully re-set $3 to $4 permissions"
-						printf "File '%s' mode re-set.\n" "$3"
-					else
-						LOGIT "Failed to re-set $3 to $4 permissions"
-						ERR "$LINENO" "Unable to re-set the mode of '$3' file."
+						LOGIT "Error(s) trying to trash $3"
 					fi
 				else
-					LOGIT "Failed to download $URL/$1/$BRANCH/$2 over $3"
-					ERR "$LINENO" "Unable to download and/or update '$3' file."
-					return 1
+					LOGIT "Deleting $3"
+					if /bin/rm "$3"; then
+						LOGIT "Successfully deleted $3"
+						printf "File '%s' deleted.\n" "$3"
+					else
+						LOGIT "Error(s) trying to delete $3"
+					fi
 				fi
 			else
-				LOGIT "Downloading $URL/$1/$BRANCH/$2 to $3"
-				if /usr/bin/wget -q $NOWARC "$URL/$1/raw/$BRANCH/$2" -O "$3" &> /dev/null; then
-					LOGIT "Successfully downloaded $URL/$1/$BRANCH/$2 to $3"
-					printf "File '%s' successfully downloaded.\n" "$3"
+				ERR "$LINENO" "File '$3' not found."
+				return 1
+			fi
+		else
+			if [ -f "$3" -a ! "$UPDATE" == "true" ]; then
+				LOGIT "File $3 already exists"
+				ERR "$LINENO" "File already exists: $3"
+				return 1
+			else
+				if [ -f "$3" ]; then
+					LOGIT "Downloading $URL/$1/$BRANCH/$2 over $3"
+					if /usr/bin/wget -q $NOWARC "$URL/$1/raw/$BRANCH/$2" -O "$3" &> /dev/null; then
+						LOGIT "Successfully downloaded $URL/$1/$BRANCH/$2 over $3"
+						printf "File '%s' downloaded and updated.\n" "$3"
 
-					LOGIT "Setting $3 to $6 UID and $5 GID"
-					if /bin/chown $5:$6 "$3" &> /dev/null; then
-						LOGIT "Successfully set $3 to $6 UID and $5 GID"
-						printf "File '%s' ownership set.\n" "$3"
-					else
-						LOGIT "Failed to set $3 to $6 UID and $5 GID"
-						ERR "$LINENO" "Unable to set the ownership of '$3' file."
-					fi
+						LOGIT "Re-setting $3 to $5 UID and $6 GID"
+						if /bin/chown $5:$6 "$3" &> /dev/null; then
+							LOGIT "Successfully re-set $3 to $5 UID and $6 GID"
+							printf "File '%s' ownership re-set.\n" "$3"
+						else
+							LOGIT "Failed to re-set $3 to $5 UID and $6 GID"
+							ERR "$LINENO" "Unable to re-set the ownership of '$3' file."
+						fi
 
-					LOGIT "Setting $3 to $4 permissions"
-					if /bin/chmod "$4" "$3" &> /dev/null; then
-						LOGIT "Successfully set $3 to $4 permissions"
-						printf "File '%s' mode successfully set.\n" "$3"
+						LOGIT "Re-setting $3 to $4 permissions"
+						if /bin/chmod "$4" "$3" &> /dev/null; then
+							LOGIT "Successfully re-set $3 to $4 permissions"
+							printf "File '%s' mode re-set.\n" "$3"
+						else
+							LOGIT "Failed to re-set $3 to $4 permissions"
+							ERR "$LINENO" "Unable to re-set the mode of '$3' file."
+						fi
 					else
-						LOGIT "Failed to set $3 to $4 permissions"
-						ERR "$LINENO" "Unable to set the mode of '$3' file."
+						LOGIT "Failed to download $URL/$1/$BRANCH/$2 over $3"
+						ERR "$LINENO" "Unable to download and/or update '$3' file."
+						return 1
 					fi
 				else
-					LOGIT "Failed to download $URL/$1/$BRANCH/$2 to $3"
-					ERR "$LINENO" "Unable to download '$3' file."
-					return 1
+					LOGIT "Downloading $URL/$1/$BRANCH/$2 to $3"
+					if /usr/bin/wget -q $NOWARC "$URL/$1/raw/$BRANCH/$2" -O "$3" &> /dev/null; then
+						LOGIT "Successfully downloaded $URL/$1/$BRANCH/$2 to $3"
+						printf "File '%s' successfully downloaded.\n" "$3"
+
+						LOGIT "Setting $3 to $6 UID and $5 GID"
+						if /bin/chown $5:$6 "$3" &> /dev/null; then
+							LOGIT "Successfully set $3 to $6 UID and $5 GID"
+							printf "File '%s' ownership set.\n" "$3"
+						else
+							LOGIT "Failed to set $3 to $6 UID and $5 GID"
+							ERR "$LINENO" "Unable to set the ownership of '$3' file."
+						fi
+
+						LOGIT "Setting $3 to $4 permissions"
+						if /bin/chmod "$4" "$3" &> /dev/null; then
+							LOGIT "Successfully set $3 to $4 permissions"
+							printf "File '%s' mode successfully set.\n" "$3"
+						else
+							LOGIT "Failed to set $3 to $4 permissions"
+							ERR "$LINENO" "Unable to set the mode of '$3' file."
+						fi
+					else
+						LOGIT "Failed to download $URL/$1/$BRANCH/$2 to $3"
+						ERR "$LINENO" "Unable to download '$3' file."
+						return 1
+					fi
 				fi
 			fi
 		fi
-	fi
-}
+	}
 
-APT_INSTALL(){
-	if [ "$NOROOT" == "true" ]; then
-		LOGIT "Skipping APT install for packages: $@"
-		return 0
-	fi
+	APT_INSTALL(){
+		if [ "$NOROOT" == "true" ]; then
+			LOGIT "Skipping APT install for packages: $@"
+			return 0
+		fi
 
-	if [ -f "$OSFILE" -a -r "$OSFILE" ]; then
-		LOGIT "Checking distribution base"
-		while IFS="=" read -a X; do
-			if [ "${X[0]//\"}" == "ID_LIKE" ]; then
-				if ! [[ "${X[1]//\"}" =~ (debian|ubuntu) ]]; then
-					LOGIT "Unsupported '${X[1]//\"}' base detected"
-					ERR "$LINENO" "Unsupported distribution base."
-					return 1
+		if [ -f "$OSFILE" -a -r "$OSFILE" ]; then
+			LOGIT "Checking distribution base"
+			while IFS="=" read -a X; do
+				if [ "${X[0]//\"}" == "ID_LIKE" ]; then
+					if ! [[ "${X[1]//\"}" =~ (debian|ubuntu) ]]; then
+						LOGIT "Unsupported '${X[1]//\"}' base detected"
+						ERR "$LINENO" "Unsupported distribution base."
+						return 1
+					fi
+
+					break
 				fi
-
-				break
-			fi
-		done < "$OSFILE"
-	else
-		LOGIT "Failed to find or read $OSFILE"
-		ERR "$LINENO" "Cannot identify your LSB/Distro type."
-		return 1
-	fi
-
-	if ! [ -x /usr/bin/apt-get ]; then
-		LOGIT "Failed to find dependency $OSFILE"
-		ERR "$LINENO" "Dependency '/usr/bin/apt-get' not found."
-		return 1
-	fi
-
-	read -e -p "Enter 'APT' to install associated packages via APT: "
-	if ! [[ "$REPLY" == "APT" ]]; then
-		LOGIT "Quit at APT_INSTALL() prompt"
-		printf "No DEB packages installed -- quitting.\n"
-		exit 1
-	else
-		LOGIT "Telling APT to install $@"
-		if ! /usr/bin/apt-get --quiet --show-progress\
-			-o Dpkg::Progress=true -o Dpkg::Progress-Fancy=true\
-			install $@; then
-			LOGIT "APT failed to install $@"
+			done < "$OSFILE"
+		else
+			LOGIT "Failed to find or read $OSFILE"
+			ERR "$LINENO" "Cannot identify your LSB/Distro type."
 			return 1
 		fi
+
+		if ! [ -x /usr/bin/apt-get ]; then
+			LOGIT "Failed to find dependency $OSFILE"
+			ERR "$LINENO" "Dependency '/usr/bin/apt-get' not found."
+			return 1
+		fi
+
+		read -e -p "Enter 'APT' to install associated packages via APT: "
+		if ! [[ "$REPLY" == "APT" ]]; then
+			LOGIT "Quit at APT_INSTALL() prompt"
+			printf "No DEB packages installed -- quitting.\n"
+			exit 1
+		else
+			LOGIT "Telling APT to install $@"
+			if ! /usr/bin/apt-get --quiet --show-progress\
+				-o Dpkg::Progress=true -o Dpkg::Progress-Fancy=true\
+				install $@; then
+				LOGIT "APT failed to install $@"
+				return 1
+			fi
+		fi
+	}
+
+	AVAIL=(
+		"apt-undo-install - Undo the last package(s) install executed with apt-get."
+		"autoscrot - Tool to take full screenshots at user-specified intervals using scrot."
+		"backmeup - A simple tool to quickly and easily back up your HOME."
+		"barred - A rudimentary, scriptable, and very small progress bar."
+		"bashconfig - My own bash settings and shell plugins for use by anybody."
+		"bdl - Easily and quickly download a batch of files using wget."
+		"binwatch - Output list of executables found in your PATH"
+		"bios-info - Simple tool to show basic BIOS keys and their values."
+		"bl - Much simpler, quicker version of blkid."
+		"capnum - Small tool to notify of NumLock and CapsLock status changes."
+		"catmedia - Concatenate media files originally separated in parts."
+		"clean-locales - Remove some unnecessary non-English localizations."
+		"compconf - The terminalforlife configuration file for compton."
+		"cpufreq - Lightweight Bourne Shell utility to output your CPU frequencies."
+		"dl-tuxradar-podcasts - Small shell program to download the TuxRadar podcasts."
+		"dlfallwalls - Download a collection of Autumn/Fall wallpapers."
+		"dlfcmags - Download issues of the Full Circle magazine PDFs."
+		"dlspwalls - Download a collection of steampunk wallpapers."
+		"dunstconfig - The terminalforlife configuration file for dunst."
+		"dwwdl - Download all of the available DistroWatch Weekly podcasts."
+		"filesitter - Watch for and act upon the completion of file size changes."
+		"forex - Easily convert various currency rates straight from the terminal."
+		"freelfm - Download last.fm's free music into the current working directory."
+		"get-uuid - Grab and copy your file system's UUID with this simple, easy-to-use GUI."
+		"getip - View your internal and/or external IP address."
+		"getline - Pure Bourne Again Shell way to handle a plain text file."
+		"ghipc - Check the validity of IP addresses of GitHub servers."
+		"github-ssh-setup - Simple shell program to create an SSH key pair for GitHub."
+		"gtk-greeter-sets - The TFL settings for the GTK LightDM greeter."
+		"homewatch - Output files in HOME which have been modified today."
+		"i3config - My own i3-wm settings and shell plugins for use by anybody."
+		"jotd - Display a Joke of the Day on your terminal."
+		"kernelchk - Small tool to check for a change in kernel version. Ideal for scripts."
+		"lsbins - Simple shell program to list and describe the PATH executables."
+		"lspkg - Quickly and portable-y show, describe, and search installed packages."
+		"mansaver - Save man pages for each applicable command in PATH."
+		"medlog - Need help taking and logging when you've had your medication?"
+		"mfw - Notifier for page-one threads on the Newbie Questions Linux Mint forum."
+		"mif - Shell program to filter films by year and whether seen or not."
+		"mkpass - Pure Bourne Again Shell approach to complex password generation."
+		"mplay - Simple script to allow me to quickly load mocp how I like."
+		"nosp - A workaround for the issue in XFCE wherein Smart Placement refuses to go away."
+		"notify-upgrade - Simple upgrade notification utility for Debian- and Ubuntu-based systems."
+		"nxbt - A fork and improvement of the XBT program written by Joe Collins."
+		"pagewatch - Watch a webpage for signs of change by checkings its md5sum."
+		"redshifter - Effective and simple tool to manually adjust the gamma via Redshift."
+		"reviewer - Terminal viewer for Linux Mint's user submitted software reviews."
+		"ripmydvd - Shell program using ffmpeg and mplayer to rip your DVD."
+		"roks - This small program will clear out your system of old kernel versions."
+		"seewttr - Super-simple wrapper-like script to get your weather."
+		"simplify-ubuntu - Small project to lighten standard Ubuntu 16.04.* LTS installations."
+		"simwea - Display various weather statistics on a terminal."
+		"snotes - Search your programming notes on-the-fly with this simple tool."
+		"tozero - Simple program to display a countdown for a target date."
+		"ubuntu-syschk - Performs various non-root system health checks on Ubuntu and similar."
+		"vimconfig - TFL plugins and more for the Vi-IMproved (VIM) modal text editor."
+		"wcdl - Crawl WallpapersCraft for desktop backgrounds. Includes wcdl tools."
+	)
+
+	if [ "$AVAIL_SHOW" == "true" ]; then
+		printf "%s\n" "${AVAIL[@]}"
+		exit 0
 	fi
-}
-
-AVAIL=(
-	"apt-undo-install - Undo the last package(s) install executed with apt-get."
-	"autoscrot - Tool to take full screenshots at user-specified intervals using scrot."
-	"backmeup - A simple tool to quickly and easily back up your HOME."
-	"barred - A rudimentary, scriptable, and very small progress bar."
-	"bashconfig - My own bash settings and shell plugins for use by anybody."
-	"bdl - Easily and quickly download a batch of files using wget."
-	"binwatch - Output list of executables found in your PATH"
-	"bios-info - Simple tool to show basic BIOS keys and their values."
-	"bl - Much simpler, quicker version of blkid."
-	"capnum - Small tool to notify of NumLock and CapsLock status changes."
-	"catmedia - Concatenate media files originally separated in parts."
-	"clean-locales - Remove some unnecessary non-English localizations."
-	"compconf - The terminalforlife configuration file for compton."
-	"cpufreq - Lightweight Bourne Shell utility to output your CPU frequencies."
-	"dl-tuxradar-podcasts - Small shell program to download the TuxRadar podcasts."
-	"dlfallwalls - Download a collection of Autumn/Fall wallpapers."
-	"dlfcmags - Download issues of the Full Circle magazine PDFs."
-	"dlspwalls - Download a collection of steampunk wallpapers."
-	"dunstconfig - The terminalforlife configuration file for dunst."
-	"dwwdl - Download all of the available DistroWatch Weekly podcasts."
-	"filesitter - Watch for and act upon the completion of file size changes."
-	"forex - Easily convert various currency rates straight from the terminal."
-	"freelfm - Download last.fm's free music into the current working directory."
-	"get-uuid - Grab and copy your file system's UUID with this simple, easy-to-use GUI."
-	"getip - View your internal and/or external IP address."
-	"getline - Pure Bourne Again Shell way to handle a plain text file."
-	"ghipc - Check the validity of IP addresses of GitHub servers."
-	"github-ssh-setup - Simple shell program to create an SSH key pair for GitHub."
-	"gtk-greeter-sets - The TFL settings for the GTK LightDM greeter."
-	"homewatch - Output files in HOME which have been modified today."
-	"i3config - My own i3-wm settings and shell plugins for use by anybody."
-	"jotd - Display a Joke of the Day on your terminal."
-	"kernelchk - Small tool to check for a change in kernel version. Ideal for scripts."
-	"lsbins - Simple shell program to list and describe the PATH executables."
-	"lspkg - Quickly and portable-y show, describe, and search installed packages."
-	"mansaver - Save man pages for each applicable command in PATH."
-	"medlog - Need help taking and logging when you've had your medication?"
-	"mfw - Notifier for page-one threads on the Newbie Questions Linux Mint forum."
-	"mif - Shell program to filter films by year and whether seen or not."
-	"mkpass - Pure Bourne Again Shell approach to complex password generation."
-	"mplay - Simple script to allow me to quickly load mocp how I like."
-	"nosp - A workaround for the issue in XFCE wherein Smart Placement refuses to go away."
-	"notify-upgrade - Simple upgrade notification utility for Debian- and Ubuntu-based systems."
-	"nxbt - A fork and improvement of the XBT program written by Joe Collins."
-	"pagewatch - Watch a webpage for signs of change by checkings its md5sum."
-	"redshifter - Effective and simple tool to manually adjust the gamma via Redshift."
-	"reviewer - Terminal viewer for Linux Mint's user submitted software reviews."
-	"ripmydvd - Shell program using ffmpeg and mplayer to rip your DVD."
-	"roks - This small program will clear out your system of old kernel versions."
-	"seewttr - Super-simple wrapper-like script to get your weather."
-	"simplify-ubuntu - Small project to lighten standard Ubuntu 16.04.* LTS installations."
-	"simwea - Display various weather statistics on a terminal."
-	"snotes - Search your programming notes on-the-fly with this simple tool."
-	"tozero - Simple program to display a countdown for a target date."
-	"ubuntu-syschk - Performs various non-root system health checks on Ubuntu and similar."
-	"vimconfig - TFL plugins and more for the Vi-IMproved (VIM) modal text editor."
-	"wcdl - Crawl WallpapersCraft for desktop backgrounds. Includes wcdl tools."
-)
-
-if [ "$AVAIL_SHOW" == "true" ]; then
-	printf "%s\n" "${AVAIL[@]}"
-	exit 0
 fi
 
 if [ ! $UID -eq 0 -a "$LOGIT" == "true" ]; then
 	ERR "$LINENO" "Logging disabled -- insufficient permissions."
 fi
 
-if [ "$UPDATE" == "true" -a $# -eq 0 -a ! "$SELF" == "true" ]; then
-	XERR "$LINENO" "No items were selected for update."
+if ! [ "$JUST_CHECK" == "true" ]; then
+	if [ "$UPDATE" == "true" -a $# -eq 0 -a ! "$SELF" == "true" ]; then
+		XERR "$LINENO" "No items were selected for update."
+	fi
 fi
 
-if ! [ "$NO_VERSION_CHECK" == "true"  -o "$SELF" == "true" ]; then
+if ! [ "$NO_VERSION_CHECK" == "true"  -o "$SELF" == "true" ]\
+|| [ "$JUST_CHECK" == "true" ]; then
 	LOGIT "Checking version for update availability"
 	VERSION_URL="$DOM/terminalforlife/installit/raw/master/version"
 	LATEST=`/usr/bin/wget "$NOWARC" -q "$VERSION_URL" -O -`
 	if [[ "${LATEST//-}" =~ ^[0-9]{8}$ ]]; then
 		if [ ${LATEST//-} -gt ${_VERSION_//-} ]; then
 			LOGIT "A newer version of insit detected"
-
 			while read -r; do
 				printf "%s\n" "$REPLY"
 			done <<-EOF
 				New version available:    $LATEST
 				Current version:          $_VERSION_
-
 			EOF
 		else
 			LOGIT "No new version of insit detected"
 		fi
 	else
 		LOGIT "Update availability error(s) detected"
-		ERR "$LINENO" "There's an issue with the update availability check."
+		ERR "$LINENO" "Failed to check for available updates."
 	fi
+
+	[ "$JUST_CHECK" == "true" ] && exit 0
 else
 	LOGIT "Bypassing version availability check"
 fi
@@ -433,6 +448,7 @@ elif [ "$UNINSTALL" == "true" ]; then
 		read -e -n 1 -p "This will send installed files to the trash -- continue? "
 		HASGVFS="true"
 	else
+		LOGIT "Asking user if insit should continue with file deletion"
 		read -e -n 1 -p "This will delete installed files -- continue? "
 		HASGVFS="false"
 	fi

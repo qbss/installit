@@ -1,3 +1,9 @@
+* 2018-04-05
+
+You can now check for the availability of an insit update, without actually doing anything; this could be useful for scripts, or if you simply want to check, on-the-fly.
+
+The files `drop_terminal` and `leave_session` have been added to i3config.
+
 * 2018-04-04
 
 Today, I address an issue which occurred when the `--update|-U` flag was used; if no item (example: apt-undo-install) were selected, nothing would typically be displayed, whereas this is ordinarily an error.

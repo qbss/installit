@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Thu  5 Apr 23:26:08 BST 2018
+# Last Change       - Thu  5 Apr 23:28:02 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -42,7 +42,7 @@ USAGE(){
 		            --quiet|-q              - Runs in quiet mode. Errors still output.
 		            --debug|-D              - Enables the built-in bash debugging.
 		            --no-check|-N           - Do not check for version updates.
-		            --just-check|-J         - Just check for version updates.
+		            --just-check|-J         - Only check for version updates.
 		            --update|-U             - Replace and/or update existing files.
 		            --uninstall|-u          - Uninstall files installed here.
 		            --available|-A          - Output all available programs.

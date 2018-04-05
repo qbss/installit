@@ -28,11 +28,11 @@ While that command is ordinarily for updating a pre-existing installation of ins
 
 ## EXAMPLE
 
-Now that you've done that, all that's left is to load up insit to peruse the catalogue of my work at your own leisure. Here is its `--help` output, as of 26th March, 2018:
+Now that you've done that, all that's left is to load up insit to peruse the catalogue of my work at your own leisure. Here is its `--help` output, as of 5th April, 2018:
 
 ```
 $ insit --help
-            INSIT (2018-03-26)
+            INSIT (2018-04-05)
             Written by terminalforlife (terminalforlife@yahoo.com)
 
             Installer for many shell programs from terminalforlife.
@@ -45,7 +45,8 @@ OPTS:       --help|-h|-?            - Displays this help information.
             --changelog             - Fetch and view the insit changelog.
             --quiet|-q              - Runs in quiet mode. Errors still output.
             --debug|-D              - Enables the built-in bash debugging.
-            --no-check              - Do not check for version updates.
+            --no-check|-N           - Do not check for version updates.
+            --just-check|-J         - Only check for version updates.
             --update|-U             - Replace and/or update existing files.
             --uninstall|-u          - Uninstall files installed here.
             --available|-A          - Output all available programs.
@@ -65,6 +66,8 @@ NOTE:       Where WHAT is the program(s) to install.
               4: The permissions (mode), such as 755 or 644.
               5: The file's owner, such as 0 or $USER.
               6: The file's group, such as 1000.
+
+            By default, insit will always work with the master branch.
 
 EXAMPLE:    sudo insit -B dev -U -C miscellaneous mfw /usr/bin/mfw 755 0
             sudo insit -U notify-upgrade lspkg lsbins apt-undo-install

@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Fri  6 Apr 00:11:39 BST 2018
+# Last Change       - Fri  6 Apr 00:30:50 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -47,6 +47,7 @@ USAGE(){
 		            --ignore-root|-I        - Disregard whether you have root access.
 		            --source|-s NAME        - Use NAME instead of terminalforlife.
 		            --custom|-C             - Execute your own FILE function line.
+		            --logfile F             - Use F instead of the default logfile.
 		            --log|-L                - Log and time-stamp actions to take.
 
 		NOTE:       Where WHAT is the program(s) to install.
@@ -62,7 +63,7 @@ USAGE(){
 
 		            By default, insit will always work with the master branch.
 
-		EXAMPLE:    sudo insit -B dev -U -C miscellaneous mfw /usr/bin/mfw 755 0
+		EXAMPLE:    sudo insit -B dev -U -C miscellaneous mfw /usr/bin/mfw 755 0 0
 		            sudo insit -U notify-upgrade lspkg lsbins apt-undo-install
 		            sudo insit -q --log --uninstall bl medlog wcdl clean-locales
 		            sudo insit -s aktsbot -C dotfiles bashrc ~/.bashrc 600 1000 1000
@@ -101,7 +102,7 @@ while [ "$1" ]; do
 		--debug|-D)
 			DEBUGME="true" ;;
 		--no-check|-N)
-			NO_VERSION_CHECK="true" ;;
+			NO_VC="true" ;;
 		--quiet|-q)
 			BEQUIET="true" ;;
 		--update|-U)
@@ -129,6 +130,11 @@ while [ "$1" ]; do
 			fi ;;
 		--custom|-C)
 			CUSTOM="true" ;;
+		--logfile)
+			shift; LOGFILE="$1"
+			if ! [ -d "${LOGFILE%/*}" ]; then
+				XERR "$LINENO" "Directory for logfile not found."
+			fi ;;
 		--log|-L)
 			LOGIT="true" ;;
 		-*)
@@ -423,8 +429,7 @@ if ! [ "$JUST_CHECK" == "true" ]; then
 	fi
 fi
 
-if ! [ "$NO_VERSION_CHECK" == "true"  -o "$SELF" == "true" ]\
-|| [ "$JUST_CHECK" == "true" ]; then
+if ! [ "$NO_VC" == "true" -o "$SELF" == "true" -o "$JUST_CHECK" == "true" ]; then
 	LOGIT "Checking version for update availability"
 	VERSION_URL="$DOM/terminalforlife/installit/raw/master/version"
 	LATEST=`/usr/bin/wget "$NOWARC" -q "$VERSION_URL" -O -`

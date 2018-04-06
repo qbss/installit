@@ -12,6 +12,8 @@ You should also be able to select the branch, using, for example `-B dev` but th
 
 The '--help|-h|-?' had an old example which has now been corrected to reflect the changes.
 
+It's now possible to specify your own insit log file, using: `--logfile FILE`
+
 * 2018-04-05
 
 You can now check for the availability of an insit update, without actually doing anything; this could be useful for scripts, or if you simply want to check, on-the-fly.

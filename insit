@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Fri  6 Apr 00:30:50 BST 2018
+# Last Change       - Fri  6 Apr 02:09:21 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -85,69 +85,75 @@ if [ $# -eq 0 ]; then
 	XERR "$LINENO" "Arguments are required. See: insit --help"
 fi
 
-while [ "$1" ]; do
-	case "$1" in
-		--just-check|-J)
-			JUST_CHECK="true"
-			shift; break ;;
-		--help|-h|-\?)
-			USAGE; exit 0 ;;
-		--verbose|-V)
-			VERBOSE="true" ;;
-		--version|-v)
-			printf "%s\n" "$_VERSION_"
-			exit 0 ;;
-		--changelog)
-			CLOG="true" ;;
-		--debug|-D)
-			DEBUGME="true" ;;
-		--no-check|-N)
-			NO_VC="true" ;;
-		--quiet|-q)
-			BEQUIET="true" ;;
-		--update|-U)
-			UPDATE="true" ;;
-		--uninstall|-u)
-			UNINSTALL="true" ;;
-		--available|-A)
-			AVAIL_SHOW="true" ;;
-		--branch|-B)
-			shift
-			BRANCH="$1" ;;
-		--self-update|-S)
-			UPDATE="true"
-			SELF="true" ;;
-		--ignore-root|-I)
-			NOROOT="true" ;;
-		--source|-s)
-			shift
-			if ! [ "$1" ]; then
-				XERR "$LINENO" "A GitHub username is required."
-			elif [[ "$1" =~ terminalforlife ]]; then
-				XERR "$LINENO" "Erm, ..."
-			else
-				URL="$DOM/$1"
-			fi ;;
-		--custom|-C)
-			CUSTOM="true" ;;
-		--logfile)
-			shift; LOGFILE="$1"
-			if ! [ -d "${LOGFILE%/*}" ]; then
-				XERR "$LINENO" "Directory for logfile not found."
-			fi ;;
-		--log|-L)
-			LOGIT="true" ;;
-		-*)
-			XERR "$LINENO" "Incorrect argument(s) specified." ;;
-		*)
-			if [ ! "${URL#*/}" == "terminalforlife" -a ! "$CUSTOM" == "true" ]; then
-				XERR "$LINENO" "Can only choose a source with '--custom|-C' OPT."
-			else
-				break
-			fi ;;
-	esac
-	shift
-done
+# This initial test is part of ensuring the user knows not to use one of these OPTs
+# alongside other OPTs; it's invalid syntax, basically. See XERRs for these flags.
+if [[ "$1" =~ ^(--just-check|-J)$ ]]; then
+	shift; JUST_CHECK="true"
+else
+	while [ "$1" ]; do
+		case "$1" in
+			--help|-h|-\?)
+				USAGE; exit 0 ;;
+			--verbose|-V)
+				VERBOSE="true" ;;
+			--version|-v)
+				printf "%s\n" "$_VERSION_"
+				exit 0 ;;
+			--changelog)
+				CLOG="true" ;;
+			--debug|-D)
+				DEBUGME="true" ;;
+			--no-check|-N)
+				NO_VC="true" ;;
+			--just-check|-J)
+				# Catches invalid args to the left of these flags.
+				XERR "$LINENO" "OPT '--just-check|-J' can only be used on its own." ;;
+			--quiet|-q)
+				BEQUIET="true" ;;
+			--update|-U)
+				UPDATE="true" ;;
+			--uninstall|-u)
+				UNINSTALL="true" ;;
+			--available|-A)
+				AVAIL_SHOW="true" ;;
+			--branch|-B)
+				shift
+				BRANCH="$1" ;;
+			--self-update|-S)
+				UPDATE="true"
+				SELF="true" ;;
+			--ignore-root|-I)
+				NOROOT="true" ;;
+			--source|-s)
+				shift
+				if ! [ "$1" ]; then
+					XERR "$LINENO" "A GitHub username is required."
+				elif [[ "$1" =~ terminalforlife ]]; then
+					XERR "$LINENO" "Erm, ..."
+				else
+					URL="$DOM/$1"
+				fi ;;
+			--custom|-C)
+				CUSTOM="true" ;;
+			--logfile)
+				shift; LOGFILE="$1"
+				if ! [ -d "${LOGFILE%/*}" ]; then
+					XERR "$LINENO" "Directory for logfile not found."
+				fi ;;
+			--log|-L)
+				LOGIT="true" ;;
+			-*)
+				XERR "$LINENO" "Incorrect argument(s) specified." ;;
+			*)
+				if [ ! "${URL##*/}" == "terminalforlife" -a ! "$CUSTOM" == "true" ]; then
+					XERR "$LINENO" "Can only choose a source with '--custom|-C' OPT."
+				else
+					break
+				fi ;;
+		esac
+		shift
+	done
+fi
 
 declare -i DEPCOUNT=0
 for DEP in /usr/bin/wget /bin/{mv,rm,chmod,chown,mkdir}; {
@@ -172,6 +178,7 @@ if ! [ "$JUST_CHECK" == "true" ]; then
 		fi
 	fi
 elif [ "$JUST_CHECK" == "true" -a $# -gt 0 ]; then
+	# Catches invalid args to the right of the --just-check|-J flags.
 	XERR "$LINENO" "OPT '--just-check|-J' can only be used on its own."
 fi
 
@@ -429,10 +436,10 @@ if ! [ "$JUST_CHECK" == "true" ]; then
 	fi
 fi
 
-if [ ! "$NO_VC" == "true" -o ! "$SELF" == "true" -o "$JUST_CHECK" == "true" ]; then
+if [ "$JUST_CHECK" == "true" ] || ! [ "$NO_VC" == "true" -o "$SELF" == "true" ]; then
 	LOGIT "Checking version for update availability"
 	VERSION_URL="$DOM/terminalforlife/installit/raw/master/version"
-	LATEST=`/usr/bin/wget "$NOWARC" -q "$VERSION_URL" -O -`
+	LATEST=`/usr/bin/wget $NOWARC -q "$VERSION_URL" -O -`
 	if [[ "${LATEST//-}" =~ ^[0-9]{8}$ ]]; then
 		if [ ${LATEST//-} -gt ${_VERSION_//-} ]; then
 			LOGIT "A newer version of insit detected"

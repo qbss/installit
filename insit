@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Fri  6 Apr 02:09:21 BST 2018
+# Last Change       - Fri  6 Apr 02:16:22 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -12,6 +12,12 @@ _VERSION_="2018-04-06"
 
 #TODO - Incorporate an 'undo' update action, in-case an update breaks something.
 #TODO - If file is removed (FILE), how is a user with updated insit to remove it?
+#       Possible temporary solution could be to have the installation process save
+#       a simple log somewhere which stores only the file paths for what was at the
+#       time installed, that way, when the user uninstalls that item, it picks up
+#       all the files, regardless of insit version. Caveat to this method is of
+#       course that they'd therefore require that log. Still, this is probably a
+#       rudimentary version of how standard package managers do it.
 
 XERR(){ printf "[L%0.4d] ERROR: %s\n" "$1" "$2" 1>&2; exit 1; }
 ERR(){ printf "[L%0.4d] ERROR: %s\n" "$1" "$2" 1>&2; }

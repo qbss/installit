@@ -429,7 +429,7 @@ if ! [ "$JUST_CHECK" == "true" ]; then
 	fi
 fi
 
-if ! [ "$NO_VC" == "true" -o "$SELF" == "true" -o "$JUST_CHECK" == "true" ]; then
+if [ ! "$NO_VC" == "true" -o ! "$SELF" == "true" -o "$JUST_CHECK" == "true" ]; then
 	LOGIT "Checking version for update availability"
 	VERSION_URL="$DOM/terminalforlife/installit/raw/master/version"
 	LATEST=`/usr/bin/wget "$NOWARC" -q "$VERSION_URL" -O -`

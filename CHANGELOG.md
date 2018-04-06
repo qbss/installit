@@ -10,6 +10,8 @@ sudo insit -s aktsbot -C dotfiles bashrc ~/.bashrc 600 1000 1000
 
 You should also be able to select the branch, using, for example `-B dev` but this particular usage is possibly yet to be ironed out.
 
+The '--help|-h|-?' had an old example which has now been corrected to reflect the changes.
+
 * 2018-04-05
 
 You can now check for the availability of an insit update, without actually doing anything; this could be useful for scripts, or if you simply want to check, on-the-fly.

@@ -219,13 +219,14 @@ $ sudo cat /var/log/tfl_insit.log
 [2018-03-06_23:57:03]: Successfully re-set /usr/share/bash-completion/completions/apt-undo-install to 644 permissions
 ```
 
-Want a list of all of the items available with insit? As of version 2018-03-06:
+Want a list of all of the items available with insit? As of version 2018-04-06:
 
 ```
 $ insit -A
 apt-undo-install - Undo the last package(s) install executed with apt-get.
 autoscrot - Tool to take full screenshots at user-specified intervals using scrot.
 backmeup - A simple tool to quickly and easily back up your HOME.
+barred - A rudimentary, scriptable, and very small progress bar.
 bashconfig - My own bash settings and shell plugins for use by anybody.
 bdl - Easily and quickly download a batch of files using wget.
 binwatch - Output list of executables found in your PATH
@@ -242,12 +243,15 @@ dlfcmags - Download issues of the Full Circle magazine PDFs.
 dlspwalls - Download a collection of steampunk wallpapers.
 dunstconfig - The terminalforlife configuration file for dunst.
 dwwdl - Download all of the available DistroWatch Weekly podcasts.
+filesitter - Watch for and act upon the completion of file size changes.
 forex - Easily convert various currency rates straight from the terminal.
+freelfm - Download last.fm's free music into the current working directory.
 get-uuid - Grab and copy your file system's UUID with this simple, easy-to-use GUI.
 getip - View your internal and/or external IP address.
 getline - Pure Bourne Again Shell way to handle a plain text file.
 ghipc - Check the validity of IP addresses of GitHub servers.
 github-ssh-setup - Simple shell program to create an SSH key pair for GitHub.
+gtk-greeter-sets - The TFL settings for the GTK LightDM greeter.
 homewatch - Output files in HOME which have been modified today.
 i3config - My own i3-wm settings and shell plugins for use by anybody.
 jotd - Display a Joke of the Day on your terminal.
@@ -269,7 +273,7 @@ reviewer - Terminal viewer for Linux Mint's user submitted software reviews.
 ripmydvd - Shell program using ffmpeg and mplayer to rip your DVD.
 roks - This small program will clear out your system of old kernel versions.
 seewttr - Super-simple wrapper-like script to get your weather.
-simplify-ubuntu - Small project to lighten standard Ubuntu 16.04.3 LTS installations.
+simplify-ubuntu - Small project to lighten standard Ubuntu 16.04.* LTS installations.
 simwea - Display various weather statistics on a terminal.
 snotes - Search your programming notes on-the-fly with this simple tool.
 tozero - Simple program to display a countdown for a target date.

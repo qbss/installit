@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Fri  6 Apr 18:07:16 BST 2018
+# Last Change       - Fri  6 Apr 18:47:16 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -504,6 +504,13 @@ while [ "$1" ]; do
 				WARNING: This will install and replace the following:
 
 				  /etc/lightdm/lightdm-gtk-greeter.conf
+
+				This configuration makes use of and requires the following to work properly:
+
+				  minimalism_texture_black_55242_1920x1080.jpg
+				  Numix-Dark (GTK theme)
+				  Monospace Bold 16 (font)
+				  Delft-Red (icon theme)
 
 			EOF
 

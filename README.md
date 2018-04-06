@@ -10,6 +10,8 @@ Just download and install this handy-dandy installer in order to run it and inst
 
 As of 29th January 2018, bash completion is now fully supported and working in insit. This is also gradually coming to other TFL programs, such as apt-undo-install, lspkg, simplify-ubuntu, and ubuntu-syschk, so watch this space!
 
+As of 6th April 2018, you can now use insit not only to download TFL content, but also other peoples'! See below for an idea as to how this can be achieved.
+
 ## HOW TO GET THIS INSTALLER
 
 Execute the following one-liner to download and install insit:
@@ -28,11 +30,10 @@ While that command is ordinarily for updating a pre-existing installation of ins
 
 ## EXAMPLE
 
-Now that you've done that, all that's left is to load up insit to peruse the catalogue of my work at your own leisure. Here is its `--help` output, as of 5th April, 2018:
+Now that you've done that, all that's left is to load up insit to peruse the catalogue of my work at your own leisure. Here is its `--help` output, as of 6th April, 2018:
 
 ```
-$ insit --help
-            INSIT (2018-04-05)
+            INSIT (2018-04-06)
             Written by terminalforlife (terminalforlife@yahoo.com)
 
             Installer for many shell programs from terminalforlife.
@@ -53,7 +54,9 @@ OPTS:       --help|-h|-?            - Displays this help information.
             --branch|-B NAME        - Where NAME is the branch to use.
             --self-update|-S        - Update insit to the latest stable version.
             --ignore-root|-I        - Disregard whether you have root access.
+            --source|-s NAME        - Use NAME instead of terminalforlife.
             --custom|-C             - Execute your own FILE function line.
+            --logfile F             - Use F instead of the default logfile.
             --log|-L                - Log and time-stamp actions to take.
 
 NOTE:       Where WHAT is the program(s) to install.
@@ -69,9 +72,10 @@ NOTE:       Where WHAT is the program(s) to install.
 
             By default, insit will always work with the master branch.
 
-EXAMPLE:    sudo insit -B dev -U -C miscellaneous mfw /usr/bin/mfw 755 0
+EXAMPLE:    sudo insit -B dev -U -C miscellaneous mfw /usr/bin/mfw 755 0 0
             sudo insit -U notify-upgrade lspkg lsbins apt-undo-install
             sudo insit -q --log --uninstall bl medlog wcdl clean-locales
+            sudo insit -s aktsbot -C dotfiles bashrc ~/.bashrc 600 1000 1000
 
 WARNING:    Using the --update|-U flags will overwrite existing files, so, if an
             executable just so happens to have the same name, take care not to
@@ -135,6 +139,14 @@ File '/usr/share/bash-completion/completions/insit' ownership re-set.
 File '/usr/share/bash-completion/completions/insit' mode re-set.
 ```
 
+You may wish to just find out if you have an insit update available, without actually doing anything else. Here's an example of an update being found:
+
+```
+$ insit -J
+New version available:    2018-04-06
+Current version:          2018-04-05
+```
+
 You'll also get a warning for certain key installations, such as vimconfig:
 
 ```
@@ -166,6 +178,24 @@ Enter 'Yes!' if you're sure you wish to continue:
 ```
 
 At which point you just type 'Yes!' exactly as you see it in the above prompt, then press the Enter key, and away you go! Just, fair warning, be absolutely sure to have **backed up your files** before you give the go-ahead.
+
+Is there a specific file on a friend's GitHub repository which you need? No problem, insit has your back there, too:
+
+```
+$ insit -I -s aktsbot -C dotfiles bashrc $HOME/.bashrc 600 1000 1000
+File '/home/tfl/.bashrc' successfully downloaded.
+File '/home/tfl/.bashrc' ownership set.
+File '/home/tfl/.bashrc' mode successfully set.
+```
+
+This can be very useful if there's a program you'd like to fetch and install in a more user-friendly and easy-to-understand fashion:
+
+```
+$ sudo insit -s aktsbot -C color-scripts skull.sh /usr/bin/skull 755 0 0
+File '/usr/bin/skull' successfully downloaded.
+File '/usr/bin/skull' ownership set.
+File '/usr/bin/skull' mode successfully set.
+```
 
 You'll probably be glad to know that insit also supports helpful logging via /var/log/tfl_insit.log. The log file is by default not accessible by anyone other than root. Here's an example of what your insit log file will show, if you execute the second example shown above:
 

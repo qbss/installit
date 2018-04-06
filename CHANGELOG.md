@@ -1,3 +1,7 @@
+* 2018-04-07
+
+Included the newest edition to the TFL collection -- rmre -- a dangerous but incredibly useful and potentially educational utility which allows you to remove all non-essential packages from a Debian and Ubuntu system, or distributions based thereon. Obviously, not for the faint of heart.
+
 * 2018-04-06
 
 A very exciting feature I'm proud to announce, is the ability to now install insit and use it not only to download and install TFL content, but now stuff from other GitHub users! This should make insit incredibly useful if you also like to fetch content from other people who are on GitHub.

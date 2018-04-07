@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sat  7 Apr 03:33:48 BST 2018
+# Last Change       - Sat  7 Apr 18:31:16 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -497,7 +497,8 @@ fi
 while [ "$1" ]; do
 	case "$1" in
 		rmne)
-			FILE miscellaneous rmne /usr/bin/rmne 755 0 0 ;;
+			FILE miscellaneous rmne /usr/bin/rmne 755 0 0
+			FILE miscellaneous rmne-completion /usr/share/bash-completion/completions/rmne 644 0 0 ;;
 		gtk-greeter-sets)
 			LOGIT "Displaying tfl-look-001 WARNING"
 			while read -r; do

@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sat  7 Apr 00:34:27 BST 2018
+# Last Change       - Sat  7 Apr 03:33:48 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -415,7 +415,7 @@ if ! [ "$JUST_CHECK" == "true" ]; then
 		"redshifter - Effective and simple tool to manually adjust the gamma via Redshift."
 		"reviewer - Terminal viewer for Linux Mint's user submitted software reviews."
 		"ripmydvd - Shell program using ffmpeg and mplayer to rip your DVD."
-		"rmne - Programmatically remove non-essential packages from Ubuntu or Debian installations."
+		"rmne - Remove all non-essential packages from Ubuntu or Debian installations."
 		"roks - This small program will clear out your system of old kernel versions."
 		"seewttr - Super-simple wrapper-like script to get your weather."
 		"simplify-ubuntu - Small project to lighten standard Ubuntu 16.04.* LTS installations."

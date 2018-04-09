@@ -1,3 +1,7 @@
+* 2018-04-09
+
+Added bash completion support for tozero, which is now made available when installing (or updating) tozero with insit.
+
 * 2018-04-07
 
 Included the newest edition to the TFL collection -- rmre -- a dangerous but incredibly useful and potentially educational utility which allows you to remove all non-essential packages from a Debian and Ubuntu system, or distributions based thereon. Obviously, not for the faint of heart.

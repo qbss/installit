@@ -3,12 +3,12 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sat  7 Apr 19:00:25 BST 2018
+# Last Change       - Mon  9 Apr 22:02:49 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
 
-_VERSION_="2018-04-07"
+_VERSION_="2018-04-09"
 
 #TODO - Incorporate an 'undo' update action, in-case an update breaks something.
 #TODO - If file is removed (FILE), how is a user with updated insit to remove it?
@@ -909,7 +909,8 @@ while [ "$1" ]; do
 		redshifter)
 			FILE miscellaneous redshifter /usr/bin/redshifter 755 0 0 ;;
 		tozero)
-			FILE miscellaneous tozero /usr/bin/tozero 755 0 0 ;;
+			FILE miscellaneous tozero /usr/bin/tozero 755 0 0
+			FILE miscellaneous Completions/tozero /usr/share/bash-completion/completions/tozero 644 0 0 ;;
 		nosp)
 			FILE miscellaneous nosp /usr/bin/nosp 755 0 0 ;;
 		dlspwalls)

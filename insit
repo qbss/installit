@@ -3,12 +3,12 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Mon  9 Apr 23:06:34 BST 2018
+# Last Change       - Tue 10 Apr 23:54:55 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
 
-_VERSION_="2018-04-09"
+_VERSION_="2018-04-10"
 
 #TODO - If file is removed (FILE), how is a user with updated insit to remove it?
 #       Possible temporary solution could be to have the installation process save
@@ -43,6 +43,7 @@ USAGE(){
 		            --changelog             - Fetch and view the insit changelog.
 		            --quiet|-q              - Runs in quiet mode. Errors still output.
 		            --debug|-D              - Enables the built-in bash debugging.
+		            --restore|-R            - Restore backups from before update(s).
 		            --no-backup             - Do not back-up for a WHAT update.
 		            --no-check|-N           - Do not check for version updates.
 		            --just-check|-J         - Only check for version updates.
@@ -117,6 +118,8 @@ else
 				CLOG="true" ;;
 			--debug|-D)
 				DEBUGME="true" ;;
+			--restore|-R)
+				RESTORE="true" ;;
 			--no-backup)
 				NOBACKUP="true" ;;
 			--no-check|-N)
@@ -171,6 +174,10 @@ else
 	done
 fi
 
+if [ "$NOBACKUP" -a "$RESTORE" ]; then
+	XERR "$LINENO" "Conflicting OPTs selected."
+fi
+
 declare -i DEPCOUNT=0
 for DEP in /usr/bin/wget /bin/{cp,mv,rm,chmod,chown,mkdir}; {
 	if ! [ -x "$DEP" ]; then
@@ -191,6 +198,10 @@ if ! [ "$JUST_CHECK" == "true" ]; then
 	if ! [ "$CLOG" == "true" -o "$AVAIL_SHOW" == "true" -o "$NOROOT" == "true" ]; then
 		if ! [ $UID -eq 0 ]; then
 			XERR "$LINENO" "Unable to continue -- do you have root access?"
+		else
+			if ! [ "$SUDO_UID" -a "$SUDO_GID" ]; then
+				XERR "$LINENO" "Are you not using sudo?"
+			fi
 		fi
 	fi
 elif [ "$JUST_CHECK" == "true" -a $# -gt 0 ]; then
@@ -281,10 +292,37 @@ if ! [ "$JUST_CHECK" == "true" ]; then
 						BUFILE="$BUPATH/${3#/}"
 						BUFILE_DIR="$BUPATH/${3%/*}"
 
-						LOGIT "Backing up $3 to $BUFILE"
-						/bin/mkdir -p "$BUFILE_DIR" &> /dev/null
-						/bin/cp "$3" "$BUFILE_DIR/" &> /dev/null
-						/bin/chmod 600 "$BUFILE_DIR/" &> /dev/null
+						BACKUP_PROMPT(){
+							LOGIT "Displaying the cautionary backup prompt"
+							read -n 1 -e -p "[C]ontinue without a backup, or [q]uit? "
+							if [[ "$REPLY" =~ [Qq] ]]; then
+								LOGIT "Quitting at the cautionary backup prompt"
+								printf "No action taken -- quitting.\n"
+								exit 1
+							elif [[ "$REPLY" =~ [Cc] ]]; then
+								LOGIT "Continuing at cautionary backup prompt"
+								printf "CAUTION: Continuing without a backup.\n"
+							else
+								LOGIT "Unrecognised response at cautionary backup prompt"
+								ERR "$LINENO" "Unrecognised response."
+							fi
+						}
+
+						LOGIT "Creating $BUFILE_DIR directory"
+						if ! /bin/mkdir -p "$BUFILE_DIR" &> /dev/null; then
+							ERR "$LINENO" "Failed to create one or more backup directories."
+							BACKUP_PROMPT
+						else
+							LOGIT "Backing up $3 to $BUFILE"
+							if ! /bin/cp "$3" "$BUFILE/" &> /dev/null; then
+								LOGIT "Failed to back up %s"
+								ERR "$LINENO" "Back up of '%s' failed.\n"
+								BACKUP_PROMPT
+							else
+								LOGIT "Setting correct permissions for $BUFILE"
+								/bin/chmod 600 "$BUFILE" &> /dev/null
+							fi
+						fi
 					else
 						LOGIT "Skipping back-up of $3"
 					fi

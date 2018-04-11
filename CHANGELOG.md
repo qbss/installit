@@ -1,6 +1,6 @@
 * 2018-04-11
 
-Added some very useful features -- Here are parts of the new `--help|-h|-?` output:
+Added some very useful features which took a couple of days to get right -- Here are parts of the new `--help|-h|-?` output:
 
 ```
             --restore|-R            - Restore backups from before update(s).
@@ -14,6 +14,8 @@ Here is another important bit, from the `WARNING:` section:
             removing any existing back-ups of files updated with insit. This will
             occur per insit execution, only if updating, NOT per item selected.
 ```
+
+As this feature can used in many ways, depending on what the user does, there may be unexpected bugs, so please be sure to report them, should you come across any; the sooner they're reported, the quicker they can be addressed and fixed.
 
 * 2018-04-09
 

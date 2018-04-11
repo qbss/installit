@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Wed 11 Apr 13:40:33 BST 2018
+# Last Change       - Wed 11 Apr 13:46:41 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -178,6 +178,10 @@ fi
 
 if [ "$NOBACKUP" -a "$RESTORE" ]; then
 	XERR "$LINENO" "Conflicting OPTs selected."
+fi
+
+if [ "$RESTORE" -a $# -gt 0 ]; then
+	XERR "$LINENO" "The '--restore|-R' flags cannot be used with WHATs."
 fi
 
 declare -i DEPCOUNT=0

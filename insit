@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Wed 11 Apr 15:09:07 BST 2018
+# Last Change       - Wed 11 Apr 15:18:55 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -296,7 +296,6 @@ if ! [ "$JUST_CHECK" == "true" ]; then
 
 		if [ ! "$NOBACKUP" == "true" -a "$UPDATE" ]; then
 			LOGIT "Cleaning up old backups in $BUPATH"
-			printf "Cleaning up old backups.\n"
 			/bin/rm -r "$BUPATH" &> /dev/null
 		fi
 	fi

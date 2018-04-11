@@ -1,3 +1,20 @@
+* 2018-04-11
+
+Added some very useful features -- Here are parts of the new `--help|-h|-?` output:
+
+```
+            --restore|-R            - Restore backups from before update(s).
+            --no-backup             - Do not back-up for a WHAT update.
+```
+
+Here is another important bit, from the `WARNING:` section:
+
+```
+            Backups are made, prior to updating files, and will be created after
+            removing any existing back-ups of files updated with insit. This will
+            occur per insit execution, only if updating, NOT per item selected.
+```
+
 * 2018-04-09
 
 Added bash completion support for tozero, which is now made available when installing (or updating) tozero with insit.

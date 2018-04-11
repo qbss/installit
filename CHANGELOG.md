@@ -3,7 +3,7 @@
 Added some very useful features which took almost two days to get right -- Here are parts of the new `--help|-h|-?` output:
 
 ```
-            --restore|-R            - Restore backups from before update(s).
+            --restore|-R            - Restore automatically generated backups.
             --no-backup             - Do not back-up for a WHAT update.
 ```
 

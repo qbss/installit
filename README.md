@@ -8,9 +8,11 @@ Installer for many shell programs from terminalforlife.
 
 Just download and install this handy-dandy installer in order to run it and install all of the TFL programs, scripts, tools, utilities, or whatever else (mostly) is up for grabs here. Don't worry, the installer can, per your request, update itself as well.
 
-As of 29th January 2018, bash completion is now fully supported and working in insit. This is also gradually coming to other TFL programs, such as apt-undo-install, lspkg, simplify-ubuntu, and ubuntu-syschk, so watch this space!
+As of 11th April 2018, insit will now automagically back up any updated files, thus, the previous update can finally be restored.
 
 As of 6th April 2018, you can now use insit not only to download TFL content, but also other peoples'! See below for an idea as to how this can be achieved.
+
+As of 29th January 2018, bash completion is now fully supported and working in insit. This is also gradually coming to other TFL programs, such as apt-undo-install, lspkg, simplify-ubuntu, and ubuntu-syschk, so watch this space!
 
 ## HOW TO GET THIS INSTALLER
 

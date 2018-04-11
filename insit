@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Wed 11 Apr 13:35:01 BST 2018
+# Last Change       - Wed 11 Apr 13:40:33 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -17,6 +17,7 @@ _VERSION_="2018-04-11"
 #       all the files, regardless of insit version. Caveat to this method is of
 #       course that they'd therefore require that log. Still, this is probably a
 #       rudimentary version of how standard package managers do it.
+#TODO - What if you're updating from a different branch?
 
 XERR(){ printf "[L%0.4d] ERROR: %s\n" "$1" "$2" 1>&2; exit 1; }
 ERR(){ printf "[L%0.4d] ERROR: %s\n" "$1" "$2" 1>&2; }
@@ -138,8 +139,7 @@ else
 			--available|-A)
 				AVAIL_SHOW="true" ;;
 			--branch|-B)
-				shift
-				BRANCH="$1" ;;
+				shift; BRANCH="$1" ;;
 			--self-update|-S)
 				UPDATE="true"
 				SELF="true" ;;

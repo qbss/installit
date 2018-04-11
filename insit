@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Wed 11 Apr 13:04:05 BST 2018
+# Last Change       - Wed 11 Apr 13:12:38 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -261,10 +261,7 @@ LOGIT(){
 
 if ! [ "$JUST_CHECK" == "true" ]; then
 	if [ "$RESTORE" ]; then
-		LOGIT "Restoring files from automated backup"
-		printf "Restoring '%s' file.\n" "$3"
 		. "$LASTFILE"
-
 		exit 0
 	fi
 
@@ -281,14 +278,16 @@ if ! [ "$JUST_CHECK" == "true" ]; then
 				#
 				# Do NOT make any changes to this script, unless you know what you're doing!
 
+				LOGIT "Restoring files from automated backup"
+
 			EOF
 		} > "$LASTFILE"
-	fi
 
-	if ! [ "$NOBACKUP" == "true" ]; then
-		LOGIT "Cleaning up old backups in $BUPATH"
-		printf "Cleaning up old backups.\n"
-		/bin/rm -r "$BUPATH" &> /dev/null
+		if ! [ "$NOBACKUP" == "true" ]; then
+			LOGIT "Cleaning up old backups in $BUPATH"
+			printf "Cleaning up old backups.\n"
+			/bin/rm -r "$BUPATH" &> /dev/null
+		fi
 	fi
 
 	FILE(){
@@ -350,6 +349,7 @@ if ! [ "$JUST_CHECK" == "true" ]; then
 								while read -r; do
 									printf "%s\n" "$REPLY"
 								done <<-EOF
+									printf "Restoring '%s' file.\n" "$3"
 									if /bin/cp "$BUFILE" "$3"; then
 									        /bin/chown $5:$6 "$3"
 									        /bin/chmod $4 "$3"
@@ -366,9 +366,9 @@ if ! [ "$JUST_CHECK" == "true" ]; then
 								BACKUP_PROMPT
 							else
 								LOGIT "Backing up $3 to $BUFILE"
-								if ! /bin/cp "$3" "$BUFILE/" &> /dev/null; then
-									LOGIT "Failed to back up %s"
-									ERR "$LINENO" "Back up of '%s' failed.\n"
+								if ! /bin/cp "$3" "$BUFILE" &> /dev/null; then
+									LOGIT "Failed to back up $3"
+									ERR "$LINENO" "Back up of '$3' failed.\n"
 									BACKUP_PROMPT
 								else
 									LOGIT "Setting correct permissions for $BUFILE"

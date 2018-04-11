@@ -30,10 +30,10 @@ While that command is ordinarily for updating a pre-existing installation of ins
 
 ## EXAMPLE
 
-Now that you've done that, all that's left is to load up insit to peruse the catalogue of my work at your own leisure. Here is its `--help` output, as of 6th April, 2018:
+Now that you've done that, all that's left is to load up insit to peruse the catalogue of my work at your own leisure. Here is its `--help` output, as of 11th April, 2018:
 
 ```
-            INSIT (2018-04-06)
+            INSIT (2018-04-11)
             Written by terminalforlife (terminalforlife@yahoo.com)
 
             Installer for many shell programs from terminalforlife.
@@ -46,6 +46,8 @@ OPTS:       --help|-h|-?            - Displays this help information.
             --changelog             - Fetch and view the insit changelog.
             --quiet|-q              - Runs in quiet mode. Errors still output.
             --debug|-D              - Enables the built-in bash debugging.
+            --restore|-R            - Restore backups from before update(s).
+            --no-backup             - Do not back-up for a WHAT update.
             --no-check|-N           - Do not check for version updates.
             --just-check|-J         - Only check for version updates.
             --update|-U             - Replace and/or update existing files.
@@ -77,11 +79,18 @@ EXAMPLE:    sudo insit -B dev -U -C miscellaneous mfw /usr/bin/mfw 755 0 0
             sudo insit -q --log --uninstall bl medlog wcdl clean-locales
             sudo insit -s aktsbot -C dotfiles bashrc ~/.bashrc 600 1000 1000
 
-WARNING:    Using the --update|-U flags will overwrite existing files, so, if an
-            executable just so happens to have the same name, take care not to
-            replace it by mistake!
+WARNING:    Using the --update|-U flags will overwrite existing files.
 
-FILE:       The log file is stored in: /var/log/tfl_insit.log
+            Backups are made, prior to updating files, and will be created after
+            removing any existing back-ups of files updated with insit. This will
+            occur per insit execution, only if updating, NOT per item selected.
+
+FILE:       Actions by insit are logged in: /var/log/tfl_insit.log
+
+            Backups made upon an update of existing files, via --update|-U, will be
+            stored within the following user's own directory:
+
+              $HOME/.local/share/insit/backups
 
 SITE:       https://github.com/terminalforlife
 ```

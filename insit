@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Wed 11 Apr 13:46:41 BST 2018
+# Last Change       - Wed 11 Apr 13:54:42 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -46,7 +46,7 @@ USAGE(){
 		            --changelog             - Fetch and view the insit changelog.
 		            --quiet|-q              - Runs in quiet mode. Errors still output.
 		            --debug|-D              - Enables the built-in bash debugging.
-		            --restore|-R            - Restore backups from before update(s).
+		            --restore|-R            - Restore automatically generated backups.
 		            --no-backup             - Do not back-up for a WHAT update.
 		            --no-check|-N           - Do not check for version updates.
 		            --just-check|-J         - Only check for version updates.
@@ -76,7 +76,7 @@ USAGE(){
 
 		EXAMPLE:    sudo insit -B dev -U -C miscellaneous mfw /usr/bin/mfw 755 0 0
 		            sudo insit -U notify-upgrade lspkg lsbins apt-undo-install
-		            sudo insit -q --log --uninstall bl medlog wcdl clean-locales
+		            sudo insit -q --logfile ./test.log -L -u bl wcdl clean-locales
 		            sudo insit -s aktsbot -C dotfiles bashrc ~/.bashrc 600 1000 1000
 
 		WARNING:    Using the --update|-U flags will overwrite existing files.

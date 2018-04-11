@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Wed 11 Apr 15:03:10 BST 2018
+# Last Change       - Wed 11 Apr 15:09:07 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -84,6 +84,8 @@ USAGE(){
 		            Backups are made, prior to updating files, and will be created after
 		            removing any existing back-ups of files updated with insit. This will
 		            occur per insit execution, only if updating, NOT per item selected.
+
+		            The backup and restore functionality applies to insit updates, too.
 
 		FILE:       Actions by insit are logged in: $LOGFILE
 

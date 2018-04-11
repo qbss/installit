@@ -1,6 +1,6 @@
 * 2018-04-11
 
-Added some very useful features which took a couple of days to get right -- Here are parts of the new `--help|-h|-?` output:
+Added some very useful features which took almost two days to get right -- Here are parts of the new `--help|-h|-?` output:
 
 ```
             --restore|-R            - Restore backups from before update(s).

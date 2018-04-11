@@ -76,6 +76,8 @@ NOTE:       Where WHAT is the program(s) to install.
 
             By default, insit will always work with the master branch.
 
+            The backup and restore functionality applies to insit updates, too.
+
 EXAMPLE:    sudo insit -B dev -U -C miscellaneous mfw /usr/bin/mfw 755 0 0
             sudo insit -U notify-upgrade lspkg lsbins apt-undo-install
             sudo insit -q --log --uninstall bl medlog wcdl clean-locales

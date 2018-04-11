@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Wed 11 Apr 12:29:37 BST 2018
+# Last Change       - Wed 11 Apr 13:04:05 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -260,6 +260,14 @@ LOGIT(){
 }
 
 if ! [ "$JUST_CHECK" == "true" ]; then
+	if [ "$RESTORE" ]; then
+		LOGIT "Restoring files from automated backup"
+		printf "Restoring '%s' file.\n" "$3"
+		. "$LASTFILE"
+
+		exit 0
+	fi
+
 	if [ ! "$RESTORE" -a "$UPDATE" ]; then
 		LOGIT "Generating a new backup restoration script"
 
@@ -267,7 +275,7 @@ if ! [ "$JUST_CHECK" == "true" ]; then
 			while read -r; do
 				printf "%s\n" "$REPLY"
 			done <<-EOF
-				#!/bin/sh
+				#!/bin/bash
 				# Backup restoration script automatically generated and used by insit.
 				# Generated on `printf '%(%F (%X))T' -1` by $SUDO_USER ($SUDO_UID) @ $HOSTNAME.
 				#
@@ -336,11 +344,19 @@ if ! [ "$JUST_CHECK" == "true" ]; then
 						}
 
 						if [ -f "$LASTFILE" -a -r "$LASTFILE" ]; then
+							LOGIT "Generating restore commands for $3"
+
 							{
 								while read -r; do
 									printf "%s\n" "$REPLY"
 								done <<-EOF
-									:
+									if /bin/cp "$BUFILE" "$3"; then
+									        /bin/chown $5:$6 "$3"
+									        /bin/chmod $4 "$3"
+									else
+									        ERR "\$LINENO" "Failed to restore '$3' file."
+									fi
+
 								EOF
 							} >> "$LASTFILE"
 

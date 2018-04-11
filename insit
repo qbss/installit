@@ -3,12 +3,12 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Tue 10 Apr 23:54:55 BST 2018
+# Last Change       - Wed 11 Apr 12:29:37 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
 
-_VERSION_="2018-04-10"
+_VERSION_="2018-04-11"
 
 #TODO - If file is removed (FILE), how is a user with updated insit to remove it?
 #       Possible temporary solution could be to have the installation process save
@@ -23,8 +23,10 @@ ERR(){ printf "[L%0.4d] ERROR: %s\n" "$1" "$2" 1>&2; }
 
 DOM="https://github.com"
 URL="$DOM/terminalforlife"
+MAINDIR="$HOME/.local/share/insit"
 LOGFILE="/var/log/tfl_insit.log"
-BUPATH="$HOME/.local/share/insit/backups"
+BUPATH="$MAINDIR/backups"
+LASTFILE="${BUPATH%/*}/last"
 
 USAGE(){
 	while read -r; do
@@ -212,6 +214,14 @@ fi
 [ "$BEQUIET" == "true" ] && exec 1> /dev/null
 [ "$DEBUGME" == "true" ] && set -x
 
+if ! [ -d "$MAINDIR" ]; then
+	if /bin/mkdir "$MAINDIR"; then
+		/bin/chown $SUDO_UID:$SUDO_UID "$MAINDIR"
+	else
+		XERR "$LINENO" "Failure to create '$MAINDIR' directory."
+	fi
+fi
+
 [ -d "$BUPATH" ] || /bin/mkdir -p "$BUPATH" &> /dev/null
 
 if ! [ "$JUST_CHECK" == "true" ]; then
@@ -250,6 +260,23 @@ LOGIT(){
 }
 
 if ! [ "$JUST_CHECK" == "true" ]; then
+	if [ ! "$RESTORE" -a "$UPDATE" ]; then
+		LOGIT "Generating a new backup restoration script"
+
+		{
+			while read -r; do
+				printf "%s\n" "$REPLY"
+			done <<-EOF
+				#!/bin/sh
+				# Backup restoration script automatically generated and used by insit.
+				# Generated on `printf '%(%F (%X))T' -1` by $SUDO_USER ($SUDO_UID) @ $HOSTNAME.
+				#
+				# Do NOT make any changes to this script, unless you know what you're doing!
+
+			EOF
+		} > "$LASTFILE"
+	fi
+
 	if ! [ "$NOBACKUP" == "true" ]; then
 		LOGIT "Cleaning up old backups in $BUPATH"
 		printf "Cleaning up old backups.\n"
@@ -308,20 +335,34 @@ if ! [ "$JUST_CHECK" == "true" ]; then
 							fi
 						}
 
-						LOGIT "Creating $BUFILE_DIR directory"
-						if ! /bin/mkdir -p "$BUFILE_DIR" &> /dev/null; then
-							ERR "$LINENO" "Failed to create one or more backup directories."
-							BACKUP_PROMPT
-						else
-							LOGIT "Backing up $3 to $BUFILE"
-							if ! /bin/cp "$3" "$BUFILE/" &> /dev/null; then
-								LOGIT "Failed to back up %s"
-								ERR "$LINENO" "Back up of '%s' failed.\n"
+						if [ -f "$LASTFILE" -a -r "$LASTFILE" ]; then
+							{
+								while read -r; do
+									printf "%s\n" "$REPLY"
+								done <<-EOF
+									:
+								EOF
+							} >> "$LASTFILE"
+
+							LOGIT "Creating $BUFILE_DIR directory"
+							if ! /bin/mkdir -p "$BUFILE_DIR" &> /dev/null; then
+								ERR "$LINENO" "Failed to create one or more backup directories."
 								BACKUP_PROMPT
 							else
-								LOGIT "Setting correct permissions for $BUFILE"
-								/bin/chmod 600 "$BUFILE" &> /dev/null
+								LOGIT "Backing up $3 to $BUFILE"
+								if ! /bin/cp "$3" "$BUFILE/" &> /dev/null; then
+									LOGIT "Failed to back up %s"
+									ERR "$LINENO" "Back up of '%s' failed.\n"
+									BACKUP_PROMPT
+								else
+									LOGIT "Setting correct permissions for $BUFILE"
+									/bin/chmod 600 "$BUFILE" &> /dev/null
+								fi
 							fi
+						else
+							LOGIT "Backup restoration script $LASTFILE not found or readonly"
+							ERR "$LINENO" "Unable to generate a backup restoration script."
+							BACKUP_PROMPT
 						fi
 					else
 						LOGIT "Skipping back-up of $3"

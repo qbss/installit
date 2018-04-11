@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Wed 11 Apr 14:05:59 BST 2018
+# Last Change       - Wed 11 Apr 15:03:10 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -17,7 +17,7 @@ _VERSION_="2018-04-11"
 #       all the files, regardless of insit version. Caveat to this method is of
 #       course that they'd therefore require that log. Still, this is probably a
 #       rudimentary version of how standard package managers do it.
-#TODO - What if you're updating from a different branch?
+#TODO - What if you're updating insit from a different branch?
 
 XERR(){ printf "[L%0.4d] ERROR: %s\n" "$1" "$2" 1>&2; exit 1; }
 ERR(){ printf "[L%0.4d] ERROR: %s\n" "$1" "$2" 1>&2; }
@@ -185,7 +185,7 @@ if [ "$RESTORE" -a $# -gt 0 ]; then
 fi
 
 declare -i DEPCOUNT=0
-for DEP in /usr/bin/wget /bin/{cp,mv,rm,chmod,chown,mkdir}; {
+for DEP in /usr/bin/{wget,find} /bin/{cp,mv,rm,chmod,chown,mkdir}; {
 	if ! [ -x "$DEP" ]; then
 		ERR "$LINENO" "Dependency '$DEP' not met."
 		DEPCOUNT+=1
@@ -251,6 +251,7 @@ LOGIT(){
 			if [ "$LOGIT" == "true" ]; then
 				printf "[%s]: %s\n" "$DATETIME" "$1" >> "$LOGFILE"
 
+				#TODO - Could not logrotate handle this?
 				readarray A < "$LOGFILE"
 				if [ "${#A[@]}" -gt 4000 ]; then
 					/bin/mv "$LOGFILE"{,.old}
@@ -380,8 +381,11 @@ if ! [ "$JUST_CHECK" == "true" ]; then
 									ERR "$LINENO" "Back up of '$3' failed.\n"
 									BACKUP_PROMPT
 								else
-									LOGIT "Setting correct permissions for $BUFILE"
+									LOGIT "Setting correct permissions, UID, and GID for $BUFILE"
 									/bin/chmod 600 "$BUFILE" &> /dev/null
+									/usr/bin/find $BUPATH/ -xdev -exec\
+										/bin/chown $SUDO_UID:$SUDO_GID "{}" \;
+
 								fi
 							fi
 						else

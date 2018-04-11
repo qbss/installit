@@ -101,32 +101,27 @@ An example installation of a program already installed:
 
 ```
 $ sudo insit apt-undo-install
-[L0189] ERROR: File already exists: /usr/bin/apt-undo-install
-[L0189] ERROR: File already exists: /usr/share/bash-completion/completions/apt-undo-install
+[L0329] ERROR: File already exists: /usr/bin/apt-undo-install
+[L0329] ERROR: File already exists: /usr/share/bash-completion/completions/apt-undo-install
 ```
 
 Now to update it, since it's already installed:
 
 ```
 $ sudo insit -U apt-undo-install
-File '/usr/bin/apt-undo-install' downloaded and updated.
-File '/usr/bin/apt-undo-install' ownership re-set.
-File '/usr/bin/apt-undo-install' mode re-set.
-File '/usr/share/bash-completion/completions/apt-undo-install' downloaded and updated.
-File '/usr/share/bash-completion/completions/apt-undo-install' ownership re-set.
-File '/usr/share/bash-completion/completions/apt-undo-install' mode re-set.
 ```
 
 To install the same program if it weren't already found:
 
 ```
 $ sudo insit apt-undo-install
-File '/usr/bin/apt-undo-install' downloaded.
-File '/usr/bin/apt-undo-install' ownership set.
-File '/usr/bin/apt-undo-install' mode set.
-File '/usr/share/bash-completion/completions/apt-undo-install' downloaded.
-File '/usr/share/bash-completion/completions/apt-undo-install' ownership set.
-File '/usr/share/bash-completion/completions/apt-undo-install' mode set.
+Cleaning up old backups.
+File '/usr/bin/apt-undo-install' downloaded and updated.
+File '/usr/bin/apt-undo-install' ownership re-set.
+File '/usr/bin/apt-undo-install' mode re-set.
+File '/usr/share/bash-completion/completions/apt-undo-install' downloaded and updated.
+File '/usr/share/bash-completion/completions/apt-undo-install' ownership re-set.
+File '/usr/share/bash-completion/completions/apt-undo-install' mode re-set.
 ```
 
 Uninstalling a program is easy too:
@@ -142,6 +137,7 @@ What if you want to update the installer itself? Easy:
 
 ```
 $ sudo insit -S
+Cleaning up old backups.
 File '/usr/bin/insit' downloaded and updated.
 File '/usr/bin/insit' ownership re-set.
 File '/usr/bin/insit' mode re-set.
@@ -154,38 +150,40 @@ You may wish to just find out if you have an insit update available, without act
 
 ```
 $ insit -J
-New version available:    2018-04-06
-Current version:          2018-04-05
+New version available:    2018-04-11
+Current version:          2018-04-06
 ```
 
 You'll also get a warning for certain key installations, such as vimconfig:
 
 ```
-$ sudo insit -U vimconfig
+$ insit -I -U vimconfig
+Cleaning up old backups.
 WARNING: This will install and replace the following:
 
-  /home/tfl/.vim/colors/tfl.vim
-  /home/tfl/.vim/plugin/altnums.vim
-  /home/tfl/.vim/plugin/autoscroll.vim
-  /home/tfl/.vim/plugin/banger.vim
-  /home/tfl/.vim/plugin/comtog.vim
-  /home/tfl/.vim/plugin/datepaste.vim
-  /home/tfl/.vim/plugin/exefile.vim
-  /home/tfl/.vim/plugin/headup.vim
-  /home/tfl/.vim/plugin/listmode.vim
-  /home/tfl/.vim/plugin/moredoc.vim
-  /home/tfl/.vim/plugin/mouseon.vim
-  /home/tfl/.vim/plugin/noarrows.vim
-  /home/tfl/.vim/plugin/sanekeys.vim
-  /home/tfl/.vim/plugin/simplyhard.vim
-  /home/tfl/.vim/plugin/sudosave.vim
-  /home/tfl/.vim/plugin/textwidth.vim
-  /home/tfl/.vim/plugin/tflsnips.vim
-  /home/tfl/.vim/plugin/togtrans.vim
-  /home/tfl/.vim/plugin/virtedit.vim
-  /home/tfl/.vimrc
+  /home/ichy/.vim/colors/tfl.vim
+  /home/ichy/.vim/plugin/altnums.vim
+  /home/ichy/.vim/plugin/autoscroll.vim
+  /home/ichy/.vim/plugin/banger.vim
+  /home/ichy/.vim/plugin/comtog.vim
+  /home/ichy/.vim/plugin/datepaste.vim
+  /home/ichy/.vim/plugin/exefile.vim
+  /home/ichy/.vim/plugin/headup.vim
+  /home/ichy/.vim/plugin/listmode.vim
+  /home/ichy/.vim/plugin/moredoc.vim
+  /home/ichy/.vim/plugin/mouseon.vim
+  /home/ichy/.vim/plugin/noarrows.vim
+  /home/ichy/.vim/plugin/sanekeys.vim
+  /home/ichy/.vim/plugin/simplyhard.vim
+  /home/ichy/.vim/plugin/sudosave.vim
+  /home/ichy/.vim/plugin/textwidth.vim
+  /home/ichy/.vim/plugin/tflsnips.vim
+  /home/ichy/.vim/plugin/tflstatus.vim
+  /home/ichy/.vim/plugin/togtrans.vim
+  /home/ichy/.vim/plugin/virtedit.vim
+  /home/ichy/.vimrc
 
-Enter 'Yes!' if you're sure you wish to continue:
+Enter 'Yes!' if you're sure you wish to continue: 
 ```
 
 At which point you just type 'Yes!' exactly as you see it in the above prompt, then press the Enter key, and away you go! Just, fair warning, be absolutely sure to have **backed up your files** before you give the go-ahead.
@@ -208,7 +206,7 @@ File '/usr/bin/skull' ownership set.
 File '/usr/bin/skull' mode successfully set.
 ```
 
-You'll probably be glad to know that insit also supports helpful logging via /var/log/tfl_insit.log. The log file is by default not accessible by anyone other than root. Here's an example of what your insit log file will show, if you execute the second example shown above:
+You'll probably be glad to know that insit also supports helpful logging via `/var/log/tfl_insit.log`. The log file is by default not accessible by anyone other than root. Here's an example of what your insit log file will show, if you execute the second example shown above:
 
 ```
 $ sudo cat /var/log/tfl_insit.log

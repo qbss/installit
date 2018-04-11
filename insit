@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Wed 11 Apr 13:56:25 BST 2018
+# Last Change       - Wed 11 Apr 14:05:59 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -274,7 +274,8 @@ if ! [ "$JUST_CHECK" == "true" ]; then
 		fi
 	fi
 
-	if [ ! "$RESTORE" -a "$UPDATE" ]; then
+	#TODO - This still gets executed at times when it shouldn't.
+	if [ "$UPDATE" ]; then
 		LOGIT "Generating a new backup restoration script"
 
 		{

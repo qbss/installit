@@ -117,7 +117,6 @@ To install the same program if it weren't already found:
 
 ```
 $ sudo insit apt-undo-install
-Cleaning up old backups.
 File '/usr/bin/apt-undo-install' downloaded and updated.
 File '/usr/bin/apt-undo-install' ownership re-set.
 File '/usr/bin/apt-undo-install' mode re-set.
@@ -139,7 +138,6 @@ What if you want to update the installer itself? Easy:
 
 ```
 $ sudo insit -S
-Cleaning up old backups.
 File '/usr/bin/insit' downloaded and updated.
 File '/usr/bin/insit' ownership re-set.
 File '/usr/bin/insit' mode re-set.
@@ -160,7 +158,6 @@ You'll also get a warning for certain key installations, such as vimconfig:
 
 ```
 $ insit -I -U vimconfig
-Cleaning up old backups.
 WARNING: This will install and replace the following:
 
   /home/ichy/.vim/colors/tfl.vim

@@ -1,3 +1,11 @@
+* 2018-04-13
+
+The user's OS type and LSB will now by default be checked not long after insit is launched, but the `--ignore-os` flag has been added, in-case there are any issues and this feature needs to be bypassed.
+
+Why was this added? Because insit is only supported on Linux, and is typically targeting Debian and Ubuntu distributions, or ones which are based thereon. It might well work in systems like Mac and BSDs, but it's not _supported_.
+
+However, where possible, support for distributions of Linux, like Arch, is already in place.
+
 * 2018-04-11
 
 Added some very useful features which took almost two days to get right -- Here are parts of the new `--help|-h|-?` output:

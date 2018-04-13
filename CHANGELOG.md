@@ -6,6 +6,10 @@ Why was this added? Because insit is only supported on Linux, and is typically t
 
 However, where possible, support for distributions of Linux, like Arch, is already in place.
 
+Now checks for and addresses permission to read and write to the previous user's last file, if it's found. An earlier version of insit, in which the backup and restore functionality was still fresh out of the oven, the permissions weren't quite ideal; this check addresses anybody who had and used that version.
+
+If you're using sudo on Debian, then, by default, your `HOME` environment variable will be `/root`, which is not practical with insit, given it by default will also access files in the user's HOME directory. This has been addressed via some checks.
+
 * 2018-04-11
 
 Added some very useful features which took almost two days to get right -- Here are parts of the new `--help|-h|-?` output:

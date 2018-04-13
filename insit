@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Fri 13 Apr 20:24:16 BST 2018
+# Last Change       - Fri 13 Apr 20:35:46 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -311,6 +311,10 @@ if ! [ "$JUST_CHECK" == "true" ]; then
 	#       but is still annoying and technically a bug.
 	if [ "$UPDATE" ]; then
 		LOGIT "Generating a new backup restoration script"
+
+		if [ -f "$LASTFILE" ] && ! [ -r "$LASTFILE" -a -w "$LASTFILE" ]; then
+			XERR "$LINENO" "Unable to write over the old backup restoration script."
+		fi
 
 		{
 			while read -r; do

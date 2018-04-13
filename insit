@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Fri 13 Apr 20:02:37 BST 2018
+# Last Change       - Fri 13 Apr 20:13:43 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -46,7 +46,7 @@ USAGE(){
 		            --changelog             - Fetch and view the insit changelog.
 		            --quiet|-q              - Runs in quiet mode. Errors still output.
 		            --debug|-D              - Enables the built-in bash debugging.
-		            --ignore-os             - Ignore OSTYPE and the os-release file.
+		            --ignore-os             - Ignore the OS and LSB type; don't check.
 		            --restore|-R            - Restore automatically generated backups.
 		            --no-backup             - Do not back-up for a WHAT update.
 		            --no-check|-N           - Do not check for version updates.

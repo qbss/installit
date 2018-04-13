@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Fri 13 Apr 20:13:43 BST 2018
+# Last Change       - Fri 13 Apr 20:24:16 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -98,6 +98,14 @@ USAGE(){
 		SITE:       $URL
 	EOF
 }
+
+if [ "$HOME" == "/root" ]; then
+	if [ "$SUDO_UID" ]; then
+		XERR "$LINENO" "The sudo '-E' flag must be used."
+	else
+		XERR "$LINENO" "Unable to interact with user whose HOME is '/root'."
+	fi
+fi
 
 OSFILE="/etc/os-release"
 BRANCH="master"
@@ -299,7 +307,8 @@ if ! [ "$JUST_CHECK" == "true" ]; then
 		fi
 	fi
 
-	#TODO - This still gets executed at times when it shouldn't.
+	#TODO - This still gets executed at times when it shouldn't. Not a biggy, -
+	#       but is still annoying and technically a bug.
 	if [ "$UPDATE" ]; then
 		LOGIT "Generating a new backup restoration script"
 

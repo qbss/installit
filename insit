@@ -3,12 +3,12 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Wed 11 Apr 15:18:55 BST 2018
+# Last Change       - Fri 13 Apr 20:02:37 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
 
-_VERSION_="2018-04-11"
+_VERSION_="2018-04-13"
 
 #TODO - If file is removed (FILE), how is a user with updated insit to remove it?
 #       Possible temporary solution could be to have the installation process save
@@ -46,6 +46,7 @@ USAGE(){
 		            --changelog             - Fetch and view the insit changelog.
 		            --quiet|-q              - Runs in quiet mode. Errors still output.
 		            --debug|-D              - Enables the built-in bash debugging.
+		            --ignore-os             - Ignore OSTYPE and the os-release file.
 		            --restore|-R            - Restore automatically generated backups.
 		            --no-backup             - Do not back-up for a WHAT update.
 		            --no-check|-N           - Do not check for version updates.
@@ -100,6 +101,27 @@ USAGE(){
 
 OSFILE="/etc/os-release"
 BRANCH="master"
+
+if ! [ "$IGNOREOS" == "true" ]; then
+	if [ "$OSTYPE" == "linux-gnu" ]; then
+		if [ -f "$OSFILE" -a -r "$OSFILE" ]; then
+			while IFS="=" read -a X; do
+				if [ "${X[0]//\"}" == "ID_LIKE" ]; then
+					if ! [[ "${X[1]//\"}" =~ (debian|ubuntu) ]]; then
+						ERR "$LINENO" "Unsupported distribution base."
+						return 1
+					fi
+
+					break
+				fi
+			done < "$OSFILE"
+		else
+			XERR "$LINENO" "Unable to get LSB type. Use '--ignore-os' to disregard."
+		fi
+	else
+		XERR "$LINENO" "Unsupported platform. Use '--ignore-os' to disregard."
+	fi
+fi
 
 if [ $# -eq 0 ]; then
 	XERR "$LINENO" "Arguments are required. See: insit --help"
@@ -462,25 +484,6 @@ if ! [ "$JUST_CHECK" == "true" ]; then
 		if [ "$NOROOT" == "true" ]; then
 			LOGIT "Skipping APT install for packages: $@"
 			return 0
-		fi
-
-		if [ -f "$OSFILE" -a -r "$OSFILE" ]; then
-			LOGIT "Checking distribution base"
-			while IFS="=" read -a X; do
-				if [ "${X[0]//\"}" == "ID_LIKE" ]; then
-					if ! [[ "${X[1]//\"}" =~ (debian|ubuntu) ]]; then
-						LOGIT "Unsupported '${X[1]//\"}' base detected"
-						ERR "$LINENO" "Unsupported distribution base."
-						return 1
-					fi
-
-					break
-				fi
-			done < "$OSFILE"
-		else
-			LOGIT "Failed to find or read $OSFILE"
-			ERR "$LINENO" "Cannot identify your LSB/Distro type."
-			return 1
 		fi
 
 		if ! [ -x /usr/bin/apt-get ]; then

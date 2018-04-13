@@ -32,10 +32,10 @@ While that command is ordinarily for updating a pre-existing installation of ins
 
 ## EXAMPLE
 
-Now that you've done that, all that's left is to load up insit to peruse the catalogue of my work at your own leisure. Here is its `--help` output, as of 11th April, 2018:
+Now that you've done that, all that's left is to load up insit to peruse the catalogue of my work at your own leisure. Here is its `--help` output, as of 13th April, 2018:
 
 ```
-            INSIT (2018-04-11)
+            INSIT (2018-04-13)
             Written by terminalforlife (terminalforlife@yahoo.com)
 
             Installer for many shell programs from terminalforlife.
@@ -48,7 +48,8 @@ OPTS:       --help|-h|-?            - Displays this help information.
             --changelog             - Fetch and view the insit changelog.
             --quiet|-q              - Runs in quiet mode. Errors still output.
             --debug|-D              - Enables the built-in bash debugging.
-            --restore|-R            - Restore backups from before update(s).
+            --ignore-os             - Ignore the OS and LSB type; don't check.
+            --restore|-R            - Restore automatically generated backups.
             --no-backup             - Do not back-up for a WHAT update.
             --no-check|-N           - Do not check for version updates.
             --just-check|-J         - Only check for version updates.
@@ -76,11 +77,9 @@ NOTE:       Where WHAT is the program(s) to install.
 
             By default, insit will always work with the master branch.
 
-            The backup and restore functionality applies to insit updates, too.
-
 EXAMPLE:    sudo insit -B dev -U -C miscellaneous mfw /usr/bin/mfw 755 0 0
             sudo insit -U notify-upgrade lspkg lsbins apt-undo-install
-            sudo insit -q --log --uninstall bl medlog wcdl clean-locales
+            sudo insit -q --logfile ./test.log -L -u bl wcdl clean-locales
             sudo insit -s aktsbot -C dotfiles bashrc ~/.bashrc 600 1000 1000
 
 WARNING:    Using the --update|-U flags will overwrite existing files.
@@ -88,6 +87,8 @@ WARNING:    Using the --update|-U flags will overwrite existing files.
             Backups are made, prior to updating files, and will be created after
             removing any existing back-ups of files updated with insit. This will
             occur per insit execution, only if updating, NOT per item selected.
+
+            The backup and restore functionality applies to insit updates, too.
 
 FILE:       Actions by insit are logged in: /var/log/tfl_insit.log
 

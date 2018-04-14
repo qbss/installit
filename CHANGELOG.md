@@ -8,7 +8,7 @@ Another benefit to this change, is that a user can have the functionality of `fe
 sudo insit feh-slides
 ```
 
-By the way, if you update i3config and/or install `feh-slides`, you may wish to first run this command, to remove the old version:
+By the way, if you update i3config and/or install `feh-slides`, you may wish to first run this command, to remove the old version, unless you've modified it of course:
 
 ```
 rm -iv "$HOME"/.i3a/feh_slides

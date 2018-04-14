@@ -3,12 +3,12 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Fri 13 Apr 20:35:46 BST 2018
+# Last Change       - Sat 14 Apr 20:46:05 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
 
-_VERSION_="2018-04-13"
+_VERSION_="2018-04-14"
 
 #TODO - If file is removed (FILE), how is a user with updated insit to remove it?
 #       Possible temporary solution could be to have the installation process save
@@ -542,6 +542,7 @@ if ! [ "$JUST_CHECK" == "true" ]; then
 		"dlspwalls - Download a collection of steampunk wallpapers."
 		"dunstconfig - The terminalforlife configuration file for dunst."
 		"dwwdl - Download all of the available DistroWatch Weekly podcasts."
+		"feh-slides - A super-simple desktop wallpaper slideshow."
 		"filesitter - Watch for and act upon the completion of file size changes."
 		"forex - Easily convert various currency rates straight from the terminal."
 		"freelfm - Download last.fm's free music into the current working directory."
@@ -651,6 +652,8 @@ fi
 
 while [ "$1" ]; do
 	case "$1" in
+		feh-slides)
+			FILE miscellaneous feh-slides /usr/bin/feh-slides 755 0 0 ;;
 		rmne)
 			FILE miscellaneous rmne /usr/bin/rmne 755 0 0
 			FILE miscellaneous Completions/rmne /usr/share/bash-completion/completions/rmne 644 0 0 ;;
@@ -944,7 +947,6 @@ while [ "$1" ]; do
 				  $HOME/.config/i3/config
 				  $HOME/.i3a/dmesg_overflow
 				  $HOME/.i3a/drop_terminal
-				  $HOME/.i3a/feh_slides
 				  $HOME/.i3a/hush_the_mic
 				  $HOME/.i3a/i3bar_trans
 				  $HOME/.i3a/initialize
@@ -988,7 +990,6 @@ while [ "$1" ]; do
 
 			FILE i3config .i3a/dmesg_overflow $HOME/.i3a/dmesg_overflow 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3a/drop_terminal $HOME/.i3a/drop_terminal 644 "$SUDO_UID" "$SUDO_GID"
-			FILE i3config .i3a/feh_slides $HOME/.i3a/feh_slides 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3a/hush_the_mic $HOME/.i3a/hush_the_mic 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3a/i3bar_trans $HOME/.i3a/i3bar_trans 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3a/initialize $HOME/.i3a/initialize 644 "$SUDO_UID" "$SUDO_GID"
@@ -1007,6 +1008,8 @@ while [ "$1" ]; do
 			FILE i3config .i3a/terminal $HOME/.i3a/terminal 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3a/track_notify $HOME/.i3a/track_notify 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3a/use_dmenu $HOME/.i3a/use_dmenu 644 "$SUDO_UID" "$SUDO_GID"
+
+			FILE miscellaneous feh-slides /usr/bin/feh-slides 755 0 0
 
 			APT_INSTALL i3-wm i3blocks suckless-tools compton moc\
 				terminology libnotify-bin dunst pulseaudio-utils ;;

@@ -2,6 +2,18 @@
 
 Migrated `feh_slides` from the i3config repository to `feh-slides` in the miscellaneous repository, now with additional features and room for expansion. This will still be installed with i3config, but now just a little bit easier to access, because instead of calling `bash $HOME/.i3a/feh_slides`, or equivalent, it's now just `feh-slides`.
 
+Another benefit to this change, is that a user can have the functionality of `feh-slides`, without the need to install all of i3config, by simply running:
+
+```bash
+sudo insit feh-slides
+```
+
+By the way, if you update i3config and/or install `feh-slides`, you may wish to first run this command, to remove the old version:
+
+```
+rm -iv "$HOME"/.i3a/feh_slides
+```
+
 * 2018-04-13
 
 The user's OS type and LSB will now by default be checked not long after insit is launched, but the `--ignore-os` flag has been added, in-case there are any issues and this feature needs to be bypassed.

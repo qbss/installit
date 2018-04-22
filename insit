@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sun 22 Apr 19:41:18 BST 2018
+# Last Change       - Sun 22 Apr 19:43:49 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -685,13 +685,6 @@ while [ "$1" ]; do
 			REPLACE_PROMPT\
 				"/etc/lightdm/lightdm-gtk-greeter.conf"\
 			|| { shift; continue; }
-
-			LOGIT "Displaying gtk-greeter-sets WARNING"
-			read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
-			if ! [[ "$REPLY" == "Yes!" ]]; then
-				printf "No action taken -- skipping.\n"
-				shift; continue
-			fi
 
 			if [ -d /etc/lightdm ]; then
 				FILE miscellaneous lightdm-gtk-greeter.conf /etc/lightdm/lightdm-gtk-greeter.conf 644 0 0

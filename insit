@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sun 22 Apr 19:22:20 BST 2018
+# Last Change       - Sun 22 Apr 19:35:18 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -18,6 +18,9 @@ _VERSION_="2018-04-22"
 #       course that they'd therefore require that log. Still, this is probably a
 #       rudimentary version of how standard package managers do it.
 #TODO - What if you're updating insit from a different branch?
+#TODO - Since the version file only goes by per day, there's no sense in checking
+#       multiple times per day, therefore, this checks needs to be limited to one
+#       check per day, perhaps using a parameter file.
 
 XERR(){ printf "[L%0.4d] ERROR: %s\n" "$1" "$2" 1>&2; exit 1; }
 ERR(){ printf "[L%0.4d] ERROR: %s\n" "$1" "$2" 1>&2; }
@@ -338,7 +341,6 @@ if ! [ "$JUST_CHECK" == "true" ]; then
 	#TODO - Include this functionality, somehow, as part of FILE().
 	# Example of usage: REPLACE_PROMPT FILE || shift
 	REPLACE_PROMPT(){
-		LOGIT "Displaying vimconfig WARNING"
 		printf "WARNING: This will install and replace the following:\n\n"
 
 		while [ $1 ]; do
@@ -716,6 +718,7 @@ while [ "$1" ]; do
 		filesitter)
 			FILE miscellaneous filesitter /usr/bin/filesitter 755 0 0 ;;
 		vimconfig)
+			LOGIT "Displaying vimconfig WARNING"
 			REPLACE_PROMPT\
 				"$HOME/.vim/colors/tfl.vim"\
 				"$HOME/.vim/plugin/altnums.vim"\
@@ -778,6 +781,7 @@ while [ "$1" ]; do
 			FILE miscellaneous snotes /usr/bin/snotes 755 0 0 ;;
 		dunstconfig)
 			if [ -f $HOME/.config/dunst/dunstrc ]; then
+				LOGIT "Displaying dunstconfig WARNING"
 				REPLACE_PROMPT\
 					"$HOME/.config/dunst/dunstrc"\
 				|| shift
@@ -793,6 +797,7 @@ while [ "$1" ]; do
 			[ -x /usr/bin/dunst ] || APT_INSTALL dunst ;;
 		compconf)
 			if [ -f $HOME/.config/compton.conf ]; then
+				LOGIT "Displaying compconf WARNING"
 				REPLACE_PROMPT\
 					"$HOME/.config/compton.conf"\
 				|| shift
@@ -860,6 +865,7 @@ while [ "$1" ]; do
 			FILE bdl bdl /usr/bin/bdl 755 0 0
 			FILE bdl completion /usr/share/bash-completion/completions/bdl 644 0 0 ;;
 		bashconfig)
+			LOGIT "Displaying bashconfig WARNING"
 			REPLACE_PROMPT\
 				"$HOME/.bash_aliases"\
 				"$HOME/.bash_functions"\
@@ -913,6 +919,7 @@ while [ "$1" ]; do
 
 			APT_INSTALL fonts-symbola ;;
 		i3config)
+			LOGIT "Displaying i3config WARNING"
 			REPLACE_PROMPT\
 				"$HOME/.config/i3/config"\
 				"$HOME/.i3a/dmesg_overflow"\

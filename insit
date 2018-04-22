@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sun 22 Apr 19:35:18 BST 2018
+# Last Change       - Sun 22 Apr 19:41:18 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -681,23 +681,10 @@ while [ "$1" ]; do
 			FILE miscellaneous rmne /usr/bin/rmne 755 0 0
 			FILE miscellaneous Completions/rmne /usr/share/bash-completion/completions/rmne 644 0 0 ;;
 		gtk-greeter-sets)
-			LOGIT "Displaying tfl-look-001 WARNING"
-			while read -r; do
-				printf "%s\n" "$REPLY"
-			done <<-EOF
-
-				WARNING: This will install and replace the following:
-
-				  /etc/lightdm/lightdm-gtk-greeter.conf
-
-				This configuration makes use of and requires the following to work properly:
-
-				  minimalism_texture_black_55242_1920x1080.jpg
-				  Numix-Dark (GTK theme)
-				  Monospace Bold 16 (font)
-				  Delft-Red (icon theme)
-
-			EOF
+			LOGIT "Displaying gtk-greeter-sets WARNING"
+			REPLACE_PROMPT\
+				"/etc/lightdm/lightdm-gtk-greeter.conf"\
+			|| { shift; continue; }
 
 			LOGIT "Displaying gtk-greeter-sets WARNING"
 			read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
@@ -741,7 +728,7 @@ while [ "$1" ]; do
 				"$HOME/.vim/plugin/togtrans.vim"\
 				"$HOME/.vim/plugin/virtedit.vim"\
 				"$HOME/.vimrc"\
-			|| shift
+			|| { shift; continue; }
 
 			if ! [ -d $HOME/.vim/colors ]; then
 				LOGIT "Creating $HOME/.vim/colors directory"
@@ -784,7 +771,7 @@ while [ "$1" ]; do
 				LOGIT "Displaying dunstconfig WARNING"
 				REPLACE_PROMPT\
 					"$HOME/.config/dunst/dunstrc"\
-				|| shift
+				|| { shift; continue; }
 			fi
 
 			if ! [ -d $HOME/.config/dunst ]; then
@@ -800,7 +787,7 @@ while [ "$1" ]; do
 				LOGIT "Displaying compconf WARNING"
 				REPLACE_PROMPT\
 					"$HOME/.config/compton.conf"\
-				|| shift
+				|| { shift; continue; }
 			fi
 
 			if ! [ -d $HOME/.config ]; then
@@ -886,7 +873,7 @@ while [ "$1" ]; do
 				"$HOME/ShellPlugins/Play_Download_MPSYT"\
 				"$HOME/ShellPlugins/Shell_Alias_Correc"\
 				"$HOME/ShellPlugins/Times_Table"\
-			|| shift
+			|| { shift; continue; }
 
 			FILE bashconfig .bash_aliases $HOME/.bash_aliases 600 "$SUDO_UID" "$SUDO_GID"
 			FILE bashconfig .bash_functions $HOME/.bash_functions 600 "$SUDO_UID" "$SUDO_GID"
@@ -946,7 +933,7 @@ while [ "$1" ]; do
 				"$HOME/.i3babove"\
 				"$HOME/.i3bbelow"\
 				"$HOME/.libi3bview"\
-			|| shift
+			|| { shift; continue; }
 
 			FILE i3config .i3babove $HOME/.i3babove 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3bbelow $HOME/.i3bbelow 644 "$SUDO_UID" "$SUDO_GID"

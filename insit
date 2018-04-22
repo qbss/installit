@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sun 22 Apr 19:12:14 BST 2018
+# Last Change       - Sun 22 Apr 19:22:20 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -335,15 +335,18 @@ if ! [ "$JUST_CHECK" == "true" ]; then
 		fi
 	fi
 
+	#TODO - Include this functionality, somehow, as part of FILE().
 	# Example of usage: REPLACE_PROMPT FILE || shift
 	REPLACE_PROMPT(){
 		LOGIT "Displaying vimconfig WARNING"
 		printf "WARNING: This will install and replace the following:\n\n"
 
 		while [ $1 ]; do
-			printf "%s\n" "$1"
+			printf "  %s\n" "$1"
 			shift
 		done
+
+		printf "\n"
 
 		LOGIT "Prompting user to continue or not"
 		read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
@@ -714,34 +717,28 @@ while [ "$1" ]; do
 			FILE miscellaneous filesitter /usr/bin/filesitter 755 0 0 ;;
 		vimconfig)
 			REPLACE_PROMPT\
-				  "$HOME/.vim/colors/tfl.vim"\
-				  "$HOME/.vim/plugin/altnums.vim"\
-				  "$HOME/.vim/plugin/autoscroll.vim"\
-				  "$HOME/.vim/plugin/banger.vim"\
-				  "$HOME/.vim/plugin/comtog.vim"\
-				  "$HOME/.vim/plugin/datepaste.vim"\
-				  "$HOME/.vim/plugin/exefile.vim"\
-				  "$HOME/.vim/plugin/headup.vim"\
-				  "$HOME/.vim/plugin/listmode.vim"\
-				  "$HOME/.vim/plugin/moredoc.vim"\
-				  "$HOME/.vim/plugin/mouseon.vim"\
-				  "$HOME/.vim/plugin/noarrows.vim"\
-				  "$HOME/.vim/plugin/sanekeys.vim"\
-				  "$HOME/.vim/plugin/simplyhard.vim"\
-				  "$HOME/.vim/plugin/sudosave.vim"\
-				  "$HOME/.vim/plugin/textwidth.vim"\
-				  "$HOME/.vim/plugin/tflsnips.vim"\
-				  "$HOME/.vim/plugin/tflstatus.vim"\
-				  "$HOME/.vim/plugin/togtrans.vim"\
-				  "$HOME/.vim/plugin/virtedit.vim"\
-				  "$HOME/.vimrc"
-
-			LOGIT "Prompting user to continue or not"
-			read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
-			if ! [[ "$REPLY" == "Yes!" ]]; then
-				printf "No action taken -- skipping.\n"
-				shift; continue
-			fi
+				"$HOME/.vim/colors/tfl.vim"\
+				"$HOME/.vim/plugin/altnums.vim"\
+				"$HOME/.vim/plugin/autoscroll.vim"\
+				"$HOME/.vim/plugin/banger.vim"\
+				"$HOME/.vim/plugin/comtog.vim"\
+				"$HOME/.vim/plugin/datepaste.vim"\
+				"$HOME/.vim/plugin/exefile.vim"\
+				"$HOME/.vim/plugin/headup.vim"\
+				"$HOME/.vim/plugin/listmode.vim"\
+				"$HOME/.vim/plugin/moredoc.vim"\
+				"$HOME/.vim/plugin/mouseon.vim"\
+				"$HOME/.vim/plugin/noarrows.vim"\
+				"$HOME/.vim/plugin/sanekeys.vim"\
+				"$HOME/.vim/plugin/simplyhard.vim"\
+				"$HOME/.vim/plugin/sudosave.vim"\
+				"$HOME/.vim/plugin/textwidth.vim"\
+				"$HOME/.vim/plugin/tflsnips.vim"\
+				"$HOME/.vim/plugin/tflstatus.vim"\
+				"$HOME/.vim/plugin/togtrans.vim"\
+				"$HOME/.vim/plugin/virtedit.vim"\
+				"$HOME/.vimrc"\
+			|| shift
 
 			if ! [ -d $HOME/.vim/colors ]; then
 				LOGIT "Creating $HOME/.vim/colors directory"
@@ -781,22 +778,9 @@ while [ "$1" ]; do
 			FILE miscellaneous snotes /usr/bin/snotes 755 0 0 ;;
 		dunstconfig)
 			if [ -f $HOME/.config/dunst/dunstrc ]; then
-				LOGIT "Displaying dunstconfig WARNING"
-				while read -r; do
-					printf "%s\n" "$REPLY"
-				done <<-EOF
-					WARNING: This will install and replace the following:
-
-					  $HOME/.config/dunst/dunstrc
-
-				EOF
-
-				LOGIT "Prompting user to continue or not"
-				read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
-				if ! [[ "$REPLY" == "Yes!" ]]; then
-					printf "No action taken -- skipping.\n"
-					shift; continue
-				fi
+				REPLACE_PROMPT\
+					"$HOME/.config/dunst/dunstrc"\
+				|| shift
 			fi
 
 			if ! [ -d $HOME/.config/dunst ]; then
@@ -809,19 +793,9 @@ while [ "$1" ]; do
 			[ -x /usr/bin/dunst ] || APT_INSTALL dunst ;;
 		compconf)
 			if [ -f $HOME/.config/compton.conf ]; then
-				LOGIT "Displaying compconf WARNING"
-				while read -r; do
-					printf "%s\n" "$REPLY"
-				done <<-EOF
-					WARNING: This will install and replace the following:
-
-					  $HOME/.config/compton.conf
-
-				EOF
-
-				LOGIT "Prompting user to continue or not"
-				read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
-				[[ "$REPLY" == "Yes!" ]] || { printf "No action taken -- skipping.\n"; shift; continue; }
+				REPLACE_PROMPT\
+					"$HOME/.config/compton.conf"\
+				|| shift
 			fi
 
 			if ! [ -d $HOME/.config ]; then
@@ -886,37 +860,27 @@ while [ "$1" ]; do
 			FILE bdl bdl /usr/bin/bdl 755 0 0
 			FILE bdl completion /usr/share/bash-completion/completions/bdl 644 0 0 ;;
 		bashconfig)
-			LOGIT "Displaying bashconfig WARNING"
-			while read -r; do
-				printf "%s\n" "$REPLY"
-			done <<-EOF
-				WARNING: This will install and replace the following:
-
-				  $HOME/.bash_aliases
-				  $HOME/.bash_functions
-				  $HOME/.bashrc
-				  $HOME/.inputrc
-				  $HOME/.profile
-				  $HOME/ShellPlugins/Bell_Alarm
-				  $HOME/ShellPlugins/CPU_Intensive_Proc
-				  $HOME/ShellPlugins/Cleaner_RK_Scan
-				  $HOME/ShellPlugins/Clear_CD_LS
-				  $HOME/ShellPlugins/Create_VM
-				  $HOME/ShellPlugins/Get_Bad_Hosts
-				  $HOME/ShellPlugins/Git_Status_All
-				  $HOME/ShellPlugins/List_Signals
-				  $HOME/ShellPlugins/Load_File_Links2
-				  $HOME/ShellPlugins/Loop_This
-				  $HOME/ShellPlugins/NIR_Difference
-				  $HOME/ShellPlugins/Play_Download_MPSYT
-				  $HOME/ShellPlugins/Shell_Alias_Correc
-				  $HOME/ShellPlugins/Times_Table
-
-			EOF
-
-			LOGIT "Prompting user to continue or not"
-			read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
-			[[ "$REPLY" == "Yes!" ]] || { printf "No action taken -- skipping.\n"; shift; continue; }
+			REPLACE_PROMPT\
+				"$HOME/.bash_aliases"\
+				"$HOME/.bash_functions"\
+				"$HOME/.bashrc"\
+				"$HOME/.inputrc"\
+				"$HOME/.profile"\
+				"$HOME/ShellPlugins/Bell_Alarm"\
+				"$HOME/ShellPlugins/CPU_Intensive_Proc"\
+				"$HOME/ShellPlugins/Cleaner_RK_Scan"\
+				"$HOME/ShellPlugins/Clear_CD_LS"\
+				"$HOME/ShellPlugins/Create_VM"\
+				"$HOME/ShellPlugins/Get_Bad_Hosts"\
+				"$HOME/ShellPlugins/Git_Status_All"\
+				"$HOME/ShellPlugins/List_Signals"\
+				"$HOME/ShellPlugins/Load_File_Links2"\
+				"$HOME/ShellPlugins/Loop_This"\
+				"$HOME/ShellPlugins/NIR_Difference"\
+				"$HOME/ShellPlugins/Play_Download_MPSYT"\
+				"$HOME/ShellPlugins/Shell_Alias_Correc"\
+				"$HOME/ShellPlugins/Times_Table"\
+			|| shift
 
 			FILE bashconfig .bash_aliases $HOME/.bash_aliases 600 "$SUDO_UID" "$SUDO_GID"
 			FILE bashconfig .bash_functions $HOME/.bash_functions 600 "$SUDO_UID" "$SUDO_GID"
@@ -949,43 +913,33 @@ while [ "$1" ]; do
 
 			APT_INSTALL fonts-symbola ;;
 		i3config)
-			LOGIT "Displaying i3config WARNING"
-			while read -r; do
-				printf "%s\n" "$REPLY"
-			done <<-EOF
-				WARNING: This will install and replace the following:
-
-				  $HOME/.config/i3/config
-				  $HOME/.i3a/dmesg_overflow
-				  $HOME/.i3a/drop_terminal
-				  $HOME/.i3a/hush_the_mic
-				  $HOME/.i3a/i3bar_trans
-				  $HOME/.i3a/initialize
-				  $HOME/.i3a/key_autorepeat
-				  $HOME/.i3a/leave_session
-				  $HOME/.i3a/partmount
-				  $HOME/.i3a/scrot_sel_take
-				  $HOME/.i3a/scrot_take
-				  $HOME/.i3a/scrot_win_take
-				  $HOME/.i3a/sink_lower
-				  $HOME/.i3a/sink_mute
-				  $HOME/.i3a/sink_raise
-				  $HOME/.i3a/source_lower
-				  $HOME/.i3a/source_mute
-				  $HOME/.i3a/source_raise
-				  $HOME/.i3a/term_font_size
-				  $HOME/.i3a/terminal
-				  $HOME/.i3a/track_notify
-				  $HOME/.i3a/use_dmenu
-				  $HOME/.i3babove
-				  $HOME/.i3bbelow
-				  $HOME/.libi3bview
-
-			EOF
-
-			LOGIT "Prompting user to continue or not"
-			read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
-			[[ "$REPLY" == "Yes!" ]] || { printf "No action taken -- skipping.\n"; shift; continue; }
+			REPLACE_PROMPT\
+				"$HOME/.config/i3/config"\
+				"$HOME/.i3a/dmesg_overflow"\
+				"$HOME/.i3a/drop_terminal"\
+				"$HOME/.i3a/hush_the_mic"\
+				"$HOME/.i3a/i3bar_trans"\
+				"$HOME/.i3a/initialize"\
+				"$HOME/.i3a/key_autorepeat"\
+				"$HOME/.i3a/leave_session"\
+				"$HOME/.i3a/partmount"\
+				"$HOME/.i3a/scrot_sel_take"\
+				"$HOME/.i3a/scrot_take"\
+				"$HOME/.i3a/scrot_win_take"\
+				"$HOME/.i3a/sink_lower"\
+				"$HOME/.i3a/sink_mute"\
+				"$HOME/.i3a/sink_raise"\
+				"$HOME/.i3a/source_lower"\
+				"$HOME/.i3a/source_mute"\
+				"$HOME/.i3a/source_raise"\
+				"$HOME/.i3a/term_font_size"\
+				"$HOME/.i3a/terminal"\
+				"$HOME/.i3a/track_notify"\
+				"$HOME/.i3a/use_dmenu"\
+				"$HOME/.i3babove"\
+				"$HOME/.i3bbelow"\
+				"$HOME/.libi3bview"\
+			|| shift
 
 			FILE i3config .i3babove $HOME/.i3babove 644 "$SUDO_UID" "$SUDO_GID"
 			FILE i3config .i3bbelow $HOME/.i3bbelow 644 "$SUDO_UID" "$SUDO_GID"

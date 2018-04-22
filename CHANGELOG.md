@@ -2,7 +2,7 @@
 
 Managed to get in an update before I go on holiday.
 
-Added `REPLACE_PROMPT` functionality, which optimizes the code, making it easier to read and handle.
+Added `REPLACE_PROMPT` functionality, which optimizes the code, making it easier to read and handle, and as an added bonus, saves around 36 lines.
 
 This equals less effort on my part when it comes to adding these prompts which confirm the user is okay with replacing certain files, such as their own `.bashrc` and `.vimrc`, which of course warrant confirmation, as these may be personally modified, prior to the attempted installation.
 

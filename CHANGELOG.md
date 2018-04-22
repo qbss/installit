@@ -1,3 +1,11 @@
+* 2018-04-22
+
+Managed to get in an update before I go on holiday.
+
+Added `REPLACE_PROMPT` functionality, which optimizes the code, making it easier to read and handle.
+
+This equals less effort on my part when it comes to adding these prompts which confirm the user is okay with replacing certain files, such as their own `.bashrc` and `.vimrc`, which of course warrant confirmation, as these may be personally modified, prior to the attempted installation.
+
 * 2018-04-14
 
 Migrated `feh_slides` from the i3config repository to `feh-slides` in the miscellaneous repository, now with additional features and room for expansion. This will still be installed with i3config, but now just a little bit easier to access, because instead of calling `bash $HOME/.i3a/feh_slides`, or equivalent, it's now just `feh-slides`.

@@ -3,12 +3,12 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sat 14 Apr 20:46:05 BST 2018
+# Last Change       - Sun 22 Apr 19:12:14 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
 
-_VERSION_="2018-04-14"
+_VERSION_="2018-04-22"
 
 #TODO - If file is removed (FILE), how is a user with updated insit to remove it?
 #       Possible temporary solution could be to have the installation process save
@@ -334,6 +334,24 @@ if ! [ "$JUST_CHECK" == "true" ]; then
 			/bin/rm -r "$BUPATH" &> /dev/null
 		fi
 	fi
+
+	# Example of usage: REPLACE_PROMPT FILE || shift
+	REPLACE_PROMPT(){
+		LOGIT "Displaying vimconfig WARNING"
+		printf "WARNING: This will install and replace the following:\n\n"
+
+		while [ $1 ]; do
+			printf "%s\n" "$1"
+			shift
+		done
+
+		LOGIT "Prompting user to continue or not"
+		read -e -p "Enter 'Yes!' if you're sure you wish to continue: "
+		if ! [[ "$REPLY" == "Yes!" ]]; then
+			printf "No action taken -- skipping.\n"
+			return 1
+		fi
+	}
 
 	FILE(){
 		LOGIT "FILE $1 $2 $3 $4 $5 $6"
@@ -695,35 +713,28 @@ while [ "$1" ]; do
 		filesitter)
 			FILE miscellaneous filesitter /usr/bin/filesitter 755 0 0 ;;
 		vimconfig)
-			LOGIT "Displaying vimconfig WARNING"
-			while read -r; do
-				printf "%s\n" "$REPLY"
-			done <<-EOF
-				WARNING: This will install and replace the following:
-
-				  $HOME/.vim/colors/tfl.vim
-				  $HOME/.vim/plugin/altnums.vim
-				  $HOME/.vim/plugin/autoscroll.vim
-				  $HOME/.vim/plugin/banger.vim
-				  $HOME/.vim/plugin/comtog.vim
-				  $HOME/.vim/plugin/datepaste.vim
-				  $HOME/.vim/plugin/exefile.vim
-				  $HOME/.vim/plugin/headup.vim
-				  $HOME/.vim/plugin/listmode.vim
-				  $HOME/.vim/plugin/moredoc.vim
-				  $HOME/.vim/plugin/mouseon.vim
-				  $HOME/.vim/plugin/noarrows.vim
-				  $HOME/.vim/plugin/sanekeys.vim
-				  $HOME/.vim/plugin/simplyhard.vim
-				  $HOME/.vim/plugin/sudosave.vim
-				  $HOME/.vim/plugin/textwidth.vim
-				  $HOME/.vim/plugin/tflsnips.vim
-				  $HOME/.vim/plugin/tflstatus.vim
-				  $HOME/.vim/plugin/togtrans.vim
-				  $HOME/.vim/plugin/virtedit.vim
-				  $HOME/.vimrc
-
-			EOF
+			REPLACE_PROMPT\
+				  "$HOME/.vim/colors/tfl.vim"\
+				  "$HOME/.vim/plugin/altnums.vim"\
+				  "$HOME/.vim/plugin/autoscroll.vim"\
+				  "$HOME/.vim/plugin/banger.vim"\
+				  "$HOME/.vim/plugin/comtog.vim"\
+				  "$HOME/.vim/plugin/datepaste.vim"\
+				  "$HOME/.vim/plugin/exefile.vim"\
+				  "$HOME/.vim/plugin/headup.vim"\
+				  "$HOME/.vim/plugin/listmode.vim"\
+				  "$HOME/.vim/plugin/moredoc.vim"\
+				  "$HOME/.vim/plugin/mouseon.vim"\
+				  "$HOME/.vim/plugin/noarrows.vim"\
+				  "$HOME/.vim/plugin/sanekeys.vim"\
+				  "$HOME/.vim/plugin/simplyhard.vim"\
+				  "$HOME/.vim/plugin/sudosave.vim"\
+				  "$HOME/.vim/plugin/textwidth.vim"\
+				  "$HOME/.vim/plugin/tflsnips.vim"\
+				  "$HOME/.vim/plugin/tflstatus.vim"\
+				  "$HOME/.vim/plugin/togtrans.vim"\
+				  "$HOME/.vim/plugin/virtedit.vim"\
+				  "$HOME/.vimrc"
 
 			LOGIT "Prompting user to continue or not"
 			read -e -p "Enter 'Yes!' if you're sure you wish to continue: "

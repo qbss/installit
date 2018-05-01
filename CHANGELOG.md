@@ -5,7 +5,7 @@ Now back from holiday.
 When testing Ubuntu 18.04 LTS "Bionic Beaver" (full release) in a virtual machine, an XERR() instance popped up, due to the one-liner method in which insit was initially installed:
 
 ```bash
-wget github.com/terminalforlife/installit/raw/master/insit && sudo bash insit -S; rm ./insit
+wget -q github.com/terminalforlife/installit/raw/master/insit && sudo bash insit -S; rm ./insit
 ```
 
 The error was in relation to improper permissions and/or ownership with file:

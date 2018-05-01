@@ -1,3 +1,21 @@
+* 2018-05-01
+
+Now back from holiday.
+
+When testing Ubuntu 18.04 LTS "Bionic Beaver" (full release) in a virtual machine, an XERR() instance popped up, due to the one-liner method in which insit was initially installed:
+
+```bash
+wget github.com/terminalforlife/installit/raw/master/insit && sudo bash insit -S; rm ./insit
+```
+
+The error was in relation to improper permissions and/or ownership with file:
+
+```
+$HOME/.local/share/insit/last
+```
+
+This has now _hopefully_ been addressed. Likely the same issue occurred in other setups prior to Ubuntu 18.04, so they too should hopefully be fixed now.
+
 * 2018-04-22
 
 Managed to get in an update before I go on holiday.

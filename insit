@@ -3,12 +3,12 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Sun 22 Apr 19:43:49 BST 2018
+# Last Change       - Tue  1 May 11:39:04 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
 
-_VERSION_="2018-04-22"
+_VERSION_="2018-05-01"
 
 #TODO - If file is removed (FILE), how is a user with updated insit to remove it?
 #       Possible temporary solution could be to have the installation process save
@@ -313,24 +313,31 @@ if ! [ "$JUST_CHECK" == "true" ]; then
 	#TODO - This still gets executed at times when it shouldn't. Not a biggy, -
 	#       but is still annoying and technically a bug.
 	if [ "$UPDATE" ]; then
-		LOGIT "Generating a new backup restoration script"
+		if [ -f "$LASTFILE" ] && [ "$SUDO_USER" ]; then
+			LOGIT "Backup restoration script ownership corrected"
+			/bin/chown $SUDO_UID:$SUDO_UID "$LASTFILE"
 
-		if [ -f "$LASTFILE" ] && ! [ -r "$LASTFILE" -a -w "$LASTFILE" ]; then
+			LOGIT "Backup restoration script permissions corrected"
+			/bin/chmod 600 "$LASTFILE"
+		elif [ -f "$LASTFILE" ] && ! [ -r "$LASTFILE" -a -w "$LASTFILE" ]; then
+			LOGIT "Backup restoration script has invalid permissions"
 			XERR "$LINENO" "Unable to write over the old backup restoration script."
+		else
+			LOGIT "Generating a new backup restoration script"
+
+			{
+				while read -r; do
+					printf "%s\n" "$REPLY"
+				done <<-EOF
+					#!/bin/bash
+					# Backup restoration script automatically generated and used by insit.
+					# Generated on `printf '%(%F (%X))T' -1` by $SUDO_USER ($SUDO_UID) @ $HOSTNAME.
+					#
+					# Do NOT make any changes to this script, unless you know what you're doing!
+
+				EOF
+			} > "$LASTFILE"
 		fi
-
-		{
-			while read -r; do
-				printf "%s\n" "$REPLY"
-			done <<-EOF
-				#!/bin/bash
-				# Backup restoration script automatically generated and used by insit.
-				# Generated on `printf '%(%F (%X))T' -1` by $SUDO_USER ($SUDO_UID) @ $HOSTNAME.
-				#
-				# Do NOT make any changes to this script, unless you know what you're doing!
-
-			EOF
-		} > "$LASTFILE"
 
 		if [ ! "$NOBACKUP" == "true" -a "$UPDATE" ]; then
 			LOGIT "Cleaning up old backups in $BUPATH"

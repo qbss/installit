@@ -3,12 +3,12 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Tue  1 May 11:39:04 BST 2018
+# Last Change       - Fri 18 May 15:01:32 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
 
-_VERSION_="2018-05-01"
+_VERSION_="2018-05-18"
 
 #TODO - If file is removed (FILE), how is a user with updated insit to remove it?
 #       Possible temporary solution could be to have the installation process save
@@ -607,6 +607,7 @@ if ! [ "$JUST_CHECK" == "true" ]; then
 		"simplify-ubuntu - Small project to lighten standard Ubuntu 16.04.* LTS installations."
 		"simwea - Display various weather statistics on a terminal."
 		"snotes - Search your programming notes on-the-fly with this simple tool."
+		"tlptog - Simple command to quickly toggle the 'TLP_ENABLE' parameter."
 		"tozero - Simple program to display a countdown for a target date."
 		"ubuntu-syschk - Performs various non-root system health checks on Ubuntu and similar."
 		"vimconfig - TFL plugins and more for the Vi-IMproved (VIM) modal text editor."
@@ -682,6 +683,8 @@ fi
 
 while [ "$1" ]; do
 	case "$1" in
+		tlptog)
+			FILE miscellaneous tlptog /usr/bin/tlptog 755 0 0 ;;
 		feh-slides)
 			FILE miscellaneous feh-slides /usr/bin/feh-slides 755 0 0 ;;
 		rmne)

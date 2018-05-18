@@ -1,3 +1,7 @@
+* 2018-05-18
+
+Added tlptog to insit.
+
 * 2018-05-01
 
 Now back from holiday.

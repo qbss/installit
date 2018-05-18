@@ -8,6 +8,8 @@ Installer for many shell programs from terminalforlife.
 
 Just download and install this handy-dandy installer in order to run it and install all of the TFL programs, scripts, tools, utilities, or whatever else (mostly) is up for grabs here. Don't worry, the installer can, per your request, update itself as well.
 
+To clarify, you do NOT need to install 'git' nor do you need to even do anything on GitHub in order to get insit and any of the tools or configurations it offers.
+
 As of 11th April 2018, insit will now automagically back up any updated files, thus, the previous update can finally be restored.
 
 As of 6th April 2018, you can now use insit not only to download TFL content, but also other peoples'! See below for an idea as to how this can be achieved.
@@ -183,7 +185,7 @@ WARNING: This will install and replace the following:
   /home/ichy/.vim/plugin/virtedit.vim
   /home/ichy/.vimrc
 
-Enter 'Yes!' if you're sure you wish to continue: 
+Enter 'Yes!' if you're sure you wish to continue:
 ```
 
 At which point you just type 'Yes!' exactly as you see it in the above prompt, then press the Enter key, and away you go! Just, fair warning, be absolutely sure to have **backed up your files** before you give the go-ahead.

@@ -1,6 +1,6 @@
 * 2018-05-18
 
-Added tlptog to insit.
+Added tlptog and purgerc to insit.
 
 * 2018-05-01
 

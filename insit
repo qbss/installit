@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 # Project Name      - installit/insit
 # Started On        - Wed 13 Dec 01:13:55 GMT 2017
-# Last Change       - Fri 18 May 15:01:32 BST 2018
+# Last Change       - Fri 18 May 23:21:27 BST 2018
 # Author E-Mail     - terminalforlife@yahoo.com
 # Author GitHub     - https://github.com/terminalforlife
 #----------------------------------------------------------------------------------
@@ -598,6 +598,7 @@ if ! [ "$JUST_CHECK" == "true" ]; then
 		"notify-upgrade - Simple upgrade notification utility for Debian- and Ubuntu-based systems."
 		"nxbt - A fork and improvement of the XBT program written by Joe Collins."
 		"pagewatch - Watch a webpage for signs of change by checkings its md5sum."
+		"purgerc - Very simple and light shell command to remove 'rc' packages."
 		"redshifter - Effective and simple tool to manually adjust the gamma via Redshift."
 		"reviewer - Terminal viewer for Linux Mint's user submitted software reviews."
 		"ripmydvd - Shell program using ffmpeg and mplayer to rip your DVD."
@@ -683,6 +684,8 @@ fi
 
 while [ "$1" ]; do
 	case "$1" in
+		purgerc)
+			FILE miscellaneous purgerc /usr/bin/purgerc 755 0 0 ;;
 		tlptog)
 			FILE miscellaneous tlptog /usr/bin/tlptog 755 0 0 ;;
 		feh-slides)

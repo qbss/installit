@@ -81,7 +81,7 @@ Added bash completion support for tozero, which is now made available when insta
 
 * 2018-04-07
 
-Included the newest edition to the TFL collection -- rmre -- a dangerous but incredibly useful and potentially educational utility which allows you to remove all non-essential packages from a Debian and Ubuntu system, or distributions based thereon. Obviously, not for the faint of heart.
+Included the newest edition to the TFL collection -- rmne -- a dangerous but incredibly useful and potentially educational utility which allows you to remove all non-essential packages from a Debian and Ubuntu system, or distributions based thereon. Obviously, not for the faint of heart.
 
 The rmne program added earlier this morning (UK time) now has bash completion support.
 
